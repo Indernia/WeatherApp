@@ -44,6 +44,7 @@ fun WeatherApp(
                     modifier = Modifier.fillMaxSize(),
                     handleClickBack = {
                         navController.navigateUp()
+
                     }
                 )
             }
