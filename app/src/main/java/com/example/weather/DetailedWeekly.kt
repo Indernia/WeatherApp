@@ -19,6 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
+
 
 @Preview(showBackground = true)
 @Composable
@@ -29,13 +32,12 @@ fun DetailedWeekly (
     Column(
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceAround,
+        verticalArrangement = Arrangement.SpaceAround
 
-        ) {
+    ) {
         Row(
             horizontalArrangement = Arrangement.Start,
-            modifier = modifier.weight(5f)
-
+            modifier = modifier.weight(1.5f)
         ){
             IconButton(onClick = {handleClickBack()}) {
                 Icon(
@@ -44,8 +46,40 @@ fun DetailedWeekly (
                 )
             }
         }
+        Text(
+            text = "Average temperature forecast" ,
+            style = TextStyle(fontSize = 20.sp)
+        )
+        Box(
+            modifier = modifier.padding(12.dp).background(Color.LightGray).weight(4.5f),
+        )
+        Spacer(modifier=modifier.weight(1f))
 
+        Text(
+            text = "8-13 forecast",
+            style = TextStyle(fontSize = 20.sp)
+        )
 
+        Spacer(modifier=modifier.weight(0.5f))
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = modifier.padding(15.dp).weight(2.5f)
+        ){
+            for(nums in 1..5){
+                TinyBox(modifier = modifier.weight(4f))
+                if(nums != 5)
+                Spacer(modifier=modifier.weight(2f))
+        }
+        }
+        Spacer(modifier=modifier.weight(8f))
     }
-
+}
+@Composable
+private fun TinyBox(
+    modifier: Modifier = Modifier,
+){
+    Box(
+        modifier = modifier
+            .background(Color.LightGray)
+    )
 }
