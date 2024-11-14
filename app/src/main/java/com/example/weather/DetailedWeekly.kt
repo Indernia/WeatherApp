@@ -1,7 +1,6 @@
 package com.example.weather
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,8 +22,7 @@ import androidx.compose.ui.unit.dp
 
 @Preview(showBackground = true)
 @Composable
-fun weeklyForecast (
-    onDetailedWeeklyClicked: () -> Unit = {},
+fun DetailedWeekly (
     modifier: Modifier = Modifier.fillMaxSize(),
     handleClickBack: () -> Unit = {}
 ){
@@ -33,7 +31,7 @@ fun weeklyForecast (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround,
 
-    ) {
+        ) {
         Row(
             horizontalArrangement = Arrangement.Start,
             modifier = modifier.weight(5f)
@@ -47,31 +45,7 @@ fun weeklyForecast (
             }
         }
 
-        val days = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-        for(x in days){
 
-            InfoBox(onClick = {onDetailedWeeklyClicked()}, modifier = modifier.weight(10f), info = x)
-            Spacer(modifier = modifier.weight(2f))
-        }
     }
 
-}
-
-@Composable
-private fun InfoBox(
-    onClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
-    info: String = ""
-){
-    Box(
-        modifier = modifier
-            .clickable {onClick()}
-            .background(Color.LightGray)
-            .padding(horizontal = 16.dp),
-        contentAlignment = Alignment.Center
-    ){
-        Text(
-            text = "$info"
-        )
-    }
 }
