@@ -53,11 +53,10 @@ fun WeatherApp(
                 )
             }
             composable(route = WeatherScreens.weeklyForecast.name){
-                MainInfoScreen(
+                weeklyForecast(
                     modifier = Modifier.fillMaxSize(),
                     handleClickBack = {
                         navController.navigateUp()
-
                     }
                 )
             }
