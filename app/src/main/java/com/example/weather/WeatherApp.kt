@@ -15,7 +15,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 enum class WeatherScreens{
     FirstPage,
     MainInfoPage,
-    weeklyForecast
+    weeklyForecast,
+    HourlyForecast
 
 
 }
@@ -42,6 +43,9 @@ fun WeatherApp(
                    },
                    onWeeklyForecastClicked = {
                        navController.navigate(WeatherScreens.weeklyForecast.name)
+                   } ,
+                   onHourlyForecastClicked = {
+                       navController.navigate(WeatherScreens.HourlyForecast.name)
                    }
                )
             }
@@ -54,10 +58,14 @@ fun WeatherApp(
                     }
                 )
             }
-
-
-
-
+            composable(route = WeatherScreens.HourlyForecast.name){
+                HourlyForecast(
+                    modifier = Modifier.fillMaxSize(),
+                    handleClickBack = {
+                        navController.navigateUp()
+                    }
+                )
+            }
             composable(route = WeatherScreens.weeklyForecast.name){
                 weeklyForecast(
                     modifier = Modifier.fillMaxSize(),

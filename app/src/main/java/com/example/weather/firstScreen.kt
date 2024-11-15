@@ -29,7 +29,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun firstScreen (
     onMainInfoClicked: () -> Unit = {},
-    onWeeklyForecastClicked: () -> Unit = {}
+    onWeeklyForecastClicked: () -> Unit = {},
+    onHourlyForecastClicked: () -> Unit = {}
 ){
     Spacer(modifier = Modifier.height(16.dp))
     Row (
@@ -53,14 +54,18 @@ fun firstScreen (
             modifier = Modifier.weight(50f).padding(horizontal = 10.dp)
         )
         Spacer(modifier = Modifier.weight(5f))
-        HourlyForecast(modifier = Modifier.weight(15f).padding(horizontal = 10.dp))
-
+        HourlyForecast(
+            onClick = {onHourlyForecastClicked()},
+            modifier = Modifier.weight(15f).padding(horizontal = 10.dp))
+        Spacer(modifier = Modifier.weight(5f)
+        )
 
         Spacer(modifier = Modifier.weight(5f))
         WeeklyForecast(
             onClick = {onWeeklyForecastClicked()},
             modifier = Modifier.weight(15f).padding(horizontal = 10.dp))
-        Spacer(modifier = Modifier.weight(5f))
+        Spacer(modifier = Modifier.weight(5f)
+        )
     }
 }
 
@@ -82,9 +87,12 @@ fun MainInformation(
 
 @Preview(showBackground = true)
 @Composable
-fun HourlyForecast(modifier: Modifier = Modifier) {
+fun HourlyForecast(
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
+            .clickable {onClick()}
             .fillMaxSize().background(Color.Gray).padding(16.dp),
         contentAlignment = Alignment.Center
     ){
