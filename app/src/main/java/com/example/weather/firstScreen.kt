@@ -54,6 +54,8 @@ fun firstScreen (
         )
         Spacer(modifier = Modifier.weight(5f))
         HourlyForecast(modifier = Modifier.weight(15f).padding(horizontal = 10.dp))
+
+
         Spacer(modifier = Modifier.weight(5f))
         WeeklyForecast(
             onClick = {onWeeklyForecastClicked()},

@@ -16,6 +16,8 @@ enum class WeatherScreens{
     FirstPage,
     MainInfoPage,
     weeklyForecast
+
+
 }
 
 @Composable
@@ -52,6 +54,10 @@ fun WeatherApp(
                     }
                 )
             }
+
+
+
+
             composable(route = WeatherScreens.weeklyForecast.name){
                 weeklyForecast(
                     modifier = Modifier.fillMaxSize(),
