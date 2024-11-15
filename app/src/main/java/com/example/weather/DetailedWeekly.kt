@@ -65,21 +65,13 @@ fun DetailedWeekly (
             horizontalArrangement = Arrangement.Center,
             modifier = modifier.padding(15.dp).weight(2.5f)
         ){
-            for(nums in 1..5){
-                TinyBox(modifier = modifier.weight(4f))
-                if(nums != 5)
-                Spacer(modifier=modifier.weight(2f))
+            for(num in 1..5){
+                Box(modifier = modifier.weight(4f).background(Color.LightGray))
+                if(num != 5) {
+                    Spacer(modifier = modifier.weight(2f))
+                }
         }
         }
         Spacer(modifier=modifier.weight(8f))
     }
-}
-@Composable
-private fun TinyBox(
-    modifier: Modifier = Modifier,
-){
-    Box(
-        modifier = modifier
-            .background(Color.LightGray)
-    )
 }
