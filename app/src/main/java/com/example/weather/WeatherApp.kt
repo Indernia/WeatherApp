@@ -16,7 +16,9 @@ enum class WeatherScreens{
     FirstPage,
     MainInfoPage,
     weeklyForecast,
-    DetailedWeekly
+    DetailedWeekly,
+    HourlyForecast,
+    Settings
 }
 
 @Composable
@@ -41,6 +43,12 @@ fun WeatherApp(
                    },
                    onWeeklyForecastClicked = {
                        navController.navigate(WeatherScreens.weeklyForecast.name)
+                   } ,
+                   onHourlyForecastClicked = {
+                       navController.navigate(WeatherScreens.HourlyForecast.name)
+                   },
+                   onSettingsClicked = {
+                       navController.navigate(WeatherScreens.Settings.name)
                    }
                )
             }
@@ -50,6 +58,14 @@ fun WeatherApp(
                     handleClickBack = {
                         navController.navigateUp()
 
+                    }
+                )
+            }
+            composable(route = WeatherScreens.HourlyForecast.name){
+                HourlyForecast(
+                    modifier = Modifier.fillMaxSize(),
+                    handleClickBack = {
+                        navController.navigateUp()
                     }
                 )
             }
@@ -73,6 +89,15 @@ fun WeatherApp(
                     }
                 )
             }
+            composable(route = WeatherScreens.Settings.name){
+                settings(
+                    modifier = Modifier.fillMaxSize(),
+                    handleClickBack = {
+                        navController.navigateUp()
+                    }
+                )
+            }
+
         }
     }
 }
