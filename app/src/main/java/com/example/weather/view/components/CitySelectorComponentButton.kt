@@ -42,7 +42,7 @@ fun CitySelectorComponentButtonPreview() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Gray) // Baggrundsfarve for at se knappens form tydeligt
+                .background(Color.Cyan) // Baggrundsfarve for at se knappens form tydeligt
         ) {
             CitySelectorComponentButton(
                 icon = {
