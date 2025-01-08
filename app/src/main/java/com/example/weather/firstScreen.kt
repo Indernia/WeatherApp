@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.weather.UIControllers.MainScreenViewModel
 import kotlinx.coroutines.launch
 import java.util.stream.IntStream.range
 
@@ -51,6 +52,8 @@ fun firstScreen (
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
+    var mainViewModel = MainScreenViewModel()
+    mainViewModel.makeTestLocationData()
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -115,6 +118,9 @@ fun firstScreen (
             MainInformation(
                 onClick = { onMainInfoClicked() },
                 modifier = Modifier.weight(50f).padding(horizontal = 10.dp)
+            )
+            Text(
+                text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
             )
             Spacer(modifier = Modifier.weight(5f))
             HourlyForecast(

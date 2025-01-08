@@ -7,6 +7,8 @@ data class HourData(
     var temperature: Double,
     var humidity: Double,
     var windSpeed: Double,
-    var condition: Condition,
     var updatedAt: ZonedDateTime,
+    var uv: Double,
+    var condition: Condition,
+
 )
