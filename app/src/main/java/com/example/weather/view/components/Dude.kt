@@ -48,3 +48,4 @@ class FigureComponent @JvmOverloads constructor(
         accessory.setImageResource(resId)
     }
 }
+
