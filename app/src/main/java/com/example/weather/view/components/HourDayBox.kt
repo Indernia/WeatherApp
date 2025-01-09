@@ -23,7 +23,6 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun HourDayBox(
     data: Any,
-    modifier: Modifier = Modifier
 ) {
     OutlinedCard(
         colors = CardDefaults.cardColors(
@@ -61,7 +60,7 @@ fun HourDayBox(
                 //makes a box for DayData given dataclass DayData
                 is DayData -> {
                     Text(
-                        text = "${data.dayOfWeek}",
+                        text = data.dayOfWeek,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
@@ -88,29 +87,27 @@ fun HourDayBox(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun PreviewHourDayBoxHourData() {
     val hourData = HourData(
-        // uses .now() only available for android 8.0 or higher
-        timestamp = ZonedDateTime.now(),
+        timestamp = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
         temperature = 25.0,
         humidity = 60.0,
         windSpeed = 15.0,
-        updatedAt = ZonedDateTime.now(),
+        updatedAt = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
         uv = 5.0,
         condition = Condition.RAIN
     )
     HourDayBox(data = hourData)
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun PreviewHourDayBoxDayData() {
     val dayData = DayData(
-        // uses .now() only available for android 8.0 or higher
-        date = ZonedDateTime.now(),
-        updatedAt = ZonedDateTime.now(),
+        date = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone),
+        updatedAt = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone),
         dayOfWeek = "Thursday",
         maxTempC = 30.0,
         minTempC = 20.0,
@@ -126,7 +123,7 @@ fun PreviewHourDayBoxDayData() {
 }
 
 // This is a "test" to see what happens if we try to pass an unknown data class
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun PreviewHourDayBoxDayUnknown() {
     val unknownData = LocationData(
@@ -135,8 +132,8 @@ fun PreviewHourDayBoxDayUnknown() {
         name = "Unknown Location",
         latitude = 0.0,
         longitude = 0.0,
-        // uses .now() only available for android 8.0 or higher
-        updatedAt = ZonedDateTime.now()
+        // Using a fixed timestamp for faster preview
+        updatedAt = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone)
     )
 
     HourDayBox(data = unknownData)
