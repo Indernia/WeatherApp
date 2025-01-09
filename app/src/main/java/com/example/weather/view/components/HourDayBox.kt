@@ -1,8 +1,7 @@
 package com.example.weather.view.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -13,11 +12,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.Alignment
 import com.example.weather.model.DayData
 import com.example.weather.model.HourData
 import com.example.weather.model.Condition
 import com.example.weather.model.LocationData
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun HourDayBox(
@@ -30,43 +31,58 @@ fun HourDayBox(
         ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
-            .size(width = 90.dp, height = 100.dp)
+            .size(width = 90.dp, height = 120.dp)
     ) {
-        when (data) {
-            is HourData -> {
-                Text(
-                    text = "${data.timestamp}",
-                    modifier = Modifier.padding(8.dp),
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Text(
-                    text = "${data.condition}",
-                    modifier = Modifier.padding(16.dp),
-                    textAlign = TextAlign.Center,
-                )
-            }
+        Box(modifier = Modifier.fillMaxSize()) {
+            //checks the dataclass and makes a box depending on dataclass
+            when (data) {
+                //makes a box for HourData given dataclass HourData
+                is HourData -> {
+                    val formattedTimestamp = data.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
+                    Text(
+                        text = formattedTimestamp,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(top = 8.dp),
+                    )
+                    Text(
+                        text = "${data.condition}",
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(8.dp),
+                    )
+                    Text(
+                        text = "${data.temperature}°C",
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                //makes a box for DayData given dataclass DayData
+                is DayData -> {
+                    Text(
+                        text = "${data.dayOfWeek}",
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(top = 8.dp),
+                    )
+                    Text(
+                        text = "${data.weatherCondition}",
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(8.dp),
+                    )
+                }
 
-            is DayData -> {
-                Text(
-                    text = "${data.date}",
-                    modifier = Modifier.padding(8.dp),
-                    textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Text(
-                    text = "${data.weatherCondition}",
-                    modifier = Modifier.padding(16.dp),
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            else -> {
-                Text(
-                    text = "Unknown data type",
-                    modifier = Modifier.padding(16.dp),
-                    textAlign = TextAlign.Center,
-                )
+                else -> {
+                    Text(
+                        text = "Unknown data type",
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
         }
     }
@@ -76,7 +92,7 @@ fun HourDayBox(
 @Composable
 fun PreviewHourDayBoxHourData() {
     val hourData = HourData(
-        //uses .now() only available for android 8.0 or higher
+        // uses .now() only available for android 8.0 or higher
         timestamp = ZonedDateTime.now(),
         temperature = 25.0,
         humidity = 60.0,
@@ -92,7 +108,7 @@ fun PreviewHourDayBoxHourData() {
 @Composable
 fun PreviewHourDayBoxDayData() {
     val dayData = DayData(
-        //uses .now() only available for android 8.0 or higher
+        // uses .now() only available for android 8.0 or higher
         date = ZonedDateTime.now(),
         updatedAt = ZonedDateTime.now(),
         dayOfWeek = "Thursday",
@@ -109,8 +125,7 @@ fun PreviewHourDayBoxDayData() {
     HourDayBox(data = dayData)
 }
 
-
-//This is a "test" to see what happens if we try to pass an unknown data class
+// This is a "test" to see what happens if we try to pass an unknown data class
 @Preview(showBackground = true)
 @Composable
 fun PreviewHourDayBoxDayUnknown() {
@@ -120,7 +135,7 @@ fun PreviewHourDayBoxDayUnknown() {
         name = "Unknown Location",
         latitude = 0.0,
         longitude = 0.0,
-        //uses .now() only available for android 8.0 or higher
+        // uses .now() only available for android 8.0 or higher
         updatedAt = ZonedDateTime.now()
     )
 
