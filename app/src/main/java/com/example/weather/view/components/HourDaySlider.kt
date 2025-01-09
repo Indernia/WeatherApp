@@ -9,8 +9,8 @@ import androidx.compose.ui.unit.dp
 import com.example.weather.model.HourData
 import com.example.weather.model.Condition
 import java.time.ZonedDateTime
-import androidx.compose.material3.Text
 import com.example.weather.model.DayData
+import com.example.weather.model.LocationData
 
 
 @Composable
@@ -20,19 +20,7 @@ fun HourDaySlider(
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(data) { item ->
-            when (item) {
-                is HourData -> {
-                    HourDayBox(data = item)
-                }
-                is DayData -> {
-                    HourDayBox(data = item)
-                }
-                else -> {
-                    // In case an unknown dataclass is given
-                    Text("Unknown data type")
-                }
-            }
+        items(data) { item -> HourDayBox(data = item)
         }
     }
 }
@@ -40,15 +28,15 @@ fun HourDaySlider(
 @Preview
 @Composable
 fun PreviewHourDaySliderHourData() {
-    val hourData = List(24) { // Create a list of 24 hours of data (representing a full day)
+    val hourData = List(24) { // Create a list of 24 hours of data
         HourData(
             timestamp = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone).plusHours(it.toLong()), // Incrementing the time for each hour
             temperature = 25.0 + it, // Example temperature increase per hour
-            humidity = 60.0 + it,    // Example humidity increase per hour
-            windSpeed = 15.0 + it,   // Example wind speed increase per hour
+            humidity = 60.0,
+            windSpeed = 15.0 ,
             updatedAt = ZonedDateTime.now(),
-            uv = 5.0 + it,           // Example UV index increase per hour
-            condition = Condition.values()[it % Condition.values().size] // Cycle through conditions
+            uv = 5.0 ,
+            condition = Condition.RAIN
         )
     }
 
@@ -58,23 +46,38 @@ fun PreviewHourDaySliderHourData() {
 @Preview
 @Composable
 fun PreviewHourDaySliderDayData() {
-    // Create a list of 8 mock DayData objects
+    // Create a list of 8 DayData objects
     val dayData = List(8) {
         DayData(
             date = ZonedDateTime.now().plusDays(it.toLong()), // Simulating 8 days ahead
             updatedAt = ZonedDateTime.now(),
             dayOfWeek = "Day ${it + 1}",
-            maxTempC = 25.0 + it,  // Example temp variation
-            minTempC = 15.0 + it,  // Example temp variation
-            maxHumidity = 80.0 - it,  // Example humidity variation
-            minHumidity = 60.0 - it,  // Example humidity variation
-            maxUV = 8.0 - it,  // Example UV variation
-            minUV = 1.0 + it,  // Example UV variation
-            maxWindSpeed = 20.0 + it,  // Example wind speed variation
-            minWindSpeed = 10.0 + it,  // Example wind speed variation
-            weatherCondition = Condition.values().getOrElse(it % Condition.values().size) { Condition.CLEAR }
+            maxTempC = 25.0,
+            minTempC = 15.0,
+            maxHumidity = 80.0 ,
+            minHumidity = 60.0 ,
+            maxUV = 8.0 ,
+            minUV = 1.0 ,
+            maxWindSpeed = 20.0,
+            minWindSpeed = 10.0,
+            weatherCondition = Condition.SNOW
         )
     }
 
     HourDaySlider(data = dayData)
+}
+@Preview
+@Composable
+fun PreviewHourDayBoxSliderUnknown() {
+    val unknownData = List(10) {
+        LocationData(
+        days = mutableListOf(),
+        hours = mutableListOf(),
+        name = "Unknown Location",
+        latitude = 0.0,
+        longitude = 0.0,
+        updatedAt = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone)
+        )
+    }
+    HourDayBox(data = unknownData)
 }
