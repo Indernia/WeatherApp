@@ -34,29 +34,27 @@ fun RainBackground() {
 
 @Composable
 fun RainEffect() {
-    // A state to hold the positions of raindrops
     val raindrops = remember { mutableStateListOf<RainDrop>() }
     val dropCount = 100
 
-    // Generate raindrops
     LaunchedEffect(Unit) {
         while (raindrops.size < dropCount) {
             raindrops.add(
                 RainDrop(
-                    x = (0..1000).random() / 1000f, // Random X position (0 to 1 as percentage of width)
-                    y = -0.1f, // Start above the screen
-                    speed = (2..5).random() / 100f // Random speed
+                    x = (0..1000).random() / 1000f,
+                    y = -0.1f,
+                    speed = (2..5).random() / 100f
                 )
             )
-            delay(100) // Add new raindrops gradually
+            delay(100)
         }
     }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
         raindrops.forEach { drop ->
             drawRaindrop(drop)
-            drop.y += drop.speed // Update drop's Y position
-            if (drop.y > 1f) { // Reset if it falls below the screen
+            drop.y += drop.speed
+            if (drop.y > 1f) {
                 drop.y = -0.1f
                 drop.x = (0..1000).random() / 1000f
                 drop.speed = (2..5).random() / 100f
@@ -80,5 +78,5 @@ fun DrawScope.drawRaindrop(drop: RainDrop) {
     )
 }
 
-// Data class for raindrop properties
+
 data class RainDrop(var x: Float, var y: Float, var speed: Float)

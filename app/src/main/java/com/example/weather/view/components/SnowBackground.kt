@@ -22,8 +22,8 @@ fun SnowBackground() {
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF87CEEB), // Light blue
-                        Color(0xFFFFFFFF)  // White
+                        Color(0xFF87CEEB),
+                        Color(0xFFFFFFFF)
                     )
                 )
             )
@@ -34,7 +34,6 @@ fun SnowBackground() {
 
 @Composable
 fun SnowEffect() {
-    // State to manage snowflake positions
     val snowflakes = remember { mutableStateListOf<Snowflake>() }
     val flakeCount = 150
 
@@ -43,8 +42,8 @@ fun SnowEffect() {
         while (snowflakes.size < flakeCount) {
             snowflakes.add(
                 Snowflake(
-                    x = (0..1000).random() / 1000f, // Random X position (0 to 1 as percentage of width)
-                    y = -0.1f, // Start above the screen
+                    x = (0..1000).random() / 1000f, // Random X position
+                    y = -0.1f, // Snow starts above the screen
                     size = (3..8).random().toFloat(), // Random size for snowflake
                     speed = (3..7).random() / 100f // Random falling speed
                 )
@@ -58,7 +57,7 @@ fun SnowEffect() {
             drawSnowflake(flake)
             flake.y += flake.speed // Update Y position
             flake.x += (0..2).random() / 1000f - 0.001f // Slight horizontal drift
-            if (flake.y > 1f) { // Reset if it falls below the screen
+            if (flake.y > 1f) {
                 flake.y = -0.1f
                 flake.x = (0..1000).random() / 1000f
                 flake.speed = (1..3).random() / 100f
@@ -80,5 +79,4 @@ fun DrawScope.drawSnowflake(flake: Snowflake) {
     )
 }
 
-// Data class for snowflake properties
 data class Snowflake(var x: Float, var y: Float, var size: Float, var speed: Float)

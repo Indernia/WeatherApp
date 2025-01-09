@@ -26,8 +26,8 @@ fun GradientBackground() {
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF2193B0), // Blue
-                        Color(0xFF6DD5ED)  // Light Blue
+                        Color(0xFF2193B0),
+                        Color(0xFF6DD5ED)
                     )
                 )
             )
