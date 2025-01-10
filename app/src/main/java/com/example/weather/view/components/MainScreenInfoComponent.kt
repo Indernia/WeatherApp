@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.weather.R
 import com.example.weather.view.components.FigureComponent
 
 
@@ -34,14 +35,14 @@ fun MainScreenInfoComponent(
         Box(
             modifier = Modifier
                 .width((300 * widthRatio.value).dp)
-                .height((450 * heightRatio.value).dp)
+                .height((550 * heightRatio.value).dp)
                 .clickable { onClick() }
                 .background(MaterialTheme.colorScheme.surface),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.TopCenter
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Bottom
             ) {
                 Text(
                     text = city,
@@ -56,14 +57,15 @@ fun MainScreenInfoComponent(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
+
                 AndroidView(
                     factory = { FigureComponent(context) },
-                    modifier = Modifier.size(300.dp)
+                    modifier = Modifier.size(350.dp)
                 ) { figureComponent ->
-                    //figureComponent.setBaseFigure(R.drawable.dude) // Set base figure
-                    //figureComponent.setClothing(clothing) // Replace with actual clothing drawable
-                    //figureComponent.setAccessory(accesory) // Replace with actual accessory drawable
+                    figureComponent.setClothing(R.drawable.trunks)
+                    figureComponent.setAccessory(R.drawable.hat)
                 }
+
             }
         }
     }
