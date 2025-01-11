@@ -36,10 +36,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weather.UIControllers.MainScreenViewModel
+import com.example.weather.view.components.FigureComponent
+import com.example.weather.view.components.MainScreenInfoComponent
 import kotlinx.coroutines.launch
 import java.util.stream.IntStream.range
 
@@ -115,10 +118,13 @@ fun firstScreen (
             modifier = Modifier.fillMaxSize()
         ) {
             Spacer(modifier = Modifier.weight(5f))
-            MainInformation(
+            MainScreenInfoComponent(
+                city = "Copenhagen", // Provide appropriate city name
+                temp = "10",         // Provide appropriate temperature
+                figureComponent = FigureComponent(LocalContext.current),
                 onClick = { onMainInfoClicked() },
-                modifier = Modifier.weight(50f).padding(horizontal = 10.dp)
             )
+
             Text(
                 text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
             )

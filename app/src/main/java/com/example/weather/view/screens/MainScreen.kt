@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weather.UIControllers.MainScreenViewModel
+import com.example.weather.view.components.HourDaySlider
 import kotlinx.coroutines.launch
 import java.util.stream.IntStream.range
 
@@ -118,18 +119,18 @@ fun MainScreen (
                 text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
             )
             Spacer(modifier = Modifier.weight(5f))
-            HourlyForecast(
-                onClick = { onHourlyForecastClicked() },
-                modifier = Modifier.weight(15f).padding(horizontal = 10.dp)
+            HourDaySlider(
+                data = mainViewModel.locationdata.hours, // Replace with actual data
+                modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)
             )
             Spacer(
                 modifier = Modifier.weight(5f)
             )
 
             Spacer(modifier = Modifier.weight(5f))
-            WeeklyForecast(
-                onClick = { onWeeklyForecastClicked() },
-                modifier = Modifier.weight(15f).padding(horizontal = 10.dp)
+            HourDaySlider(
+                data = mainViewModel.locationdata.days, // Replace with actual data
+                modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)
             )
             Spacer(
                 modifier = Modifier.weight(5f)

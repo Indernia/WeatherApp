@@ -1,3 +1,5 @@
+package com.example.weather.view.components
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,7 +22,8 @@ fun MainScreenInfoComponent(
     city: String,
     temp: String,
     figureComponent: FigureComponent,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier // Add this parameter
 ) {
     val context = LocalContext.current
 
