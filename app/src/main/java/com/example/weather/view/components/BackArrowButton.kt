@@ -29,5 +29,4 @@ fun BackArrowButton (modifier: Modifier = Modifier,
                     modifier = Modifier.size(24.dp)
                 )
             }
-
 }
