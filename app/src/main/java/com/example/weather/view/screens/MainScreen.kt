@@ -111,15 +111,16 @@ fun MainScreen (
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            //verticalArrangement = Arrangement.SpaceAround,
+            verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxSize()
         ) {
             Spacer(modifier = Modifier.weight(5f))
             Box(
                 modifier = Modifier
                     .background(Color(0xFFF70E0B))
-                    .height(650.dp)
-                    .padding(top = 30.dp)
+                    .height(500.dp)
+                    .padding(top = 10.dp)
+                    .padding(bottom = 10.dp)
                     .wrapContentSize(Alignment.TopCenter)
             ) {
                 MainScreenInfoComponent(
@@ -138,7 +139,7 @@ fun MainScreen (
             Text(
                 text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
             )
-            Spacer(modifier = Modifier.weight(5f))
+            Spacer(modifier = Modifier.weight(1f))
             HourDaySlider(
                 data = mainViewModel.locationdata.hours, // Replace with actual data
                 modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)

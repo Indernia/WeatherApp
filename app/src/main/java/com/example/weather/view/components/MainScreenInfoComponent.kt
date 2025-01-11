@@ -30,18 +30,22 @@ fun MainScreenInfoComponent(
 ) {
     val context = LocalContext.current
 
-
     BoxWithConstraints(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
-        val widthRatio = maxWidth / 360 // Reference width of 360
-        val heightRatio = maxHeight / 800 // Reference height of 800
+        //val widthRatio = maxWidth / 360 // Reference width of 360
+        //val heightRatio = maxHeight / 800 // Reference height of 800
+
+        //val widthRatio = maxWidth / 360 // Reference width of 360
+        //val heightRatio = maxHeight / 500
 
         Box(
             modifier = Modifier
-                .width((300 * widthRatio.value).dp)
-                .height((650 * heightRatio.value).dp)
+             //   .width((300 * widthRatio.value).dp)
+              //  .height((500 * heightRatio.value).dp)
+                .width(300.dp)
+                .height(500.dp)
                 .clickable { onClick() }
                 .background(MaterialTheme.colorScheme.surface),
             contentAlignment = Alignment.TopCenter
@@ -52,21 +56,21 @@ fun MainScreenInfoComponent(
             ) {
                 Text(
                     text = city,
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 52.sp)
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 35.sp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
                     text = "$temp°C",
-                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold, fontSize = 34.sp)
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold, fontSize = 30.sp)
 
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(3.dp))
 
 
                 AndroidView(
                     factory = { FigureComponent(context) },
-                    modifier = Modifier.size(650.dp)
+                    modifier = Modifier.size(350.dp)
                 ) { figureComponent ->
                     figureComponent.setClothing(R.drawable.trunks)
                     figureComponent.setAccessory(R.drawable.hat)
