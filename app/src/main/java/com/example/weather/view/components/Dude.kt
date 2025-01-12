@@ -1,69 +1,43 @@
 package com.example.weather.view.components
 
-import android.content.Context
-import android.util.AttributeSet
-import android.view.View
-import android.widget.ImageView
-import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.weather.R
+import androidx.compose.runtime.Composable
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 
-class FigureComponent @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+@Composable
+fun FigureComponent(
+    @DrawableRes baseFigureResId: Int,
+    @DrawableRes clothingResId: Int,
+    @DrawableRes accessoryResId: Int,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier) {
+        Image(
+            painter = painterResource(id = baseFigureResId),
+            contentDescription = "Base Figure",
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+        )
 
-    private val baseFigure: ImageView
-    private val clothing: ImageView
-    private val accessory: ImageView
+        Image(
+            painter = painterResource(id = clothingResId),
+            contentDescription = "Clothing",
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(start = 0.dp, bottom = 24.dp),
+        )
 
-    init {
-
-        baseFigure = ImageView(context).apply {
-            id = View.generateViewId() // Assign a unique ID to the base figure
-            layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
-                startToStart = LayoutParams.PARENT_ID
-                topToTop = LayoutParams.PARENT_ID
-                setPadding(0, 200, 0, 0)
-            }
-            setImageResource(R.drawable.dude)
-        }
-
-        clothing = ImageView(context).apply {
-            id = View.generateViewId()
-            layoutParams = LayoutParams(700, 270).apply {
-                startToStart = baseFigure.id
-                bottomToBottom = baseFigure.id
-                setMargins(64, 0, 0, 56)
-            }
-        }
-
-        accessory = ImageView(context).apply {
-            id = View.generateViewId()
-            layoutParams = LayoutParams(350, 270).apply {
-                startToStart = baseFigure.id
-                topToTop = baseFigure.id
-                setMargins(248, 20, 0, 0)
-            }
-        }
-
-        addView(baseFigure)
-        addView(clothing)
-        addView(accessory)
-    }
-
-    fun setBaseFigure(@DrawableRes resId: Int) {
-        baseFigure.setImageResource(resId)
-    }
-
-    fun setClothing(@DrawableRes resId: Int) {
-        clothing.setImageResource(resId)
-    }
-
-    fun setAccessory(@DrawableRes resId: Int) {
-        accessory.setImageResource(resId)
+        Image(
+            painter = painterResource(id = accessoryResId),
+            contentDescription = "Accessory",
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 0.dp, start = 0.dp),
+        )
     }
 }
-
