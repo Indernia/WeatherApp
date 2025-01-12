@@ -34,18 +34,18 @@ fun MainScreenInfoComponent(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
-        //val widthRatio = maxWidth / 360 // Reference width of 360
-        //val heightRatio = maxHeight / 800 // Reference height of 800
+        val widthRatio = maxWidth / 300 // Reference width of 360
+        val heightRatio = maxHeight / 500 // Reference height of 800
 
         //val widthRatio = maxWidth / 360 // Reference width of 360
         //val heightRatio = maxHeight / 500
 
         Box(
             modifier = Modifier
-             //   .width((300 * widthRatio.value).dp)
-              //  .height((500 * heightRatio.value).dp)
-                .width(300.dp)
-                .height(500.dp)
+                .width((300 * widthRatio.value).dp)
+                .height((500 * heightRatio.value).dp)
+              //  .width(300.dp)
+              //  .height(500.dp)
                 .clickable { onClick() }
                 .background(Color.Transparent),
             contentAlignment = Alignment.TopCenter
