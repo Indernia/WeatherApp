@@ -47,7 +47,7 @@ fun MainScreenInfoComponent(
                 .width(300.dp)
                 .height(500.dp)
                 .clickable { onClick() }
-                .background(MaterialTheme.colorScheme.surface),
+                .background(Color.Transparent),
             contentAlignment = Alignment.TopCenter
         ) {
             Column(

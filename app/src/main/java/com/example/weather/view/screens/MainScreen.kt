@@ -2,6 +2,7 @@ package com.example.weather.view.screens
 
 
 import android.util.Log
+import com.example.weather.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +50,9 @@ import com.example.weather.view.components.MainScreenInfoComponent
 import com.example.weather.view.components.NavBar
 import kotlinx.coroutines.launch
 import java.util.stream.IntStream.range
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 
 @Preview(showBackground = true)
 @Composable
@@ -63,6 +67,14 @@ fun MainScreen (
     mainViewModel.makeTestLocationData()
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+
+    Image(
+        painter = painterResource(id = R.drawable.background), // Use background.JPG
+        contentDescription = "Background Image",
+        contentScale = ContentScale.Crop, // Scale the image to fill the screen
+        modifier = Modifier.fillMaxSize()
+    )
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -118,7 +130,7 @@ fun MainScreen (
             Spacer(modifier = Modifier.weight(5f))
             Box(
                 modifier = Modifier
-                    .background(Color(0xFFF70E0B))
+                    .background(Color.Transparent)
                     .height(500.dp)
                     .padding(top = 10.dp)
                     .padding(bottom = 10.dp)
