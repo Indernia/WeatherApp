@@ -26,7 +26,7 @@ fun MainScreenInfoComponent(
     temp: String,
     figureComponent: FigureComponent,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier // Add this parameter
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
 

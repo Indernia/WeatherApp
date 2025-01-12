@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.weather.R
@@ -16,7 +17,7 @@ import com.example.weather.R
 
 @Preview(showBackground = true)
 @Composable
-fun NavBar() {
+fun NavBar(modifier: Modifier = Modifier) {
     var selectedItem by remember {mutableStateOf(0) }
 
     NavigationBar {
