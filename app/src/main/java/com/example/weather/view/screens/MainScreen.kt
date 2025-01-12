@@ -46,6 +46,7 @@ import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.components.FigureComponent
 import com.example.weather.view.components.HourDaySlider
 import com.example.weather.view.components.MainScreenInfoComponent
+import com.example.weather.view.components.NavBar
 import kotlinx.coroutines.launch
 import java.util.stream.IntStream.range
 
@@ -136,9 +137,9 @@ fun MainScreen (
             )*/
 
 
-            Text(
-                text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
-            )
+            //Text(
+              //  text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
+            //)
             Spacer(modifier = Modifier.weight(1f))
             HourDaySlider(
                 data = mainViewModel.locationdata.hours, // Replace with actual data
@@ -156,6 +157,7 @@ fun MainScreen (
             Spacer(
                 modifier = Modifier.weight(5f)
             )
+            NavBar()
         }
     }
 }
