@@ -5,12 +5,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import com.example.weather.R
 import com.example.weather.view.components.FigureComponent
 
@@ -19,11 +17,10 @@ import com.example.weather.view.components.FigureComponent
 fun MainScreenInfoComponent(
     city: String,
     temp: String,
-    figureComponent: FigureComponent,
+    clothingRes: Int,
+    accessoryRes: Int,
     onClick: () -> Unit
 ) {
-    val context = LocalContext.current
-
 
     BoxWithConstraints(
         modifier = Modifier.fillMaxSize(),
@@ -58,13 +55,12 @@ fun MainScreenInfoComponent(
                 Spacer(modifier = Modifier.height(16.dp))
 
 
-                AndroidView(
-                    factory = { FigureComponent(context) },
+                FigureComponent(
+                    baseFigureResId = R.drawable.dude,
+                    clothingResId = clothingRes,
+                    accessoryResId = accessoryRes,
                     modifier = Modifier.size(350.dp)
-                ) { figureComponent ->
-                    figureComponent.setClothing(R.drawable.trunks)
-                    figureComponent.setAccessory(R.drawable.hat)
-                }
+                )
 
             }
         }
@@ -84,7 +80,8 @@ fun PreviewMainScreenInfoComponent() {
             MainScreenInfoComponent(
                 city = "Copenhagen",
                 temp = "10",
-                figureComponent = FigureComponent(LocalContext.current),
+                clothingRes = R.drawable.trunks,
+                accessoryRes = R.drawable.hat,
                 onClick = { /* ToDO */ }
             )
         }
