@@ -66,7 +66,7 @@ class WeatherRepository {
                 latitude = latituteStore,
                 longitude = longitudeStore,
                 exclude = "minutely",
-                apiKey = "f7926ce66cde68fb4ad96bd11dc8f468"
+                apiKey = ""
             )
         } catch (e: Exception) {
             e.printStackTrace()
