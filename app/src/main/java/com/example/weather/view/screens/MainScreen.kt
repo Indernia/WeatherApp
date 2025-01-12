@@ -141,7 +141,8 @@ fun MainScreen (
                 MainScreenInfoComponent(
                     city = city,
                     temp = temperature,
-                    figureComponent = FigureComponent(LocalContext.current),
+                    R.drawable.hat,
+                    R.drawable.trunks,
                     onClick = { /* ToDO */ }
                 )
             }

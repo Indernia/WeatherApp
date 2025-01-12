@@ -121,7 +121,8 @@ fun firstScreen (
             MainScreenInfoComponent(
                 city = "Copenhagen", // Provide appropriate city name
                 temp = "10",         // Provide appropriate temperature
-                figureComponent = FigureComponent(LocalContext.current),
+                R.drawable.hat,
+                R.drawable.trunks,
                 onClick = { onMainInfoClicked() },
             )
 

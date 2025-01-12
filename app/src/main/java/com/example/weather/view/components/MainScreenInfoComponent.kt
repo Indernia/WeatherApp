@@ -1,6 +1,7 @@
 package com.example.weather.view.components
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,7 +25,8 @@ import com.example.weather.view.components.FigureComponent
 fun MainScreenInfoComponent(
     city: String,
     temp: String,
-    figureComponent: FigureComponent,
+    clothingRes: Int,
+    accessoryRes: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier // Add this parameter
 ) {
@@ -67,15 +69,11 @@ fun MainScreenInfoComponent(
                 )
                 Spacer(modifier = Modifier.height(3.dp))
 
-
-                AndroidView(
-                    factory = { FigureComponent(context) },
-                    modifier = Modifier.size(350.dp)
-                ) { figureComponent ->
-                    figureComponent.setClothing(R.drawable.trunks)
-                    figureComponent.setAccessory(R.drawable.hat)
-                }
-
+                FigureComponent(
+                    R.drawable.dude,
+                    accessoryRes,
+                    clothingRes,
+                    modifier = Modifier.height((390 * heightRatio.value).dp))
             }
         }
     }
@@ -95,7 +93,8 @@ fun PreviewMainScreenInfoComponent() {
             MainScreenInfoComponent(
                 city = "Copenhagen",
                 temp = "10",
-                figureComponent = FigureComponent(LocalContext.current),
+                R.drawable.hat,
+                R.drawable.trunks,
                 onClick = { /* ToDO */ }
             )
         }
