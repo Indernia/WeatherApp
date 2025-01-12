@@ -57,6 +57,8 @@ import androidx.compose.ui.layout.ContentScale
 @Preview(showBackground = true)
 @Composable
 fun MainScreen (
+    temperature: String = "10",
+    city: String = "Copenhagen",
     onMainInfoClicked: () -> Unit = {},
     onWeeklyForecastClicked: () -> Unit = {},
     onHourlyForecastClicked: () -> Unit = {},
@@ -137,8 +139,8 @@ fun MainScreen (
                     .wrapContentSize(Alignment.TopCenter)
             ) {
                 MainScreenInfoComponent(
-                    city = "Copenhagen",
-                    temp = "10",
+                    city = city,
+                    temp = temperature,
                     figureComponent = FigureComponent(LocalContext.current),
                     onClick = { /* ToDO */ }
                 )
