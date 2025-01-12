@@ -1,14 +1,31 @@
 package com.example.weather.model
 
-import java.time.ZonedDateTime
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+
+// Missing some datapoints to be added later notice that timestamps are stored as UNIX Time / epoch time
+
+@Entity(
+    primaryKeys = ["timestamp", "location"],
+    foreignKeys = [
+        ForeignKey(
+            entity = LocationData::class,
+            parentColumns = ["id"],
+            childColumns = ["location"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 
 data class HourData(
-    var timestamp: ZonedDateTime,
-    var temperature: Double,
-    var humidity: Double,
-    var windSpeed: Double,
-    var updatedAt: ZonedDateTime,
-    var uv: Double,
-    var condition: Condition,
+    @ColumnInfo var timestamp: Int,
+    @ColumnInfo var location: Long,
+    @ColumnInfo var updatedAt: Int ,
 
+    @ColumnInfo var humidity: Double,
+    @ColumnInfo var temperature: Double,
+    @ColumnInfo var windSpeed: Double,
+    @ColumnInfo var uv: Double,
+    @ColumnInfo var condition: String,
 )

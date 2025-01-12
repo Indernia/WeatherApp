@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +55,10 @@ fun firstScreen (
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
     var mainViewModel = MainScreenViewModel()
-    mainViewModel.makeTestLocationData()
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        mainViewModel.getWeatherData(context)
+    }
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -118,9 +123,6 @@ fun firstScreen (
             MainInformation(
                 onClick = { onMainInfoClicked() },
                 modifier = Modifier.weight(50f).padding(horizontal = 10.dp)
-            )
-            Text(
-                text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
             )
             Spacer(modifier = Modifier.weight(5f))
             HourlyForecast(

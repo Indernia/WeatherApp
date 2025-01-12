@@ -1,23 +1,38 @@
 package com.example.weather.model
 
-import java.time.ZonedDateTime
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
 
+// We are missing a some datapoints here as the main focus is to get it implemented and working before making it perfect
+
+@Entity(
+    primaryKeys = ["date", "location"],
+    foreignKeys = [
+        ForeignKey(
+            entity = LocationData::class,
+            parentColumns = ["id"],
+            childColumns = ["location"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class DayData(
-    var date: ZonedDateTime,
-    var updatedAt: ZonedDateTime,
-    var dayOfWeek: String,
+    @ColumnInfo var date: String,
+    @ColumnInfo var location: Long,
+    @ColumnInfo var updatedAt: Int,
 
-    var maxTempC: Double = 0.0,
-    var minTempC: Double = 0.0,
+    @ColumnInfo var maxTempK: Double? = 0.0,
+    @ColumnInfo var minTempK: Double? = 0.0,
+    @ColumnInfo var tempK: Double? = 0.0,
 
-    var maxHumidity: Double = 0.0,
-    var minHumidity: Double = 0.0,
 
-    var maxUV: Double = 0.0,
-    var minUV: Double = 0.0,
+    @ColumnInfo var humidity: Double? = 0.0,
 
-    var maxWindSpeed: Double = 0.0,
-    var minWindSpeed: Double = 0.0,
+    @ColumnInfo var uvi: Double? = 0.0,
 
-    var weatherCondition: Condition,
+    @ColumnInfo var windSpeed: Double = 0.0,
+    @ColumnInfo var windGustSpeed: Double = 0.0,
+
+    @ColumnInfo var weatherCondition: String?,
 )
