@@ -46,19 +46,22 @@ fun HourDayBox(
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
+                        textAlign = TextAlign.Center,
                     )
                     Text(
                         text = "${data.condition}",
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(8.dp),
-                    )
+                        textAlign = TextAlign.Center,
+                        )
                     Text(
                         text = "${data.temperature}°C",
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .padding(bottom = 8.dp),
-                    )
+                        textAlign = TextAlign.Center,
+                        )
                 }
                 //makes a box for DayData given dataclass DayData
                 is DayData -> {
@@ -67,13 +70,15 @@ fun HourDayBox(
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
-                    )
+                        textAlign = TextAlign.Center,
+                        )
                     Text(
                         text = "${data.weatherCondition}",
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(8.dp),
-                    )
+                        textAlign = TextAlign.Center
+                        )
                 }
 
                 else -> {
