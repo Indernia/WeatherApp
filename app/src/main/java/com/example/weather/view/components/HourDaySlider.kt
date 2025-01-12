@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weather.model.HourData
@@ -16,6 +17,7 @@ import com.example.weather.model.LocationData
 @Composable
 fun HourDaySlider(
     data: List<Any>,
+    modifier: Modifier = Modifier // Add this parameter
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
