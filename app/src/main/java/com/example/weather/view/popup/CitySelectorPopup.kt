@@ -31,12 +31,10 @@ fun CitySelectorPopup(
     onDismissRequest: () -> Unit,
     onAddCity: (String) -> Unit
 ) {
-    var cityName by remember { mutableStateOf("") }
-
+var cityName = ""
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
