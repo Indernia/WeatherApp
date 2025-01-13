@@ -42,7 +42,7 @@ fun HourDropDown(
     Row(
         modifier = Modifier
             .padding(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(90.dp),
+        horizontalArrangement = Arrangement.spacedBy(100.dp),
         ){
             val formattedTimestamp = hour.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
             Text(
