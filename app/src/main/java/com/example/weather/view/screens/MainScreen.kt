@@ -164,6 +164,13 @@ fun MainScreen (
             Spacer(
                 modifier = Modifier.weight(5f)
             )
+            DaySlider(
+                data = mainViewModel.locationdata.days, // Replace with actual data
+                modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)
+            )
+            Spacer(
+                modifier = Modifier.weight(5f)
+            )
             NavBar()
         }
     }
