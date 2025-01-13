@@ -230,17 +230,3 @@ fun HourlyForecast(
         )
     }
 }
-
-@Composable
-fun WeeklyForecast(
-    onClick: () -> Unit = {},
-    modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .clickable {onClick()}
-            .fillMaxSize().background(Color.Gray).padding(16.dp),
-        contentAlignment = Alignment.Center
-    ){
-        Text(text = "Weekly Forecast")
-    }
-}
