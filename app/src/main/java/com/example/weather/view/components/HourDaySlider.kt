@@ -17,7 +17,7 @@ import com.example.weather.model.LocationData
 @Composable
 fun HourDaySlider(
     data: List<Any>,
-    modifier: Modifier = Modifier // Add this parameter
+    modifier: Modifier = Modifier
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),

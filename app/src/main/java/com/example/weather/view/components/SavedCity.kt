@@ -24,7 +24,8 @@ import java.time.ZonedDateTime
 @Composable
 fun SavedCity(
     hourData: HourData,
-    locationData: LocationData
+    locationData: LocationData,
+    modifier: Modifier = Modifier
 ) {
     OutlinedCard(
         colors = CardDefaults.cardColors(

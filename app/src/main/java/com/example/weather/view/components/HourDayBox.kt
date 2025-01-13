@@ -26,6 +26,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun HourDayBox(
     data: Any,
+    modifier: Modifier = Modifier
 ) {
     OutlinedCard(
         colors = CardDefaults.cardColors(
