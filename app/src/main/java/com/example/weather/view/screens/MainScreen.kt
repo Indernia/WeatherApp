@@ -45,7 +45,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.components.FigureComponent
-import com.example.weather.view.components.HourDaySlider
+import com.example.weather.view.components.HourSlider
+import com.example.weather.view.components.DaySlider
 import com.example.weather.view.components.MainScreenInfoComponent
 import com.example.weather.view.components.NavBar
 import kotlinx.coroutines.launch
@@ -156,17 +157,8 @@ fun MainScreen (
               //  text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
             //)
             Spacer(modifier = Modifier.weight(1f))
-            HourDaySlider(
+            HourSlider(
                 data = mainViewModel.locationdata.hours, // Replace with actual data
-                modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)
-            )
-            Spacer(
-                modifier = Modifier.weight(5f)
-            )
-
-            Spacer(modifier = Modifier.weight(5f))
-            HourDaySlider(
-                data = mainViewModel.locationdata.days, // Replace with actual data
                 modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)
             )
             Spacer(

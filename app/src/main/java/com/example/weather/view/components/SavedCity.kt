@@ -33,7 +33,7 @@ fun SavedCity(
         ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
-            .size(width = 280.dp, height = 80.dp)
+            .size(width = 280.dp, height = 80.dp),
     ) {
         Box(
             modifier = Modifier

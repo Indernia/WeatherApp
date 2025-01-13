@@ -33,11 +33,8 @@ fun HourDropDown(
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-
     ){
     Row(
         modifier = Modifier
@@ -64,7 +61,7 @@ fun HourDropDown(
     }
 }
 }
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun hourdropdownpreview() {
     val hourData = HourData(
