@@ -21,15 +21,13 @@
     <string name="Done">Done</string>
     <string name="Cancel">Cancel</string>
     <string name="Settings">Settings</string>
-    <string name="Hourly">Hourly</string>
+    <string name="Daily">Hourly</string>
     <string name="Weekly">Weekly</string>
     <string name="InsertCity">Insert City Name</string>
     <string name="Name">Name</string>
     <string name="Latitude">Latitude</string>
     <string name="Longitude">Longitude</string>
     <string name="Add">Add</string>
-    <string name="Dansk">Dansk</string>
-    <string name="English">English</string>
     <string name="WeatherAlert">Weather Alert</string>
     <string name="Language">Language</string>
 </resources>
