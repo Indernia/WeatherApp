@@ -1,11 +1,20 @@
+import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
+    //id("com.google.devtools.ksp")
+    id("kotlin-kapt")
 }
+
 
 android {
     namespace = "com.example.weather"
     compileSdk = 34
+
+
 
     defaultConfig {
         applicationId = "com.example.weather"
@@ -18,6 +27,17 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+            val localProperties = File(rootProject.rootDir, "local.properties")
+        val apiKey: String? = if (localProperties.exists()) {
+            localProperties.inputStream().use { stream ->
+                Properties().apply { load(stream) }
+            }.getProperty("API_KEY")
+        } else {
+            null
+        }
+
+        // Generate a resource file containing the API key
+        resValue("string", "api_key", apiKey ?: "")
     }
 
     buildTypes {
@@ -30,11 +50,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -50,6 +70,7 @@ android {
 }
 
 dependencies {
+    val room_version = "2.6.1"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -61,6 +82,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.storage)
+    implementation(libs.androidx.datastore)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -83,4 +106,23 @@ dependencies {
 
     // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    //ksp("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+    //imported from codelab on networking
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    //implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    //implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    //ksp("androidx.room:room-compiler:2.5.0")
+
+    // Retrofit with Kotlin serialization Converter
+
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
+    // Kotlin serialization imported from codelab on networking
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 }

@@ -16,15 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Alignment
+import com.example.weather.model.DayData
 import com.example.weather.model.HourData
 import com.example.weather.model.Condition
+import com.example.weather.model.LocationData
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun HourBox(
-    data: HourData,
-    modifier: Modifier = Modifier
+fun HourDayBox(
+    data: Any,
 ) {
     OutlinedCard(
         colors = CardDefaults.cardColors(
@@ -35,37 +36,65 @@ fun HourBox(
             .size(width = 90.dp, height = 120.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-                    val formattedTimestamp = data.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
+            //checks the dataclass and makes a box depending on dataclass
+            when (data) {
+                //makes a box for HourData given dataclass HourData
+                is HourData -> {
+                    val formattedTimestamp = data.timestamp
                     Text(
-                        text = formattedTimestamp,
+                        text = formattedTimestamp.toString(),
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
-                        textAlign = TextAlign.Center,
                     )
                     Text(
                         text = "${data.condition}",
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(8.dp),
-                        textAlign = TextAlign.Center,
-                        )
+                    )
                     Text(
                         text = "${data.temperature}°C",
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .padding(bottom = 8.dp),
+                    )
+                }
+                //makes a box for DayData given dataclass DayData
+                is DayData -> {
+                    Text(
+                        text = data.date,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(top = 8.dp),
+                    )
+                    Text(
+                        text = "${data.weatherCondition}",
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(8.dp),
+                    )
+                }
+
+                else -> {
+                    Text(
+                        text = "Unknown data type",
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
                         textAlign = TextAlign.Center,
-                        )
-
-
+                    )
+                }
+            }
         }
     }
 }
 
+// commented out the testing previews for new before re making them for a new data model version
+/*
 @Preview
 @Composable
-fun PreviewHourBox() {
+fun PreviewHourDayBoxHourData() {
     val hourData = HourData(
         timestamp = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
         temperature = 25.0,
@@ -75,5 +104,43 @@ fun PreviewHourBox() {
         uv = 5.0,
         condition = Condition.RAIN
     )
-    HourBox(data = hourData)
+    HourDayBox(data = hourData)
 }
+
+@Preview
+@Composable
+fun PreviewHourDayBoxDayData() {
+    val dayData = DayData(
+        date = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone),
+        updatedAt = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone),
+        dayOfWeek = "Thursday",
+        maxTempC = 30.0,
+        minTempC = 20.0,
+        maxHumidity = 80.0,
+        minHumidity = 50.0,
+        maxUV = 6.0,
+        minUV = 1.0,
+        maxWindSpeed = 20.0,
+        minWindSpeed = 5.0,
+        weatherCondition = Condition.CLOUDS
+    )
+    HourDayBox(data = dayData)
+}
+
+// This is a "test" to see what happens if we try to pass an unknown data class
+@Preview
+@Composable
+fun PreviewHourDayBoxDayUnknown() {
+    val unknownData = LocationData(
+        days = mutableListOf(),
+        hours = mutableListOf(),
+        name = "Unknown Location",
+        latitude = 0.0,
+        longitude = 0.0,
+        // Using a fixed timestamp for faster preview
+        updatedAt = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone)
+    )
+
+    HourDayBox(data = unknownData)
+}
+*/

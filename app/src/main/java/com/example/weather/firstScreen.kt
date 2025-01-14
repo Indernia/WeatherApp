@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,8 +42,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weather.UIControllers.MainScreenViewModel
-import com.example.weather.view.components.FigureComponent
-import com.example.weather.view.components.MainScreenInfoComponent
+import com.example.weather.model.DayData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.stream.IntStream.range
 
@@ -55,8 +56,10 @@ fun firstScreen (
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
-    var mainViewModel = MainScreenViewModel()
-    mainViewModel.makeTestLocationData()
+    val context = LocalContext.current
+    var mainViewModel = MainScreenViewModel(context = context)
+    val dayDataList by mainViewModel.dayDataState.collectAsState()
+
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -118,16 +121,9 @@ fun firstScreen (
             modifier = Modifier.fillMaxSize()
         ) {
             Spacer(modifier = Modifier.weight(5f))
-            MainScreenInfoComponent(
-                city = "Copenhagen", // Provide appropriate city name
-                temp = "10",         // Provide appropriate temperature
-                R.drawable.hat,
-                R.drawable.trunks,
+            MainInformation(
                 onClick = { onMainInfoClicked() },
-            )
-
-            Text(
-                text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
+                modifier = Modifier.weight(50f).padding(horizontal = 10.dp)
             )
             Spacer(modifier = Modifier.weight(5f))
             HourlyForecast(
