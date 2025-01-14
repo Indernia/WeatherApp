@@ -4,7 +4,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
     //id("com.google.devtools.ksp")
     id("kotlin-kapt")
 }
@@ -92,7 +92,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    val nav_version = "2.8.3"
+    val nav_version = "2.8.5"
 
     // Jetpack Compose integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -106,6 +106,9 @@ dependencies {
 
     // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
+    // JSON serialization library, works with the Kotlin serialization plugin
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
@@ -122,7 +125,4 @@ dependencies {
 
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
-
-    // Kotlin serialization imported from codelab on networking
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 }
