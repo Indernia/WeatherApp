@@ -120,7 +120,7 @@ fun MainScreen (
                 coroutineScope.launch{drawerState.open()}
             }) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
+                    imageVector = Icons.Filled.Settings,
                     contentDescription = "BackArrow"
                 )
             }
