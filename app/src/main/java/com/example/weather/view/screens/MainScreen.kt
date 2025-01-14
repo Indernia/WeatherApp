@@ -142,8 +142,7 @@ fun MainScreen (
                     city = city,
                     temp = temperature,
                     R.drawable.hat,
-                    R.drawable.trunks,
-                    onClick = { /* ToDO */ }
+                    R.drawable.trunks
                 )
             }
             /*MainInformation(

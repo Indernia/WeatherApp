@@ -27,7 +27,6 @@ fun MainScreenInfoComponent(
     temp: String,
     clothingRes: Int,
     accessoryRes: Int,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -47,8 +46,7 @@ fun MainScreenInfoComponent(
                 .width((300 * widthRatio.value).dp)
                 .height((500 * heightRatio.value).dp)
               //  .width(300.dp)
-              //  .height(500.dp)
-                .clickable { onClick() }
+              //  .height(500.dp) }
                 .background(Color.Transparent),
             contentAlignment = Alignment.TopCenter
         ) {
@@ -94,8 +92,8 @@ fun PreviewMainScreenInfoComponent() {
                 city = "Copenhagen",
                 temp = "10",
                 R.drawable.hat,
-                R.drawable.trunks,
-                onClick = { /* ToDO */ }
+                R.drawable.trunks
+                
             )
         }
     }
