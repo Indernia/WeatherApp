@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.weather.ui.theme.WeatherTheme
+import com.example.weather.view.navigation.AppNavHost
 
 
 class MainActivity : ComponentActivity() {
@@ -47,44 +48,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherTheme {
-                /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    WeatherApp(modifier = Modifier.padding(innerPadding))
-*/
-
+            AppNavHost()
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreen(modifier: Modifier = Modifier) {
-
-}
-
-@Preview
-@Composable
-fun SecondScreen(modifier: Modifier= Modifier, handleClick: () -> Unit = {}){
-    val HandleClick: () -> Unit = handleClick
-    Text(modifier = modifier, text = "Second Screen")
-    Button( modifier = modifier, onClick = HandleClick) {
-        Text(text = "Button")
-
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WeatherTheme {
-        Greeting("Android")
     }
 }
