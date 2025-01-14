@@ -45,7 +45,6 @@ import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.model.DayData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.stream.IntStream.range
 
 @Preview(showBackground = true)
@@ -126,18 +125,6 @@ fun firstScreen (
                 onClick = { onMainInfoClicked() },
                 modifier = Modifier.weight(50f).padding(horizontal = 10.dp)
             )
-            // For Check with the data model, if not deleted do so
-
-
-            Log.println(Log.DEBUG, "Screen", "before draw")
-
-            for (i in dayDataList){
-                Text(
-                    text = i.toString(),
-                )
-            }
-
-            // End of data model check
             Spacer(modifier = Modifier.weight(5f))
             HourlyForecast(
                 onClick = { onHourlyForecastClicked() },

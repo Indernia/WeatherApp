@@ -21,92 +21,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
-
-data class Hour(
-    val hourname: String,
-    val description: String,
-    val temperature: Int
-)
-
-val Hours = arrayOf(
-    Hour("Hour 1", "Sunny",2),
-    Hour("Hour 2", "Rainy",2),
-    Hour("Hour 3", "Cloudy",2),
-    Hour("Hour 4", "Stormy",2),
-    Hour("Hour 5", "Windy",2),
-    Hour("Hour 6", "Snowy",2),
-    Hour("Hour 7", "Foggy",2),
-    Hour("Hour 8", "Thunderstorm",2)
-)
+import com.example.weather.model.Condition
+import com.example.weather.model.HourData
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
-fun HighlightedHour(hour: Hour) {
+fun HourDropDown(
+    hour: HourData,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .height(150.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB))
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically, // Align items vertically
-            horizontalArrangement = Arrangement.SpaceBetween // Spread items across the row
-        ) {
-            Column {
-                Text(
-                    text = hour.hourname,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            }
-            Text(
-                text = hour.description,
-                fontSize = 24.sp,
-                color = Color.White
-            )
-            Text(
-                text = "${hour.temperature}°C",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Yellow
-            )
-        }
-    }
-}
-
-@Composable
-fun HourItem(hour: Hour, index: Int) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-
     ){
     Row(
         modifier = Modifier
-            .fillMaxSize()
             .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically, // Align items vertically
-        horizontalArrangement = Arrangement.SpaceBetween // Spread items across the row
-    ){
-        Column(
-            modifier = Modifier.padding(12.dp)
-        ) {
+        horizontalArrangement = Arrangement.spacedBy(100.dp),
+        ){
+            val formattedTimestamp = hour.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
             Text(
-                text = "${hour.hourname}",
+                text = formattedTimestamp,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold
             )
-        }
         Text(
-            text = hour.description,
+            text = "${hour.condition}",
             fontSize = 16.sp,
             color = Color.Gray
         )
@@ -119,20 +61,17 @@ fun HourItem(hour: Hour, index: Int) {
     }
 }
 }
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun ScrollableHourList() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        // Show today's weather in a big box
-        HighlightedHour(Hours[0])
-
-        // Show the rest of the days
-        for (index in 1 until Hours.size) {
-            HourItem(hour = Hours[index], index = index)
-        }
-    }
+fun hourdropdownpreview() {
+    val hourData = HourData(
+        timestamp = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
+        temperature = 25.0,
+        humidity = 60.0,
+        windSpeed = 15.0,
+        updatedAt = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
+        uv = 5.0,
+        condition = Condition.RAIN
+    )
+    HourDropDown(hourData)
 }

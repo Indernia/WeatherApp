@@ -26,6 +26,7 @@ data class Day(
     val dayname: String,
     val description: String,
     val temperature: Int
+
 )
 
 val Days = arrayOf(
@@ -36,7 +37,9 @@ val Days = arrayOf(
     Day("Day 5", "Windy",2),
     Day("Day 6", "Snowy",2),
     Day("Day 7", "Foggy",2),
-    Day("Day 8", "Thunderstorm",2)
+    Day("Day 8", "Thunderstorm",2),
+    Day("Day 9", "Sunny",2),
+    Day("Day 10", "Rainy",2)
 )
 
 @Composable
@@ -121,7 +124,7 @@ fun DayItem(day: Day, index: Int) {
 }
 @Preview(showBackground = true)
 @Composable
-fun ScrollableDayList() {
+fun ScrollableDayList(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
             .fillMaxSize()
