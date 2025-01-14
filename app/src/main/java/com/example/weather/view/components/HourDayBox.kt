@@ -40,9 +40,9 @@ fun HourDayBox(
             when (data) {
                 //makes a box for HourData given dataclass HourData
                 is HourData -> {
-                    val formattedTimestamp = data.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
+                    val formattedTimestamp = data.timestamp
                     Text(
-                        text = formattedTimestamp,
+                        text = formattedTimestamp.toString(),
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
@@ -63,7 +63,7 @@ fun HourDayBox(
                 //makes a box for DayData given dataclass DayData
                 is DayData -> {
                     Text(
-                        text = data.dayOfWeek,
+                        text = data.date,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
@@ -90,6 +90,8 @@ fun HourDayBox(
     }
 }
 
+// commented out the testing previews for new before re making them for a new data model version
+/*
 @Preview
 @Composable
 fun PreviewHourDayBoxHourData() {
@@ -141,3 +143,4 @@ fun PreviewHourDayBoxDayUnknown() {
 
     HourDayBox(data = unknownData)
 }
+*/

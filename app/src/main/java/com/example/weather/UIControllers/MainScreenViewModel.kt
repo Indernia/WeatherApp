@@ -17,13 +17,30 @@ import kotlinx.serialization.json.Json
 import java.time.ZonedDateTime
 import kotlin.contracts.contract
 
-class MainScreenViewModel: ViewModel() {
-    // Store weather data as StateFlow for UI observation
-    suspend fun getWeatherData(context: Context) {
-        val weatherRepository = WeatherRepository()
+class MainScreenViewModel (context: Context): ViewModel() {
 
-        weatherRepository.UpdataData("Test", context = context)
+    private val _dayDataState = MutableStateFlow<List<DayData>>(emptyList())
+    val dayDataState: StateFlow<List<DayData>> = _dayDataState
+
+    private val _hourDataState = MutableStateFlow<List<HourData>>(emptyList())
+    val hourDataState: StateFlow<List<HourData>> = _hourDataState
+
+    init {
+        viewModelScope.launch {
+            val weatherRepository = WeatherRepository()
+            weatherRepository.getDays(context = context, lat = 55.67594, lon = 12.56553, name = "Copenhagen").collect{
+                _dayDataState.value = it
+            }
+
+            weatherRepository.getHours(context = context, lat = 55.67594, lon = 12.56553, name = "Copenhagen").collect{
+                _hourDataState.value = it
+            }
+
+
+        }
     }
+
+
 
 
 }

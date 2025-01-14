@@ -1,4 +1,5 @@
 import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -8,9 +9,12 @@ plugins {
     id("kotlin-kapt")
 }
 
+
 android {
     namespace = "com.example.weather"
     compileSdk = 34
+
+
 
     defaultConfig {
         applicationId = "com.example.weather"
@@ -23,6 +27,17 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+            val localProperties = File(rootProject.rootDir, "local.properties")
+        val apiKey: String? = if (localProperties.exists()) {
+            localProperties.inputStream().use { stream ->
+                Properties().apply { load(stream) }
+            }.getProperty("API_KEY")
+        } else {
+            null
+        }
+
+        // Generate a resource file containing the API key
+        resValue("string", "api_key", apiKey ?: "")
     }
 
     buildTypes {

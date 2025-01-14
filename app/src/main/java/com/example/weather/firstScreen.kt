@@ -42,7 +42,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weather.UIControllers.MainScreenViewModel
+import com.example.weather.model.DayData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.stream.IntStream.range
 
 @Preview(showBackground = true)
@@ -54,11 +57,10 @@ fun firstScreen (
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
-    var mainViewModel = MainScreenViewModel()
     val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        mainViewModel.getWeatherData(context)
-    }
+    var mainViewModel = MainScreenViewModel(context = context)
+    val dayDataList by mainViewModel.dayDataState.collectAsState()
+
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -124,6 +126,18 @@ fun firstScreen (
                 onClick = { onMainInfoClicked() },
                 modifier = Modifier.weight(50f).padding(horizontal = 10.dp)
             )
+            // For Check with the data model, if not deleted do so
+
+
+            Log.println(Log.DEBUG, "Screen", "before draw")
+
+            for (i in dayDataList){
+                Text(
+                    text = i.toString(),
+                )
+            }
+
+            // End of data model check
             Spacer(modifier = Modifier.weight(5f))
             HourlyForecast(
                 onClick = { onHourlyForecastClicked() },

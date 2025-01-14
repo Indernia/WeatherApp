@@ -8,7 +8,7 @@ import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 
 @Database(entities = [LocationData::class, DayData::class, HourData::class],
-    version = 2
+    version = 4
 
 )
 abstract class AppDatabase: RoomDatabase() {

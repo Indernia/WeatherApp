@@ -24,7 +24,8 @@ fun HourDaySlider(
         }
     }
 }
-
+// commented out the testing previews for new before re making them for a new data model version
+/*
 @Preview
 @Composable
 fun PreviewHourDaySliderHourData() {
@@ -81,3 +82,5 @@ fun PreviewHourDayBoxSliderUnknown() {
     }
     HourDayBox(data = unknownData)
 }
+
+ */
