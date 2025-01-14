@@ -147,15 +147,7 @@ fun MainScreen (
                     onClick = { /* ToDO */ }
                 )
             }
-            /*MainInformation(
-                onClick = { onMainInfoClicked() },
-                modifier = Modifier.weight(50f).padding(horizontal = 10.dp)
-            )*/
 
-
-            //Text(
-              //  text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
-            //)
             Spacer(modifier = Modifier.weight(1f))
             /*
             HourSlider(
@@ -176,60 +168,5 @@ fun MainScreen (
             )
             NavBar()
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainInformation(
-    onClick: () -> Unit = {},
-    modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .clickable {onClick()}
-            .fillMaxSize().background(Color.Gray).padding(16.dp)
-        ,
-        contentAlignment = Alignment.Center
-    ){
-        Text(text = "Main information view large")
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HourlyForecast(
-    onClick: () -> Unit = {},
-    modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .clickable {onClick()}
-            .fillMaxSize().background(Color.Gray).padding(16.dp),
-        contentAlignment = Alignment.Center
-    ){
-        Row {
-            Box(
-                modifier = Modifier.width(40.dp).height(75.dp).background(Color.LightGray)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Box(
-                modifier = Modifier.width(40.dp).height(75.dp).background(Color.LightGray)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Box(
-                modifier = Modifier.width(40.dp).height(75.dp).background(Color.LightGray)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Box(
-                modifier = Modifier.width(40.dp).height(75.dp).background(Color.LightGray)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Box(
-                modifier = Modifier.width(40.dp).height(75.dp).background(Color.LightGray)
-            )
-        }
-        Text(
-            text = "Hourly forecast",
-            fontSize = 25.sp,
-        )
     }
 }
