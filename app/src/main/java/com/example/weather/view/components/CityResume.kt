@@ -21,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.weather.model.Condition
 import com.example.weather.model.DayData
 import com.example.weather.model.HourData
+import java.time.Instant
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -52,7 +54,7 @@ fun CityResume(
 
                 )
                 Text(
-                    text = hourdata.timestamp.format(DateTimeFormatter.ofPattern("HH:mm")),
+                    text = Instant.ofEpochSecond(hourdata.timestamp.toLong()).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm")),
                     textAlign = TextAlign.Center,
                     fontSize = MaterialTheme.typography.titleLarge.fontSize
                 )
@@ -61,7 +63,7 @@ fun CityResume(
     }
 }
 
-
+/*
 @Preview
 @Composable
 fun PreviewCityResumeDayData() {
@@ -90,3 +92,5 @@ fun PreviewCityResumeDayData() {
     )
     CityResume(daydata = dayData,hourdata = hourData )
 }
+
+ */

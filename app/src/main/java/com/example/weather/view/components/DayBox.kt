@@ -20,6 +20,8 @@ import com.example.weather.model.DayData
 import com.example.weather.model.HourData
 import com.example.weather.model.Condition
 import com.example.weather.model.LocationData
+import java.time.Instant
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -38,7 +40,7 @@ fun DayBox(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
                     Text(
-                        text = data.dayOfWeek,
+                        text = Instant.ofEpochSecond(data.date.toLong()).atZone(ZoneId.systemDefault()).toLocalDate().format(DateTimeFormatter.ofPattern("EEEE")),
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
@@ -55,7 +57,7 @@ fun DayBox(
     }
 }
 
-
+/*
 @Preview
 @Composable
 fun PreviewHourDayBox() {
@@ -76,3 +78,6 @@ fun PreviewHourDayBox() {
     DayBox(data = dayData)
 }
 
+
+
+ */

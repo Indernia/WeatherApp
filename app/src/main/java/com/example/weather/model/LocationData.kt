@@ -1,12 +1,15 @@
 package com.example.weather.model
 
-import java.time.ZonedDateTime
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(
+)
 data class LocationData(
-    val days: MutableList<DayData> = mutableListOf(),
-    val hours: MutableList<HourData> = mutableListOf(),
+    @PrimaryKey(autoGenerate = true) var id: Long,
     var name: String = "",
-    var latitude: Double = 0.0,
+    @ColumnInfo() var latitude: Double = 0.0,
     var longitude: Double = 0.0,
-    var updatedAt: ZonedDateTime,
+    var updatedAt: Int = 0,
 )

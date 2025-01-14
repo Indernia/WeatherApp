@@ -16,15 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Alignment
+import com.example.weather.model.DayData
 import com.example.weather.model.HourData
 import com.example.weather.model.Condition
+import com.example.weather.model.LocationData
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun HourBox(
     data: HourData,
-    modifier: Modifier = Modifier
 ) {
     OutlinedCard(
         colors = CardDefaults.cardColors(
@@ -35,37 +36,36 @@ fun HourBox(
             .size(width = 90.dp, height = 120.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-                    val formattedTimestamp = data.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
+                    val formattedTimestamp = data.timestamp
                     Text(
-                        text = formattedTimestamp,
+                        text = formattedTimestamp.toString(),
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
-                        textAlign = TextAlign.Center,
                     )
                     Text(
                         text = "${data.condition}",
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(8.dp),
-                        textAlign = TextAlign.Center,
-                        )
+                    )
                     Text(
                         text = "${data.temperature}°C",
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .padding(bottom = 8.dp),
-                        textAlign = TextAlign.Center,
-                        )
+                    )
 
 
         }
     }
 }
 
+// commented out the testing previews for new before re making them for a new data model version
+/*
 @Preview
 @Composable
-fun PreviewHourBox() {
+fun PreviewHourDayBoxHourData() {
     val hourData = HourData(
         timestamp = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
         temperature = 25.0,
@@ -75,5 +75,6 @@ fun PreviewHourBox() {
         uv = 5.0,
         condition = Condition.RAIN
     )
-    HourBox(data = hourData)
+    HourDayBox(data = hourData)
 }
+*/
