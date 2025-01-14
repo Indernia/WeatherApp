@@ -25,7 +25,7 @@ fun DaySlider(
         }
     }
 }
-
+/*
 @Preview
 @Composable
 fun PreviewDaySlider() {
@@ -47,3 +47,5 @@ fun PreviewDaySlider() {
     }
     DaySlider(data = dayData)
 }
+
+ */

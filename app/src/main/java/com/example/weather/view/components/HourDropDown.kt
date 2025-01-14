@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
 import com.example.weather.model.Condition
 import com.example.weather.model.HourData
+import java.time.Instant
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -41,7 +43,8 @@ fun HourDropDown(
             .padding(12.dp),
         horizontalArrangement = Arrangement.spacedBy(100.dp),
         ){
-            val formattedTimestamp = hour.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
+            val formattedTimestamp = Instant.ofEpochSecond(hour.timestamp.toLong()).atZone(
+                ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"))
             Text(
                 text = formattedTimestamp,
                 fontSize = 20.sp,
@@ -61,6 +64,7 @@ fun HourDropDown(
     }
 }
 }
+/*
 @Preview
 @Composable
 fun hourdropdownpreview() {
@@ -75,3 +79,5 @@ fun hourdropdownpreview() {
     )
     HourDropDown(hourData)
 }
+
+ */

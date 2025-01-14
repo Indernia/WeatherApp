@@ -66,8 +66,8 @@ fun MainScreen (
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
-    var mainViewModel = MainScreenViewModel()
-    mainViewModel.makeTestLocationData()
+    val context = LocalContext.current
+    var mainViewModel = MainScreenViewModel(context = context)
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -157,6 +157,7 @@ fun MainScreen (
               //  text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
             //)
             Spacer(modifier = Modifier.weight(1f))
+            /*
             HourSlider(
                 data = mainViewModel.locationdata.hours, // Replace with actual data
                 modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)
@@ -168,6 +169,8 @@ fun MainScreen (
                 data = mainViewModel.locationdata.days, // Replace with actual data
                 modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)
             )
+
+             */
             Spacer(
                 modifier = Modifier.weight(5f)
             )

@@ -90,7 +90,10 @@ class WeatherRepository {
         val hourDataList = db.hourDao().getAllFromLatLon(lat, lon, limit).first()
         emit(hourDataList)
 
-        val latestUpdate = db.hourDao().getLatestUpdate(lat, lon)
+        var latestUpdate = 0
+        withContext(Dispatchers.IO) {
+            latestUpdate = db.hourDao().getLatestUpdate(lat, lon)
+        }
 
         if (Instant.now().epochSecond - latestUpdate > dataStaleValue) {
             UpdataData(lat = lat, lon = lon, name = name, context = context)
