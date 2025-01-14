@@ -1,5 +1,6 @@
 package com.example.weather.view.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +36,9 @@ fun HourDropDown(
     hour: HourData,
     modifier: Modifier = Modifier
 ) {
+    // State to manage dropdown expansion
+    var expanded by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,6 +69,26 @@ fun HourDropDown(
             fontWeight = FontWeight.Bold,
             color = Color.Blue
         )
+    }
+        // Show additional details if expanded
+        if (expanded) {
+            // Additional details can be included here
+            Column(
+                modifier = Modifier
+                    .padding(12.dp)
+                    .background(Color(0xFFB0E0E6)) // Lighter color for additional info
+            ) {
+                Text(" Temp: ${hour.temperature}°C")
+                // Text("min Temp: ${day.minTempC}°C")
+                Text(" Humidity: ${hour.humidity}")
+                // Text("min Humidity: ${day.minHumidity}")
+                Text("UV: ${hour.uv}")
+                //Text("min UV: ${day.minUV}")
+                Text( "wind Speed: ${hour.windSpeed}")
+                //Text( "min wind Speed: ${day.minWindSpeed}")
+
+            }
+        }
     }
 }
 }
