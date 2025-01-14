@@ -1,6 +1,7 @@
 package com.example.weather.view.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,59 +43,56 @@ fun HourDropDown(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable { expanded = !expanded }, //  Toggle expansion on click
         colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB)),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-
-    ){
-    Row(
-        modifier = Modifier
-            .padding(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(90.dp),
-        ){
-            val formattedTimestamp = hour.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
-            Text(
-                text = formattedTimestamp,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        Text(
-            text = "${hour.condition}",
-            fontSize = 16.sp,
-            color = Color.Gray
-        )
-        Text(
-            text = "${hour.temperature}°C",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Blue
-        )
-    }
-        // Show additional details if expanded
-        if (expanded) {
-            // Additional details can be included here
-            Column(
-                modifier = Modifier
-                    .padding(12.dp)
-                    .background(Color(0xFFB0E0E6)) // Lighter color for additional info
+    ) {
+        Column { // Wrap everything in a Column so expanded content aligns properly
+            Row(
+                modifier = Modifier.padding(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(90.dp)
             ) {
-                Text(" Temp: ${hour.temperature}°C")
-                // Text("min Temp: ${day.minTempC}°C")
-                Text(" Humidity: ${hour.humidity}")
-                // Text("min Humidity: ${day.minHumidity}")
-                Text("UV: ${hour.uv}")
-                //Text("min UV: ${day.minUV}")
-                Text( "wind Speed: ${hour.windSpeed}")
-                //Text( "min wind Speed: ${day.minWindSpeed}")
+                val formattedTimestamp = hour.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
+                Text(
+                    text = formattedTimestamp,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    text = hour.condition.name,
+                    fontSize = 16.sp,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "${hour.temperature}°C",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Blue
+                )
+            }
 
+            // Show additional details when expanded
+            if (expanded) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp)
+                        .background(Color(0xFFB0E0E6)) // Lighter color for better visibility
+                ) {
+                    Text("Temperature: ${hour.temperature}°C")
+                    Text("Humidity: ${hour.humidity}%")
+                    Text("UV Index: ${hour.uv}")
+                    Text("Wind Speed: ${hour.windSpeed} km/h")
+                }
             }
         }
     }
 }
-}
+
 @Preview(showBackground = true)
 @Composable
-fun hourdropdownpreview() {
+fun HourDropDownPreview() {
     val hourData = HourData(
         timestamp = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
         temperature = 25.0,
