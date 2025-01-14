@@ -24,8 +24,8 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun HourDayBox(
-    data: Any,
+fun HourBox(
+    data: HourData,
 ) {
     OutlinedCard(
         colors = CardDefaults.cardColors(
@@ -36,10 +36,6 @@ fun HourDayBox(
             .size(width = 90.dp, height = 120.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            //checks the dataclass and makes a box depending on dataclass
-            when (data) {
-                //makes a box for HourData given dataclass HourData
-                is HourData -> {
                     val formattedTimestamp = data.timestamp
                     Text(
                         text = formattedTimestamp.toString(),
@@ -59,33 +55,8 @@ fun HourDayBox(
                             .align(Alignment.BottomCenter)
                             .padding(bottom = 8.dp),
                     )
-                }
-                //makes a box for DayData given dataclass DayData
-                is DayData -> {
-                    Text(
-                        text = data.date,
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(top = 8.dp),
-                    )
-                    Text(
-                        text = "${data.weatherCondition}",
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(8.dp),
-                    )
-                }
 
-                else -> {
-                    Text(
-                        text = "Unknown data type",
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(16.dp),
-                        textAlign = TextAlign.Center,
-                    )
-                }
-            }
+
         }
     }
 }

@@ -22,7 +22,7 @@ fun HourSlider(
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(data) { item -> Text(text="test")// HourBox(data = item) Not sure why this does not work, for now I just replace it with text
+        items(data) { item -> HourBox(data = item)
         }
     }
 }
