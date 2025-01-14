@@ -30,9 +30,4 @@ fun Navgraph(){
         composable<HourlyBreakdown> { HourlyBreakdownScreen() }
         composable<CitySelector> { CitySelectorScreen() }
     }
-    NavHost(navController = navController, startDestination = Main) {
-        composable<Main> { backStackEntry ->
-            val main: Main = backStackEntry.toRoute()
-            MainScreen() }
-    }
 }
