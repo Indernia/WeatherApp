@@ -122,8 +122,7 @@ fun firstScreen (
                 city = "Copenhagen", // Provide appropriate city name
                 temp = "10",         // Provide appropriate temperature
                 R.drawable.hat,
-                R.drawable.trunks,
-                onClick = { onMainInfoClicked() },
+                R.drawable.trunks
             )
 
             Text(
