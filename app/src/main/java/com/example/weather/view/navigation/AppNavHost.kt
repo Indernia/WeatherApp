@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.example.weather.DailyBreakdownScreen
 import kotlinx.serialization.Serializable
 import com.example.weather.view.screens.*
@@ -21,7 +20,7 @@ object Settings
 object CitySelector
 
 @Composable
-fun NavGraph(){
+fun AppNavHost(){
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Main){
@@ -39,7 +38,9 @@ fun NavGraph(){
 
         composable<DailyBreakdown> {
             DailyBreakdownScreen(
-
+                handleClickBack = {
+                    navController.navigateUp()
+                }
             )
         }
 
