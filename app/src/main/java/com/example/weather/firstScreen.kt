@@ -55,8 +55,7 @@ fun firstScreen (
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
-    var mainViewModel = MainScreenViewModel()
-    mainViewModel.makeTestLocationData()
+
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -125,9 +124,7 @@ fun firstScreen (
                 R.drawable.trunks
             )
 
-            Text(
-                text = "temp: ${mainViewModel.locationdata.hours[0].temperature} and UV: ${mainViewModel.locationdata.hours[0].uv} "
-            )
+
             Spacer(modifier = Modifier.weight(5f))
             HourlyForecast(
                 onClick = { onHourlyForecastClicked() },
