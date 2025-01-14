@@ -15,19 +15,44 @@ object Main
 object HourlyBreakdown
 @Serializable
 object DailyBreakdown
-//@Serializable
-//object Settings
+@Serializable
+object Settings
 @Serializable
 object CitySelector
 
 @Composable
-fun Navgraph(){
+fun NavGraph(){
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Main){
-        composable<Main> { MainScreen() }
-        composable<DailyBreakdown> { DailyBreakdownScreen() }
-        composable<HourlyBreakdown> { HourlyBreakdownScreen() }
-        composable<CitySelector> { CitySelectorScreen() }
+        composable<Main> {
+            MainScreen(
+                onWeeklyForecastClicked = {
+                    navController.navigate(route = DailyBreakdown)
+                },
+                onHourlyForecastClicked = {
+                    navController.navigate(route = HourlyBreakdown)
+                },
+
+            )
+        }
+
+        composable<DailyBreakdown> {
+            DailyBreakdownScreen(
+
+            )
+        }
+
+        composable<HourlyBreakdown> {
+            HourlyBreakdownScreen(
+
+            )
+        }
+
+        composable<CitySelector> {
+            CitySelectorScreen(
+
+            )
+        }
     }
 }
