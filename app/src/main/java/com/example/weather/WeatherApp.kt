@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
-
+/*
 enum class WeatherScreens{
     FirstPage,
     MainInfoPage,
@@ -101,3 +101,4 @@ fun WeatherApp(
         }
     }
 }
+*/

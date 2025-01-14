@@ -47,10 +47,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     WeatherApp(modifier = Modifier.padding(innerPadding))
+*/
 
-                }
             }
         }
     }
