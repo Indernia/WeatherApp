@@ -19,10 +19,12 @@ fun HourSlider(
     data: List<HourData>,
     modifier: Modifier = Modifier
 ) {
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(data) { item -> HourBox(data = item)
+        items(data, key = { it.timestamp }) { item ->
+            HourBox(data = item)
         }
     }
 }

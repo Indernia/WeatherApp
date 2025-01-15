@@ -23,7 +23,8 @@ fun DaySlider(
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(limitedDayData) { item -> DayBox(data = item)
+        items(data, key = { it.date }) { item ->
+            DayBox(data = item)
         }
     }
 }
