@@ -65,7 +65,9 @@ fun AppNavHost(
             modifier = modifier.padding(it)
         ) {
             composable(route = AppScreens.MainScreen.name) {
-                MainScreen()
+                MainScreen(
+                    onSettingsClicked = {navController.navigate(AppScreens.Settings.name)}
+                )
             }
 
             composable(route = AppScreens.DailyBreakdown.name) {
@@ -76,7 +78,7 @@ fun AppNavHost(
                     }
                 )
             }
-/*
+
             composable(route = AppScreens.HourlyBreakdown.name) {
                 HourlyBreakdownScreen(
                     handleClickBack = {
@@ -85,7 +87,7 @@ fun AppNavHost(
                     }
                 )
             }
-*/
+
             composable(route = AppScreens.Settings.name) {
                 SettingsScreen(
                     selectedOption = "English",
