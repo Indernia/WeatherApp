@@ -37,6 +37,9 @@ fun AppNavHost(
                     },
                     onHourlyForecastClicked = {
                         navController.navigate(AppScreens.HourlyBreakdown.name)
+                    },
+                    onSettingsClicked = {
+                        navController.navigate(AppScreens.Settings.name)
                     }
                 )
             }
@@ -60,12 +63,12 @@ fun AppNavHost(
                     // Add any required arguments or callbacks
                 )
             }
-/*
+
             composable(route = AppScreens.Settings.name) {
-                SettingsScreen(
-                )
+                //SettingsScreen(
+                //)
             }
-*/
+
         }
     }
 }

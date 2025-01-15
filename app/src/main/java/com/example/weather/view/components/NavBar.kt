@@ -19,8 +19,10 @@ import com.example.weather.R
 @Composable
 fun NavBar(
     modifier: Modifier = Modifier,
-    onDailyClicked: () -> Unit = {}
-) {
+    onDailyClicked: () -> Unit = {},
+    onSelectorClicked: () -> Unit = {},
+    onHourlyClicked: () -> Unit = {},
+    ) {
     var selectedItem by remember {mutableStateOf(0) }
 
     NavigationBar {
@@ -28,12 +30,18 @@ fun NavBar(
             icon = { Icon(painterResource(id = R.drawable.outline_location_city_24), contentDescription = "Location City") },
             //label = { Text("Location") },
             selected = selectedItem == 0,
-            onClick = { selectedItem = 0 }
+            onClick = {
+                selectedItem = 0
+                onSelectorClicked()
+            }
         )
         NavigationBarItem(
             icon = { Icon(painterResource(id = R.drawable.hourly), contentDescription = "hourly") },
             selected = selectedItem == 1,
-            onClick = { selectedItem = 1 }
+            onClick = {
+                selectedItem = 1
+                onHourlyClicked()
+            }
         )
         NavigationBarItem(
             icon = { Icon(painterResource(id = R.drawable.daily), contentDescription = "daily") },

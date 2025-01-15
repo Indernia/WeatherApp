@@ -116,10 +116,14 @@ fun MainScreen (
         Row(
             horizontalArrangement = Arrangement.Start,
         ) {
+            IconButton(onClick = {
+                onSettingsClicked()
+            }) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "BackArrow"
+                    painter = painterResource(id = R.drawable.settings_24px), // Replace with your icon
+                    contentDescription = "Daily Breakdown"
                 )
+            }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
