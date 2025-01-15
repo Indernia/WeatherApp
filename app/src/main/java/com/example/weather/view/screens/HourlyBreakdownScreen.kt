@@ -84,13 +84,16 @@ fun HourlyBreakdownScreen(
                         )
                     }
                 }
-                // Conditional rendering based on availability of firstDayData and firstHourData
                 if (firstDayData != null && firstHourData != null) {
                     CityResume(
                         daydata = firstDayData,
-                        hourdata = firstHourData
+                        hourdata = firstHourData,
+                        modifier = Modifier.fillMaxSize()
                     )
-                } else{}
+                } else{
+
+                }
+
                 HourDropDownList(hours = hourDataList)
             }
 

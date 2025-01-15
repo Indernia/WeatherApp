@@ -112,7 +112,6 @@ fun HourDropDown(
                         .padding(12.dp)
                         .background(Color(0xFFB0E0E6)) // Lighter color for better visibility
                 ) {
-                    Text("Temperature: ${hour.temperature}°C")
                     Text("Humidity: ${hour.humidity}%")
                     Text("UV Index: ${hour.uv}")
                     Text("Wind Speed: ${hour.windSpeed} km/h")

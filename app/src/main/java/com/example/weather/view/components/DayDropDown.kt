@@ -93,7 +93,6 @@ fun DayDropDown(
                         .padding(12.dp)
                         .background(Color(0xFFB0E0E6)) // Lighter color for better visibility
                 ) {
-                    Text("Temperature: ${day.tempK}°C")
                     Text("Humidity: ${day.humidity}%")
                     Text("UV Index: ${day.uvi}")
                     Text("Wind Speed: ${day.windSpeed} km/h")
