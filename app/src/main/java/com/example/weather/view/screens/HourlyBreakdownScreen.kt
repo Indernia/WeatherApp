@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
 import com.example.weather.R
+import com.example.weather.view.components.HourDropDownListPreview
 import com.example.weather.view.components.NavBar
-import com.example.weather.view.components.ScrollableDayList
 
 @Preview(showBackground = true)
 @Composable
@@ -68,11 +68,6 @@ fun HourlyBreakdownScreen(
                         )
                     }
                 }
-
-
-                ScrollableDayList(
-                    modifier = Modifier.fillMaxWidth()
-                )
             }
 
         }

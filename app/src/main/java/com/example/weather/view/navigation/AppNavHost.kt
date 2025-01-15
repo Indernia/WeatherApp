@@ -91,7 +91,7 @@ fun AppNavHost(
             composable(route = AppScreens.Settings.name) {
                 SettingsScreen(
                     selectedOption = "English",
-                    onOptionSelected = { /* Handle setting change */ }
+                    onOptionSelected = {  }
                 )
             }
         }

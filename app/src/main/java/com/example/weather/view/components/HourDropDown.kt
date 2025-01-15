@@ -54,7 +54,7 @@ fun HourDropDown(
         Column { // Wrap everything in a Column so expanded content aligns properly
             Row(
                 modifier = Modifier.padding(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(90.dp)
+                horizontalArrangement = Arrangement.spacedBy(80.dp)
             ) {
                 val formattedTimestamp = LocalDateTime.ofInstant(
                     Instant.ofEpochSecond(hour.timestamp.toLong()), // Convert Int to Instant
@@ -67,15 +67,25 @@ fun HourDropDown(
                 )
                 Text(
                     text = hour.condition,
-                    fontSize = 16.sp,
+                    fontSize = 20.sp,
                     color = Color.Gray
                 )
-                Text(
-                    text = "${hour.temperature}°C",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Blue
-                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(
+                        text = "${hour.temperature}°C",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Blue
+                    )
+                    Text(
+                        text = if (expanded) "▲" else "▼", // Use arrows to indicate expand/collapse
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Gray
+                    )
+                }
             }
 
             // Show additional details when expanded

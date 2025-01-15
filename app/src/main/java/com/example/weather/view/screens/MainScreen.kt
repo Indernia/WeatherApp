@@ -52,8 +52,12 @@ import com.example.weather.view.components.NavBar
 import kotlinx.coroutines.launch
 import java.util.stream.IntStream.range
 import androidx.compose.foundation.Image
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.view.components.HourDropDown
+import com.example.weather.view.components.HourDropDownPreview
 
 @Preview(showBackground = true)
 @Composable
@@ -63,11 +67,14 @@ fun MainScreen (
     onMainInfoClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    //viewModel: MainScreenViewModel = viewModel(),
 ){
     val context = LocalContext.current
     var mainViewModel = MainScreenViewModel(context = context)
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+    //val dayData by viewModel.dayDataState.collectAsState()
+
 
     Image(
         painter = painterResource(id = R.drawable.background), // Use background.JPG
@@ -155,8 +162,9 @@ fun MainScreen (
             Spacer(
                 modifier = Modifier.weight(5f)
             )
+
             DaySlider(
-                data = mainViewModel.locationdata.days, // Replace with actual data
+                data = dayData,
                 modifier = Modifier.height(120.dp).padding(horizontal = 10.dp)
             )
 

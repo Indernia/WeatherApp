@@ -18,10 +18,12 @@ fun DaySlider(
     data: List<DayData>,
     modifier: Modifier = Modifier
 ) {
+    val limitedDayData = data.take(7)
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(data) { item -> DayBox(data = item)
+        items(limitedDayData) { item -> DayBox(data = item)
         }
     }
 }
