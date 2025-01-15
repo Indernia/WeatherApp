@@ -1,5 +1,6 @@
 package com.example.weather.view.components
 
+import android.icu.text.DecimalFormat
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,9 @@ import java.time.format.DateTimeFormatter
 fun HourBox(
     data: HourData,
 ) {
+    val decimalFormat = remember { DecimalFormat("#.00") }
+    val celsiusTemperature = decimalFormat.format(data.temperature - 273.15)
+
     val formattedTimestamp = remember(data.timestamp) {
         Instant.ofEpochSecond(data.timestamp.toLong())
             .atZone(ZoneId.of("Europe/Copenhagen"))
@@ -52,7 +56,7 @@ fun HourBox(
                             .padding(8.dp),
                     )
                     Text(
-                        text = "${data.temperature}°C",
+                        text = "$celsiusTemperature°C",
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .padding(bottom = 8.dp),
