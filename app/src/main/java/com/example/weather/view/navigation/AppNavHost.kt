@@ -70,6 +70,15 @@ fun AppNavHost(
                 )
             }
 
+            composable(route = AppScreens.CitySelector.name) {
+                CitySelectorScreen(
+                    handleClickBack = {
+                        navController.navigateUp()
+                        viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
+                    }
+                )
+            }
+
             composable(route = AppScreens.DailyBreakdown.name) {
                 DailyBreakdownScreen(
                     handleClickBack = {
