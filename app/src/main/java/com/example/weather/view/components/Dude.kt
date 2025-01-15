@@ -14,6 +14,12 @@ fun FigureComponent(
     @DrawableRes baseFigureResId: Int,
     @DrawableRes clothingResId: Int,
     @DrawableRes accessoryResId: Int,
+    clothingAlignment: Alignment = Alignment.BottomCenter,
+    clothingPadding: PaddingValues = PaddingValues(0.dp),
+    accessoryAlignment: Alignment = Alignment.TopCenter,
+    accessoryPadding: PaddingValues = PaddingValues(0.dp),
+    clothingSize: Pair<Int, Int>? = null,
+    accessorySize: Pair<Int, Int>? = null,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
@@ -22,22 +28,33 @@ fun FigureComponent(
             contentDescription = "Base Figure",
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .padding(bottom = 20.dp)
         )
 
         Image(
             painter = painterResource(id = clothingResId),
             contentDescription = "Clothing",
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(start = 0.dp, bottom = 24.dp),
+                .align(clothingAlignment)
+                .padding(clothingPadding)
+                .let { baseModifier ->
+                    clothingSize?.let { (width, height) ->
+                        baseModifier.size(width.dp, height.dp)
+                    } ?: baseModifier
+                }
         )
 
         Image(
             painter = painterResource(id = accessoryResId),
             contentDescription = "Accessory",
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 0.dp, start = 0.dp),
+                .align(accessoryAlignment)
+                .padding(accessoryPadding)
+                .let { baseModifier ->
+                    accessorySize?.let { (width, height) ->
+                        baseModifier.size(width.dp, height.dp)
+                    } ?: baseModifier
+                }
         )
     }
 }

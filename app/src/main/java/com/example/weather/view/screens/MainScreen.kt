@@ -52,6 +52,7 @@ fun MainScreen (
     val mainViewModel = remember { MainScreenViewModel(context = context) }
     val dayDataList by mainViewModel.dayDataState.collectAsState()
     val hourDataList by mainViewModel.hourDataState.collectAsState()
+    val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -82,14 +83,13 @@ fun MainScreen (
             Box(
                 modifier = Modifier
                     .background(Color.Transparent)
-                    .height(460.dp)
+                    .height(500.dp)
                     .wrapContentSize(Alignment.TopCenter)
             ) {
                 MainScreenInfoComponent(
                     city = city,
                     temp = temperature,
-                    R.drawable.hat,
-                    R.drawable.trunks,
+                    weatherCondition = "Rainy",
                     onClick = { /* ToDO */ }
                 )
             }
