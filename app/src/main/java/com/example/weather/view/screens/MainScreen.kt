@@ -35,6 +35,7 @@ import com.example.weather.view.components.DaySlider
 import com.example.weather.view.components.MainScreenInfoComponent
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
@@ -61,38 +62,34 @@ fun MainScreen (
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
-
-        Row(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-        ) {
-            IconButton(onClick = { onSettingsClicked() }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.settings_24px),
-                    contentDescription = "Daily Breakdown"
-                )
-            }
-        }
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxHeight()
         ) {
+            // Settings button aligned to the top start with some padding
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                IconButton(onClick = { onSettingsClicked() }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.settings_24px),
+                        contentDescription = "Settings"
+                    )
+                }
+            }
+
             Box(
                 modifier = Modifier
                     .background(Color.Transparent)
-                    .height(490.dp)
-                    .padding(top = 10.dp)
-                    .padding(bottom = 10.dp)
+                    .height(460.dp)
             ) {
                 MainScreenInfoComponent(
                     city = city,
                     temp = temperature,
                     R.drawable.hat,
                     R.drawable.trunks,
-                    onClick = { /* ToDO */ }
+                    onClick = { /* ToDo */ }
                 )
             }
 
@@ -100,7 +97,7 @@ fun MainScreen (
                 data = hourDataList,
                 modifier = Modifier.height(100.dp)
             )
-
+/*
             Spacer(modifier = Modifier.height(20.dp))
 
             DaySlider(
@@ -108,7 +105,9 @@ fun MainScreen (
                 modifier = Modifier.height(100.dp)
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+ */
+
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
