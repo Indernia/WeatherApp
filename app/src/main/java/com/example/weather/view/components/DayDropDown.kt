@@ -48,6 +48,8 @@ fun DayDropDown(
 
     val decimalFormat = remember { DecimalFormat("#.00") }
     val celsiusTemperature = decimalFormat.format(day.tempK?.minus(273.15))
+    val celsiusmax = decimalFormat.format(day.maxTempK?.minus(273.15))
+    val celsiusmin = decimalFormat.format(day.minTempK?.minus(273.15))
 
     val formattedTimestamp = remember {LocalDateTime.ofInstant(
         Instant.ofEpochSecond(day.date.toLong()), // Convert Int to Instant
@@ -116,6 +118,9 @@ fun DayDropDown(
                     Text("Humidity: ${day.humidity}%")
                     Text("UV Index: ${day.uvi}")
                     Text("Wind Speed: ${day.windSpeed} km/h")
+                    Text("Min temp: $celsiusmin°")
+                    Text("Max temp: $celsiusmax°")
+
                 }
             }
         }
