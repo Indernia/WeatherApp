@@ -12,6 +12,7 @@ import com.example.weather.model.HourData
 import com.example.weather.model.LocationData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import java.time.ZonedDateTime
@@ -28,15 +29,22 @@ class MainScreenViewModel (context: Context): ViewModel() {
     init {
         viewModelScope.launch {
             val weatherRepository = WeatherRepository()
-            weatherRepository.getDays(context = context, lat = 55.67594, lon = 12.56553, name = "Copenhagen").collect{
-                _dayDataState.value = it
+
+            launch {
+                weatherRepository.getDays(context, 55.67594, 12.56553, "Copenhagen")
+                    .distinctUntilChanged()
+                    .collect {
+                    _dayDataState.value = it
+                }
             }
 
-            weatherRepository.getHours(context = context, lat = 55.67594, lon = 12.56553, name = "Copenhagen").collect{
-                _hourDataState.value = it
+            launch {
+                weatherRepository.getHours(context, 55.67594, 12.56553, "Copenhagen")
+                    .distinctUntilChanged()
+                    .collect {
+                    _hourDataState.value = it
+                }
             }
-
-
         }
     }
 

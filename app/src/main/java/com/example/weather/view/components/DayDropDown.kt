@@ -1,10 +1,12 @@
 package com.example.weather.view.components
 
+import android.icu.text.DecimalFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -38,11 +40,21 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun DayDropDown(
-    day:DayData,
+    day: DayData,
     modifier: Modifier = Modifier
 ) {
     // State to manage dropdown expansion
     var expanded by remember { mutableStateOf(false) }
+
+    val decimalFormat = remember { DecimalFormat("#.00") }
+    val celsiusTemperature = decimalFormat.format(day.tempK?.minus(273.15))
+    val celsiusmax = decimalFormat.format(day.maxTempK?.minus(273.15))
+    val celsiusmin = decimalFormat.format(day.minTempK?.minus(273.15))
+
+    val formattedTimestamp = remember {LocalDateTime.ofInstant(
+        Instant.ofEpochSecond(day.date.toLong()), // Convert Int to Instant
+        ZoneId.systemDefault() // Convert to LocalDateTime
+    ).format(DateTimeFormatter.ofPattern("EEEE"))}
 
     Card(
         modifier = Modifier
@@ -54,24 +66,34 @@ fun DayDropDown(
     ) {
         Column { // Wrap everything in a Column so expanded content aligns properly
             Row(
-                modifier = Modifier.padding(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(80.dp)
+                modifier = Modifier
+                    .padding(12.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = Instant.ofEpochSecond(day.date.toLong()).atZone(ZoneId.systemDefault()).toLocalDate().format(DateTimeFormatter.ofPattern("EEEE")),
+                    text = formattedTimestamp,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold
                 )
+
+                Spacer(modifier = Modifier.weight(1f))
+
                 Text(
                     text = "${day.weatherCondition}",
                     fontSize = 20.sp,
-                    color = Color.Gray
+                    color = Color.Gray,
+                    modifier = Modifier.align(Alignment.CenterVertically)
                 )
+
+                Spacer(modifier = Modifier.weight(1f))
+
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "${day.tempK}°C",
+                        text = "$celsiusTemperature°",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Blue
@@ -93,10 +115,12 @@ fun DayDropDown(
                         .padding(12.dp)
                         .background(Color(0xFFB0E0E6)) // Lighter color for better visibility
                 ) {
-                    Text("Temperature: ${day.tempK}°C")
                     Text("Humidity: ${day.humidity}%")
                     Text("UV Index: ${day.uvi}")
                     Text("Wind Speed: ${day.windSpeed} km/h")
+                    Text("Min temp: $celsiusmin°")
+                    Text("Max temp: $celsiusmax°")
+
                 }
             }
         }

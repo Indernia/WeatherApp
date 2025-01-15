@@ -1,5 +1,6 @@
 package com.example.weather.view.components
 
+import android.icu.text.DecimalFormat
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,23 +11,29 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Alignment
-import com.example.weather.model.DayData
 import com.example.weather.model.HourData
-import com.example.weather.model.Condition
-import com.example.weather.model.LocationData
-import java.time.ZonedDateTime
+import java.time.Instant
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun HourBox(
     data: HourData,
 ) {
+    val decimalFormat = remember { DecimalFormat("#.00") }
+    val celsiusTemperature = decimalFormat.format(data.temperature - 273.15)
+
+    val formattedTimestamp = remember(data.timestamp) {
+        Instant.ofEpochSecond(data.timestamp.toLong())
+            .atZone(ZoneId.of("Europe/Copenhagen"))
+            .toLocalDateTime()
+            .format(DateTimeFormatter.ofPattern("HH:mm"))
+    }
     OutlinedCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -36,21 +43,20 @@ fun HourBox(
             .size(width = 90.dp, height = 120.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-                    val formattedTimestamp = data.timestamp
                     Text(
-                        text = formattedTimestamp.toString(),
+                        text = formattedTimestamp,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
                     )
                     Text(
-                        text = "${data.condition}",
+                        text = data.condition,
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(8.dp),
                     )
                     Text(
-                        text = "${data.temperature}°C",
+                        text = "$celsiusTemperature°C",
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .padding(bottom = 8.dp),

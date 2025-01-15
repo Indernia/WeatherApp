@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
@@ -30,6 +31,12 @@ fun DayBox(
     data: DayData,
     modifier: Modifier = Modifier
 ) {
+    val formattedDate = remember(data.date) {
+        Instant.ofEpochSecond(data.date.toLong())
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+            .format(DateTimeFormatter.ofPattern("EEEE"))
+    }
     OutlinedCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -40,7 +47,7 @@ fun DayBox(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
                     Text(
-                        text = Instant.ofEpochSecond(data.date.toLong()).atZone(ZoneId.systemDefault()).toLocalDate().format(DateTimeFormatter.ofPattern("EEEE")),
+                        text = formattedDate,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
