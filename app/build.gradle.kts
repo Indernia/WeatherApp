@@ -27,7 +27,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-            val localProperties = File(rootProject.rootDir, "local.properties")
+        val localProperties = File(rootProject.rootDir, "local.properties")
         val apiKey: String? = if (localProperties.exists()) {
             localProperties.inputStream().use { stream ->
                 Properties().apply { load(stream) }

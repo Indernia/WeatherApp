@@ -1,4 +1,4 @@
-package com.example.weather
+package com.example.weather.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
+import com.example.weather.R
 import com.example.weather.view.components.NavBar
 import com.example.weather.view.components.ScrollableDayList
 
@@ -74,11 +75,6 @@ fun DailyBreakdownScreen(
                 )
             }
 
-            NavBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp) // Standard height for bottom navigation bars
-            )
         }
     }
 }

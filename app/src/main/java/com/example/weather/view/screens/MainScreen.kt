@@ -61,8 +61,6 @@ fun MainScreen (
     temperature: String = "10",
     city: String = "Copenhagen",
     onMainInfoClicked: () -> Unit = {},
-    onWeeklyForecastClicked: () -> Unit = {},
-    onHourlyForecastClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
@@ -117,11 +115,11 @@ fun MainScreen (
             horizontalArrangement = Arrangement.Start,
         ) {
             IconButton(onClick = {
-                coroutineScope.launch{drawerState.open()}
+                onSettingsClicked()
             }) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "BackArrow"
+                    painter = painterResource(id = R.drawable.settings_24px), // Replace with your icon
+                    contentDescription = "Daily Breakdown"
                 )
             }
         }
@@ -147,6 +145,7 @@ fun MainScreen (
                     onClick = { /* ToDO */ }
                 )
             }
+
             Spacer(modifier = Modifier.weight(1f))
             /*
             HourSlider(
@@ -165,7 +164,6 @@ fun MainScreen (
             Spacer(
                 modifier = Modifier.weight(5f)
             )
-            NavBar()
         }
     }
 }
