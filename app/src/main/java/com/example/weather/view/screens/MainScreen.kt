@@ -61,7 +61,7 @@ fun MainScreen (
     temperature: String = "10",
     city: String = "Copenhagen",
     onMainInfoClicked: () -> Unit = {},
-    onWeeklyForecastClicked: () -> Unit = {},
+    onDailyBreakdownClicked: () -> Unit = {},
     onHourlyForecastClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
@@ -116,14 +116,10 @@ fun MainScreen (
         Row(
             horizontalArrangement = Arrangement.Start,
         ) {
-            IconButton(onClick = {
-                coroutineScope.launch{drawerState.open()}
-            }) {
                 Icon(
                     imageVector = Icons.Filled.Menu,
                     contentDescription = "BackArrow"
                 )
-            }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -166,7 +162,9 @@ fun MainScreen (
             Spacer(
                 modifier = Modifier.weight(5f)
             )
-            NavBar()
+            NavBar(
+                onDailyClicked = { onDailyBreakdownClicked() }
+            )
         }
     }
 }

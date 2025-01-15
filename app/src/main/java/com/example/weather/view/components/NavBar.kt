@@ -17,7 +17,10 @@ import com.example.weather.R
 
 @Preview(showBackground = true)
 @Composable
-fun NavBar(modifier: Modifier = Modifier) {
+fun NavBar(
+    modifier: Modifier = Modifier,
+    onDailyClicked: () -> Unit = {}
+) {
     var selectedItem by remember {mutableStateOf(0) }
 
     NavigationBar {
@@ -35,7 +38,10 @@ fun NavBar(modifier: Modifier = Modifier) {
         NavigationBarItem(
             icon = { Icon(painterResource(id = R.drawable.daily), contentDescription = "daily") },
             selected = selectedItem == 2,
-            onClick = { selectedItem = 2 }
+            onClick = {
+                selectedItem = 2
+                onDailyClicked()
+            }
         )
 
     }

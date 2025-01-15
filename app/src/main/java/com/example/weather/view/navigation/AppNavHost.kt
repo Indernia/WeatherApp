@@ -1,59 +1,71 @@
 package com.example.weather.view.navigation
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.weather.DailyBreakdownScreen
-import kotlinx.serialization.Serializable
 import com.example.weather.view.screens.*
 
-@Serializable
-object Main
-@Serializable
-object HourlyBreakdown
-@Serializable
-object DailyBreakdown
-@Serializable
-object Settings
-@Serializable
-object CitySelector
+enum class AppScreens {
+    MainScreen,
+    DailyBreakdown,
+    HourlyBreakdown,
+    CitySelector,
+    Settings
+}
 
 @Composable
-fun AppNavHost(){
-    val navController = rememberNavController()
+fun AppNavHost(
+    navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier
+) {
+    Scaffold(
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = AppScreens.MainScreen.name,
+            modifier = modifier.padding(innerPadding)
+        ) {
+            composable(route = AppScreens.MainScreen.name) {
+                MainScreen(
+                    onDailyBreakdownClicked = {
+                        navController.navigate(AppScreens.DailyBreakdown.name)
+                    },
+                    onHourlyForecastClicked = {
+                        navController.navigate(AppScreens.HourlyBreakdown.name)
+                    }
+                )
+            }
 
-    NavHost(navController = navController, startDestination = Main){
-        composable<Main> {
-            MainScreen(
-                onWeeklyForecastClicked = {
-                    navController.navigate(route = DailyBreakdown)
-                },
-                onHourlyForecastClicked = {
-                    navController.navigate(route = HourlyBreakdown)
-                },
+            composable(route = AppScreens.DailyBreakdown.name) {
+                DailyBreakdownScreen(
+                    handleClickBack = {
+                        navController.navigateUp()
+                    }
+                )
+            }
 
-            )
-        }
+            composable(route = AppScreens.HourlyBreakdown.name) {
+                HourlyBreakdownScreen(
+                    // Add any required arguments or callbacks
+                )
+            }
 
-        composable<DailyBreakdown> {
-            DailyBreakdownScreen(
-                handleClickBack = {
-                    navController.navigateUp()
-                }
-            )
-        }
-
-        composable<HourlyBreakdown> {
-            HourlyBreakdownScreen(
-
-            )
-        }
-
-        composable<CitySelector> {
-            CitySelectorScreen(
-
-            )
+            composable(route = AppScreens.CitySelector.name) {
+                CitySelectorScreen(
+                    // Add any required arguments or callbacks
+                )
+            }
+/*
+            composable(route = AppScreens.Settings.name) {
+                SettingsScreen(
+                )
+            }
+*/
         }
     }
 }
