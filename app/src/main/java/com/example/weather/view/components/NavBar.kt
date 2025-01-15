@@ -23,7 +23,7 @@ fun NavBar(
     onSelectorClicked: () -> Unit = {},
     onHourlyClicked: () -> Unit = {},
     ) {
-    var selectedItem by remember {mutableStateOf(0) }
+    var selectedItem by remember { mutableStateOf<Int?>(null) }
 
     NavigationBar {
         NavigationBarItem(
