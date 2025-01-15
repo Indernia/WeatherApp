@@ -8,8 +8,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
+import com.example.weather.UIControllers.NavViewModel
+
 
 enum class AppScreens {
     MainScreen,
@@ -22,20 +25,36 @@ enum class AppScreens {
 @Composable
 fun AppNavHost(
     navController: NavHostController = rememberNavController(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: NavViewModel = viewModel()
 ) {
+    val selectedItem = viewModel.selectedItem.value
+
     Scaffold(
         modifier = modifier,
         bottomBar = {
             NavBar(
+                selectedItem = selectedItem, // Pass selected item state to NavBar
                 onDailyClicked = {
-                    navController.navigate(AppScreens.DailyBreakdown.name)
+                    viewModel.onNavItemSelected(2) // Update selected item in ViewModel
+                    navController.navigate(AppScreens.DailyBreakdown.name){
+                        launchSingleTop = true
+                        popUpTo(AppScreens.MainScreen.name) { inclusive = false }
+                    }
                 },
                 onSelectorClicked = {
-                    navController.navigate(AppScreens.CitySelector.name)
+                    viewModel.onNavItemSelected(0) // Update selected item in ViewModel
+                    navController.navigate(AppScreens.CitySelector.name){
+                        launchSingleTop = true
+                        popUpTo(AppScreens.MainScreen.name) { inclusive = false }
+                    }
                 },
                 onHourlyClicked = {
-                    navController.navigate(AppScreens.HourlyBreakdown.name)
+                    viewModel.onNavItemSelected(1) // Update selected item in ViewModel
+                    navController.navigate(AppScreens.HourlyBreakdown.name){
+                        launchSingleTop = true
+                        popUpTo(AppScreens.MainScreen.name) { inclusive = false }
+                    }
                 }
             )
         }
@@ -53,6 +72,7 @@ fun AppNavHost(
                 DailyBreakdownScreen(
                     handleClickBack = {
                         navController.navigateUp()
+                        viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
                     }
                 )
             }
@@ -61,6 +81,7 @@ fun AppNavHost(
                 HourlyBreakdownScreen(
                     handleClickBack = {
                         navController.navigateUp()
+                        viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
                     }
                 )
             }
@@ -73,5 +94,4 @@ fun AppNavHost(
             }
         }
     }
-
 }
