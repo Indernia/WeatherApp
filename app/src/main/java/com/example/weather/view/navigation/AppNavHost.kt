@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.weather.view.screens.*
+import com.example.weather.view.components.NavBar
 
 enum class AppScreens {
     MainScreen,
@@ -24,24 +25,28 @@ fun AppNavHost(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-    ) { innerPadding ->
+        modifier = modifier,
+        bottomBar = {
+            NavBar(
+                onDailyClicked = {
+                    navController.navigate(AppScreens.DailyBreakdown.name)
+                },
+                onSelectorClicked = {
+                    navController.navigate(AppScreens.CitySelector.name)
+                },
+                onHourlyClicked = {
+                    navController.navigate(AppScreens.HourlyBreakdown.name)
+                }
+            )
+        }
+    ) {
         NavHost(
             navController = navController,
             startDestination = AppScreens.MainScreen.name,
-            modifier = modifier.padding(innerPadding)
+            modifier = modifier.padding(it)
         ) {
             composable(route = AppScreens.MainScreen.name) {
-                MainScreen(
-                    onDailyBreakdownClicked = {
-                        navController.navigate(AppScreens.DailyBreakdown.name)
-                    },
-                    onHourlyForecastClicked = {
-                        navController.navigate(AppScreens.HourlyBreakdown.name)
-                    },
-                    onSettingsClicked = {
-                        navController.navigate(AppScreens.Settings.name)
-                    }
-                )
+                MainScreen()
             }
 
             composable(route = AppScreens.DailyBreakdown.name) {
@@ -51,24 +56,22 @@ fun AppNavHost(
                     }
                 )
             }
-
+/*
             composable(route = AppScreens.HourlyBreakdown.name) {
                 HourlyBreakdownScreen(
-                    // Add any required arguments or callbacks
+                    handleClickBack = {
+                        navController.navigateUp()
+                    }
                 )
             }
-
-            composable(route = AppScreens.CitySelector.name) {
-                CitySelectorScreen(
-                    // Add any required arguments or callbacks
-                )
-            }
-
+*/
             composable(route = AppScreens.Settings.name) {
-                //SettingsScreen(
-                //)
+                SettingsScreen(
+                    selectedOption = "English",
+                    onOptionSelected = { /* Handle setting change */ }
+                )
             }
-
         }
     }
+
 }

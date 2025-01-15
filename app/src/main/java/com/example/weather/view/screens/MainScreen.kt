@@ -61,8 +61,6 @@ fun MainScreen (
     temperature: String = "10",
     city: String = "Copenhagen",
     onMainInfoClicked: () -> Unit = {},
-    onDailyBreakdownClicked: () -> Unit = {},
-    onHourlyForecastClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
@@ -165,9 +163,6 @@ fun MainScreen (
              */
             Spacer(
                 modifier = Modifier.weight(5f)
-            )
-            NavBar(
-                onDailyClicked = { onDailyBreakdownClicked() }
             )
         }
     }

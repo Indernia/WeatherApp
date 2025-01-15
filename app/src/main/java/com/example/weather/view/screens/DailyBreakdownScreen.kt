@@ -75,11 +75,6 @@ fun DailyBreakdownScreen(
                 )
             }
 
-            NavBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp) // Standard height for bottom navigation bars
-            )
         }
     }
 }
