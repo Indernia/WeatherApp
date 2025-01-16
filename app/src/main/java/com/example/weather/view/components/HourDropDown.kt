@@ -61,7 +61,7 @@ fun HourDropDown(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable { expanded = !expanded }, // Toggle expansion on click
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer), // Use theme color
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary), // Use theme color
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column { // Wrap everything in a Column so expanded content aligns properly
@@ -110,7 +110,7 @@ fun HourDropDown(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp)
-                        .background(MaterialTheme.colorScheme.secondaryContainer) // Lighter theme color
+                        .background(MaterialTheme.colorScheme.primaryContainer) // Lighter theme color
                 ) {
                     Text(
                         text = "Humidity: ${hour.humidity}%",

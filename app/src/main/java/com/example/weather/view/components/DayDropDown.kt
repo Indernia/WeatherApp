@@ -60,13 +60,12 @@ import java.time.format.DateTimeFormatter
             ).format(DateTimeFormatter.ofPattern("EEEE"))
         }
 
-        // Use MaterialTheme for container and expanded background colors
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .clickable { expanded = !expanded }, // Toggle expansion on click
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer), // Use primary container color from theme
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
             Column { // Wrap everything in a Column so expanded content aligns properly
@@ -115,7 +114,7 @@ import java.time.format.DateTimeFormatter
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(12.dp)
-                            .background(MaterialTheme.colorScheme.secondaryContainer) // Lighter theme color
+                            .background(MaterialTheme.colorScheme.primaryContainer)
                     ) {
                         Text("Humidity: ${day.humidity}%")
                         Text("UV Index: ${day.uvi}")

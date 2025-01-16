@@ -18,7 +18,12 @@ val sunnyColorScheme = lightColorScheme(
     onPrimary = Color.Black,
     primaryContainer = BluePrimaryContainer,
     onPrimaryContainer = OnBluePrimaryContainer,
-    secondaryContainer = BlueSecondaryContainer
+    secondary = BlueSecondary,
+    onSecondary = Color.Black,
+    secondaryContainer = BlueSecondaryContainer,
+    onSecondaryContainer = OnBlueSecondaryContainer,
+    background = BackgroundColor,
+    surface = SurfaceColor,
 )
 
 @Composable

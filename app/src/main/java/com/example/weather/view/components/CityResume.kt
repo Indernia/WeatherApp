@@ -43,9 +43,6 @@ fun CityResume(
             .format(DateTimeFormatter.ofPattern("MMMM: dd"))
     }
     OutlinedCard(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-        ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .fillMaxWidth().height(120.dp)
