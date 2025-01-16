@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
 import com.example.weather.model.Condition
 import com.example.weather.model.HourData
+import com.example.weather.ui.theme.ExspandedBlue
+import com.example.weather.ui.theme.Lightblue
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -58,7 +60,7 @@ fun HourDropDown(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable { expanded = !expanded }, //  Toggle expansion on click
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB)),
+        colors = CardDefaults.cardColors(containerColor = Lightblue),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column { // Wrap everything in a Column so expanded content aligns properly
@@ -110,7 +112,7 @@ fun HourDropDown(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp)
-                        .background(Color(0xFFB0E0E6)) // Lighter color for better visibility
+                        .background(ExspandedBlue) // Lighter color for better visibility
                 ) {
                     Text("Humidity: ${hour.humidity}%")
                     Text("UV Index: ${hour.uv}")
