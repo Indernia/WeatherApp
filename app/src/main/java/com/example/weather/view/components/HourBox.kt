@@ -36,7 +36,7 @@ fun HourBox(
     }
     OutlinedCard(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
         ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
