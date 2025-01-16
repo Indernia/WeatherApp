@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.weather.R
 import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.components.CityResume
+import com.example.weather.view.components.DateTimeDisplay
 import com.example.weather.view.components.DayDropDownList
 import com.example.weather.view.components.HourDropDownList
 import com.example.weather.view.components.NavBar
@@ -92,6 +93,8 @@ fun DailyBreakdownScreen(
                 } else{
 
                 }
+                // Added DateTimeDisplay at the top
+                DateTimeDisplay()
 
                 DayDropDownList(days = dayDataList)
             }
