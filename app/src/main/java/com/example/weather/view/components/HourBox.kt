@@ -35,9 +35,6 @@ fun HourBox(
             .format(DateTimeFormatter.ofPattern("HH:mm"))
     }
     OutlinedCard(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .size(width = 90.dp, height = 120.dp)
