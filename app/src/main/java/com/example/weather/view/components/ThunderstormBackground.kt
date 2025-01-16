@@ -42,7 +42,8 @@ fun RaindropEffect() {
     val dropCount = 200
 
     LaunchedEffect(Unit) {
-        while (raindrops.size < dropCount) {
+        while (raindrops
+            .size < dropCount) {
             raindrops.add(
                 Raindrop(
                     x = Random.nextFloat(),
@@ -71,6 +72,7 @@ fun DrawScope.drawRaindrop(raindrop: Raindrop) {
     val height = size.height
     val startX = raindrop.x * width
     val startY = raindrop.y * height
+
     drawLine(
         color = Color.White.copy(alpha = 0.5f),
         start = androidx.compose.ui.geometry.Offset(startX, startY),
@@ -96,8 +98,10 @@ fun LightningEffect() {
     }
 
     if (isLightningVisible) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
+        Canvas(modifier = Modifier
+            .fillMaxSize()) {
             val topHalfScreen =size.height / 2
+
             drawRect(
                 color = Color.White.copy(alpha = 0.7f),
                 topLeft = androidx.compose.ui.geometry.Offset(0f, 0f),
