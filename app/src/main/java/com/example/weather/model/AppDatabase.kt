@@ -7,14 +7,16 @@ import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 
-@Database(entities = [LocationData::class, DayData::class, HourData::class],
-    version = 4
+@Database(entities = [LocationData::class, DayData::class, HourData::class, CurrentData::class, Settings::class],
+    version = 8
 
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun locationDao(): LocationDAO
     abstract fun dayDao(): DayDAO
     abstract fun hourDao(): HourDAO
+    abstract fun currentDataDao(): CurrentDataDao
+    abstract fun settingsDao(): SettingsDAO
 
 
     companion object {

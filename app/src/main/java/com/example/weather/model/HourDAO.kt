@@ -16,11 +16,11 @@ interface HourDAO {
         SELECT HourData.*
         FROM HourData 
         LEFT JOIN LocationData on HourData.location = LocationData.id
-        WHERE LocationData.latitude = :lat AND LocationData.longitude = :lon
-        ORDER BY HourData.timestamp DESC
+        WHERE LocationData.latitude = :lat AND LocationData.longitude = :lon AND HourData.timestamp > :currentTime
+        ORDER BY HourData.timestamp ASC
         LIMIT :limit
     """)
-    fun getAllFromLatLon(lat: Double, lon: Double, limit: Int = 24) : Flow<List<HourData>>
+    fun getAllFromLatLon(lat: Double, lon: Double, currentTime: Int, limit: Int = 24) : Flow<List<HourData>>
 
     @Query("""
         SELECT HourData.updatedAt

@@ -16,11 +16,11 @@ interface DayDAO{
         SELECT DayData.*
         FROM DayData
         LEFT JOIN LOCATIONDATA ON DayData.location = LocationData.id
-        WHERE LocationData.latitude = :lat AND LocationData.longitude = :lon
-        ORDER BY DayData.date DESC
+        WHERE LocationData.latitude = :lat AND LocationData.longitude = :lon AND DayData.date > :currentTime
+        ORDER BY DayData.date ASC
         LIMIT :limit
     """)
-    fun getFromLatLon(lat: Double, lon: Double, limit:Int = 7): Flow<List<DayData>>
+    fun getFromLatLon(lat: Double, lon: Double, currentTime: Int, limit:Int = 7): Flow<List<DayData>>
 
     @Query("""
         SELECT DayData.updatedAt

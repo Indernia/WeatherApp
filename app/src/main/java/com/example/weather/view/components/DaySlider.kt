@@ -1,5 +1,6 @@
 package com.example.weather.view.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -18,8 +19,7 @@ fun DaySlider(
     data: List<DayData>,
     modifier: Modifier = Modifier
 ) {
-    val limitedDayData = data.take(7)
-
+    val limitedDayData = data.take(4)
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
