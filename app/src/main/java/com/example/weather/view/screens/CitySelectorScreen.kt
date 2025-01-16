@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weather.R
+import com.example.weather.view.components.AddCityComp
 
 @Preview
 @Composable
@@ -31,7 +32,6 @@ fun CitySelectorScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
     ) {
         Image(
             painter = painterResource(id = R.drawable.background),
@@ -65,8 +65,10 @@ fun CitySelectorScreen(
                         )
                     }
                 }
+                AddCityComp()
             }
 
         }
+
     }
 }
