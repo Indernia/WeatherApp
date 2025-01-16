@@ -23,7 +23,7 @@ fun DayDropDownList(
 @Preview(showBackground = true)
 @Composable
 fun DayDropDownListPreview() {
-    val dayData = List(7) { // Generate 7 days of data
+    val dayData = List(8) { // Generate 8 days of data
         DayData(
             date = "1736428200",
             location = 1,
