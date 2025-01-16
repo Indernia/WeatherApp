@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
 import com.example.weather.model.Condition
 import com.example.weather.model.HourData
+import com.example.weather.ui.theme.Black
 import com.example.weather.ui.theme.ExspandedBlue
 import com.example.weather.ui.theme.Lightblue
 import java.time.Instant
@@ -73,7 +74,8 @@ fun HourDropDown(
                 Text(
                     text = formattedTimestamp,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    color = Black
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -81,7 +83,7 @@ fun HourDropDown(
                 Text(
                     text = hour.condition,
                     fontSize = 20.sp,
-                    color = Color.Gray,
+                    color = Black,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
 
@@ -95,7 +97,7 @@ fun HourDropDown(
                         text = "$celsiusTemperature°",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Blue
+                        color = Black
                     )
                     Text(
                         text = if (expanded) "▲" else "▼", // Use arrows to indicate expand/collapse
