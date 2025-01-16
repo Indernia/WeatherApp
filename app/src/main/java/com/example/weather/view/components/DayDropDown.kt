@@ -126,3 +126,24 @@ import java.time.format.DateTimeFormatter
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DayDropDownPreview() {
+    val dayData = DayData(
+        date = "1736428200",
+        location = 1,
+        updatedAt = 1736428200,
+        maxTempK = 300.0,
+        minTempK = 280.0,
+        tempK = 290.0,
+        humidity = 65.0,
+        uvi = 5.5,
+        windSpeed = 10.0,
+        windGustSpeed = 15.0,
+        weatherCondition = "Cloudy"
+    )
+
+    DayDropDown(dayData)
+}
