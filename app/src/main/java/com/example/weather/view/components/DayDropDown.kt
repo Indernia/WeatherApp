@@ -126,7 +126,6 @@ import java.time.format.DateTimeFormatter
             }
         }
     }
-}
 
 @Preview(showBackground = true)
 @Composable
