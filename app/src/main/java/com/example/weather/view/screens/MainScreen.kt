@@ -37,6 +37,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.weather.view.components.ClearBackground
+import com.example.weather.view.components.CloudyBackground
+import com.example.weather.view.components.DrizzleBackground
+import com.example.weather.view.components.SnowBackground
 
 
 @Preview(showBackground = true)
@@ -54,14 +58,23 @@ fun MainScreen (
     val hourDataList by mainViewModel.hourDataState.collectAsState()
     val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
 
+    when (weatherCondition) {
+        "Cloudy" -> {
+            CloudyBackground()
+        }
+        "Snow"-> {
+            SnowBackground()
+        }
+        "Drizzle" -> {
+            DrizzleBackground()
+        }
+        else -> {
+            ClearBackground()
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
 
-    Image(
-        painter = painterResource(id = R.drawable.background),
-        contentDescription = "Background Image",
-        contentScale = ContentScale.Crop, // Scale the image to fill the screen
-        modifier = Modifier.fillMaxSize()
-    )
     Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
