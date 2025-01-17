@@ -14,6 +14,9 @@ interface LocationDAO {
     @Query("SELECT * FROM LocationData WHERE longitude = :lon AND latitude = :lat")
     fun getLocationByLatLon(lat: Double, lon: Double): Flow<LocationData?>
 
+    @Query("SELECT * FROM LocationData WHERE id = :id")
+    fun getLocationById(id: Int): Flow<LocationData>
+
     @Query("""
             UPDATE LocationData
             SET isFavourite = 1

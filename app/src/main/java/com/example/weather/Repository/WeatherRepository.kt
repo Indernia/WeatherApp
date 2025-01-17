@@ -12,10 +12,13 @@ import com.example.weather.model.DayData
 import com.example.weather.model.HourData
 import com.example.weather.model.LocationDAO
 import com.example.weather.model.LocationData
+import com.example.weather.model.Settings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -39,6 +42,19 @@ class WeatherRepository {
     ): Flow<List<LocationData>> {
         val db = AppDatabase.getDatabase(context)
         return db.locationDao().getAll()
+    }
+
+    fun getCurrentLocation(context: Context): Flow<LocationData> {
+        val db = AppDatabase.getDatabase(context)
+        val settings: Flow<Settings> = db.settingsDao().getSettings()
+        return settings.flatMapLatest { settings ->
+            db.locationDao().getLocationById(settings.currentLocationID)
+        }
+    }
+
+    fun setCurrentLocation(LocationId: Int, context: Context){
+        val db = AppDatabase.getDatabase(context)
+        db.settingsDao().updateCurrentLocation(id = LocationId)
     }
 
     fun markLocationAsFavouriteLatLon(
