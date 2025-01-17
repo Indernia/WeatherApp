@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FigureComponent(
     @DrawableRes baseFigureResId: Int,
-    @DrawableRes clothingResId: Int,
+    /*@DrawableRes clothingResId: Int,
     @DrawableRes accessoryResId: Int,
     clothingAlignment: Alignment = Alignment.BottomCenter,
     clothingPadding: PaddingValues = PaddingValues(0.dp),
@@ -20,6 +20,8 @@ fun FigureComponent(
     accessoryPadding: PaddingValues = PaddingValues(0.dp),
     clothingSize: Pair<Int, Int>? = null,
     accessorySize: Pair<Int, Int>? = null,
+    */
+
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
@@ -31,7 +33,7 @@ fun FigureComponent(
                 .padding(bottom = 20.dp)
         )
 
-        Image(
+        /*Image(
             painter = painterResource(id = clothingResId),
             contentDescription = "Clothing",
             modifier = Modifier
@@ -56,5 +58,7 @@ fun FigureComponent(
                     } ?: baseModifier
                 }
         )
+
+         */
     }
 }

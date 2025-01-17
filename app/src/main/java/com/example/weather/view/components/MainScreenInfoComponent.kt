@@ -31,7 +31,14 @@ fun MainScreenInfoComponent(
 ) {
     val context = LocalContext.current
 
-    val clothingRes = when (weatherCondition) {
+    val baseFigureRes = when (weatherCondition) {
+        "Clear" -> R.drawable.standard
+        "Rainy" -> R.drawable.rain
+        "Snowy" -> R.drawable.winter
+        else -> R.drawable.standard
+    }
+
+    /*val clothingRes = when (weatherCondition) {
         "Clear" -> R.drawable.trunks
         "Rainy" -> R.drawable.rainboots
         "Snowy" -> R.drawable.winterboots
@@ -86,7 +93,7 @@ fun MainScreenInfoComponent(
         "Snowy" -> PaddingValues(top = 0.dp, start = 5.dp)
         else -> PaddingValues(0.dp)
     }
-
+*/
     BoxWithConstraints(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
@@ -125,8 +132,8 @@ fun MainScreenInfoComponent(
                 Spacer(modifier = Modifier.height(3.dp))
 
                 FigureComponent(
-                    baseFigureResId = R.drawable.dude,
-                    clothingResId = clothingRes,
+                    baseFigureResId = baseFigureRes,
+                    /*clothingResId = clothingRes,
                     accessoryResId = accessoryRes,
                     clothingAlignment = clothingAlignment,
                     clothingPadding = clothingPadding,
@@ -134,6 +141,7 @@ fun MainScreenInfoComponent(
                     accessoryPadding = accessoryPadding,
                     clothingSize = clothingSize,
                     accessorySize = accessorySize,
+                    */
                     modifier = Modifier
                         .height((390 * heightRatio.value).dp))
             }
