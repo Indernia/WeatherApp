@@ -1,6 +1,8 @@
 package com.example.weather.view.components
 
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -24,7 +26,9 @@ fun NavBar(
     onSelectorClicked: () -> Unit = {},
     onHourlyClicked: () -> Unit = {},
 ) {
-    NavigationBar {
+    NavigationBar(
+    ) {
+
         NavigationBarItem(
             icon = { Icon(painterResource(id = R.drawable.outline_location_city_24), contentDescription = "Location City") },
             selected = selectedItem == 0,

@@ -113,13 +113,13 @@ fun MainScreenInfoComponent(
             ) {
                 Text(
                     text = city,
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 35.sp)
+                    style = MaterialTheme.typography.titleLarge
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
                     text = "$temp°C",
-                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold, fontSize = 30.sp)
+                    style = MaterialTheme.typography.titleLarge
 
                 )
                 Spacer(modifier = Modifier.height(3.dp))

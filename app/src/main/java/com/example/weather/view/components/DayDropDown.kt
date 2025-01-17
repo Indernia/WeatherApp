@@ -1,10 +1,12 @@
 package com.example.weather.view.components
 
+import android.icu.text.DecimalFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,69 +39,110 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-@Composable
-fun DayDropDown(
-    day:DayData,
-    modifier: Modifier = Modifier
-) {
-    // State to manage dropdown expansion
-    var expanded by remember { mutableStateOf(false) }
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { expanded = !expanded }, //  Toggle expansion on click
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    @Composable
+    fun DayDropDown(
+        day: DayData,
+        modifier: Modifier = Modifier
     ) {
-        Column { // Wrap everything in a Column so expanded content aligns properly
-            Row(
-                modifier = Modifier.padding(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(80.dp)
-            ) {
-                Text(
-                    text = Instant.ofEpochSecond(day.date.toLong()).atZone(ZoneId.systemDefault()).toLocalDate().format(DateTimeFormatter.ofPattern("EEEE")),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Text(
-                    text = "${day.weatherCondition}",
-                    fontSize = 20.sp,
-                    color = Color.Gray
-                )
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    Text(
-                        text = "${day.tempK}°C",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Blue
-                    )
-                    Text(
-                        text = if (expanded) "▲" else "▼", // Use arrows to indicate expand/collapse
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-                }
-            }
+        // State to manage dropdown expansion
+        var expanded by remember { mutableStateOf(false) }
 
-            // Show additional details when expanded
-            if (expanded) {
-                Column(
+        val decimalFormat = remember { DecimalFormat("#.00") }
+        val celsiusTemperature = decimalFormat.format(day.tempK?.minus(273.15))
+        val celsiusmax = decimalFormat.format(day.maxTempK?.minus(273.15))
+        val celsiusmin = decimalFormat.format(day.minTempK?.minus(273.15))
+
+        val formattedTimestamp = remember {
+            LocalDateTime.ofInstant(
+                Instant.ofEpochSecond(day.date.toLong()), // Convert Int to Instant
+                ZoneId.systemDefault() // Convert to LocalDateTime
+            ).format(DateTimeFormatter.ofPattern("EEEE"))
+        }
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .clickable { expanded = !expanded }, // Toggle expansion on click
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Column { // Wrap everything in a Column so expanded content aligns properly
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(12.dp)
-                        .background(Color(0xFFB0E0E6)) // Lighter color for better visibility
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start
                 ) {
-                    Text("Temperature: ${day.tempK}°C")
-                    Text("Humidity: ${day.humidity}%")
-                    Text("UV Index: ${day.uvi}")
-                    Text("Wind Speed: ${day.windSpeed} km/h")
+                    Text(
+                        text = formattedTimestamp,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(
+                        text = "${day.weatherCondition}",
+                        fontSize = 20.sp,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "$celsiusTemperature°",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Text(
+                            text = if (expanded) "▲" else "▼", // Use arrows to indicate expand/collapse
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+                }
+
+                // Show additional details when expanded
+                if (expanded) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp)
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                    ) {
+                        Text("Humidity: ${day.humidity}%")
+                        Text("UV Index: ${day.uvi}")
+                        Text("Wind Speed: ${day.windSpeed} km/h")
+                        Text("Min temp: $celsiusmin°")
+                        Text("Max temp: $celsiusmax°")
+                    }
                 }
             }
         }
     }
+
+@Preview(showBackground = true)
+@Composable
+fun DayDropDownPreview() {
+    val dayData = DayData(
+        date = "1736428200",
+        location = 1,
+        updatedAt = 1736428200,
+        maxTempK = 300.0,
+        minTempK = 280.0,
+        tempK = 290.0,
+        humidity = 65.0,
+        uvi = 5.5,
+        windSpeed = 10.0,
+        windGustSpeed = 15.0,
+        weatherCondition = "Cloudy"
+    )
+
+    DayDropDown(dayData)
 }
