@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
 import com.example.weather.UIControllers.NavViewModel
@@ -66,6 +68,7 @@ fun AppNavHost(
         ) {
             composable(route = AppScreens.MainScreen.name) {
                 MainScreen(
+                    mainViewModel = MainScreenViewModel(context = LocalContext.current),
                     onSettingsClicked = {navController.navigate(AppScreens.Settings.name)}
                 )
             }

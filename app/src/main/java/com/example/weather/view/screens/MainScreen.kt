@@ -37,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.view.components.ClearBackground
 import com.example.weather.view.components.CloudyBackground
 import com.example.weather.view.components.DrizzleBackground
@@ -46,14 +47,13 @@ import com.example.weather.view.components.SnowBackground
 @Preview(showBackground = true)
 @Composable
 fun MainScreen (
+    mainViewModel: MainScreenViewModel = viewModel(),
     temperature: String = "10",
     city: String = "Copenhagen",
     onMainInfoClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
-    val context = LocalContext.current
-    val mainViewModel = remember { MainScreenViewModel(context = context) }
     val dayDataList by mainViewModel.dayDataState.collectAsState()
     val hourDataList by mainViewModel.hourDataState.collectAsState()
     val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
@@ -67,6 +67,9 @@ fun MainScreen (
         }
         "Drizzle" -> {
             DrizzleBackground()
+        }
+        "Rain" -> {
+            SnowBackground()
         }
         else -> {
             ClearBackground()
@@ -102,7 +105,7 @@ fun MainScreen (
                 MainScreenInfoComponent(
                     city = city,
                     temp = temperature,
-                    weatherCondition = "Rainy",
+                    weatherCondition = weatherCondition,
                     onClick = { /* ToDO */ }
                 )
             }
