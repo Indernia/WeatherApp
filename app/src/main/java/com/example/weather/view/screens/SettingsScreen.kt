@@ -1,5 +1,6 @@
 package com.example.weather.view.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,9 +34,13 @@ fun SettingsScreen(
     onOptionSelected: (String) -> Unit
 ){
     val langOptions = listOf("Dansk", "English")
+    var isSwitchChecked by remember { mutableStateOf(true) }
+    var selectedLanguage by remember { mutableStateOf(selectedOption) }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
         item {
             Text(
@@ -48,8 +54,8 @@ fun SettingsScreen(
             SwitchSettingItem(
                 title = "Weather Alert",
                 description = "Enable or disable weather alerts",
-                isChecked = true,
-                onCheckedChange = { isEnabled -> /* To Do */ }
+                isChecked = isSwitchChecked,
+                onCheckedChange = { isSwitchChecked = it}
             )
         }
 
@@ -57,8 +63,10 @@ fun SettingsScreen(
             DropdownSettingItem(
                 title = "Language",
                 options = langOptions,
-                selectedOption = selectedOption,
-                onOptionSelected = onOptionSelected
+                selectedOption = selectedLanguage,
+                onOptionSelected = { newOption ->
+                    selectedLanguage = newOption // Update state when an option is selected
+                }
             )
         }
 
@@ -91,7 +99,13 @@ fun SwitchSettingItem(
         }
         Switch(
             checked = isChecked,
-            onCheckedChange = onCheckedChange
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = androidx.compose.ui.graphics.Color.Green,
+                uncheckedThumbColor = androidx.compose.ui.graphics.Color.Red,
+                checkedTrackColor = androidx.compose.ui.graphics.Color.LightGray,
+                uncheckedTrackColor = androidx.compose.ui.graphics.Color.Gray
+            )
         )
     }
 }
@@ -130,7 +144,9 @@ fun DropdownSettingItem(
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor()
             )
 
             ExposedDropdownMenu(
