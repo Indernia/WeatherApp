@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
 import com.example.weather.UIControllers.NavViewModel
+import com.example.weather.UIControllers.SettingsViewModel
 
 
 enum class AppScreens {
@@ -98,9 +100,12 @@ fun AppNavHost(
             }
 
             composable(route = AppScreens.Settings.name) {
+                val context = LocalContext.current
+                val savedLanguage = getLanguagePreference(context)
                 SettingsScreen(
-                    selectedOption = "English",
-                    onOptionSelected = {  }
+                    selectedOption = savedLanguage,
+                    onOptionSelected = { },
+                    SettingsViewModel = SettingsViewModel()
                 )
             }
         }
