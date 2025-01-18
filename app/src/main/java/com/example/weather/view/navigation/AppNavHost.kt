@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.UIControllers.DailyBreakdownViewModel
 import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
@@ -84,6 +85,7 @@ fun AppNavHost(
 
             composable(route = AppScreens.DailyBreakdown.name) {
                 DailyBreakdownScreen(
+                    dailyViewModel = DailyBreakdownViewModel(context = LocalContext.current),
                     handleClickBack = {
                         navController.navigateUp()
                         viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
