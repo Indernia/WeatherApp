@@ -2,10 +2,16 @@ package com.example.weather.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Primary Colors (Sky Blue Theme)
+val BluePrimary = Color(0xFF87CEEB) // Sky Blue
+val BluePrimaryContainer = Color(0xFFB0E0E6) // Light Sky Blue
+val OnBluePrimaryContainer = Color(0xFF000000) // Black text on primary container
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Additional colors for your theme
+val BlueSecondary = Color(0xFF4682B4)
+val BlueSecondaryContainer = Color(0xFF4682B4)
+val OnBlueSecondaryContainer = Color(0xFF000000) // Black text on secondary container
+
+// Background and surface colors
+val BackgroundColor = Color(0xFF87CEEB)
+val SurfaceColor = Color(0xFF87CEEB)

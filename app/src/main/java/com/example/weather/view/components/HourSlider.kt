@@ -3,6 +3,7 @@ package com.example.weather.view.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,14 +19,17 @@ fun HourSlider(
     data: List<HourData>,
     modifier: Modifier = Modifier
 ) {
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(data) { item -> HourBox(data = item)
+        items(data, key = { it.timestamp }) { item ->
+            HourBox(data = item)
         }
     }
 }
 
+/*
 @Preview
 @Composable
 fun PreviewHourSlider() {
@@ -43,3 +47,5 @@ fun PreviewHourSlider() {
 
     HourSlider(data = hourData)
 }
+
+ */

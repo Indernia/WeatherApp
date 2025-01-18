@@ -1,8 +1,12 @@
 package com.example.weather.view.components
 
+import android.icu.text.DecimalFormat
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,8 +16,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -21,121 +30,119 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
+import com.example.weather.model.Condition
+import com.example.weather.model.DayData
+import com.example.weather.model.HourData
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
-data class Day(
-    val dayname: String,
-    val description: String,
-    val temperature: Int
 
-)
-
-val Days = arrayOf(
-    Day("Day 1", "Sunny",2),
-    Day("Day 2", "Rainy",2),
-    Day("Day 3", "Cloudy",2),
-    Day("Day 4", "Stormy",2),
-    Day("Day 5", "Windy",2),
-    Day("Day 6", "Snowy",2),
-    Day("Day 7", "Foggy",2),
-    Day("Day 8", "Thunderstorm",2),
-    Day("Day 9", "Sunny",2),
-    Day("Day 10", "Rainy",2)
-)
-
-@Composable
-fun HighlightedDay(day: Day) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .height(150.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB))
+    @Composable
+    fun DayDropDown(
+        day: DayData,
+        modifier: Modifier = Modifier
     ) {
-        Row(
+        // State to manage dropdown expansion
+        var expanded by remember { mutableStateOf(false) }
+
+        val decimalFormat = remember { DecimalFormat("#.00") }
+        val celsiusTemperature = decimalFormat.format(day.tempK?.minus(273.15))
+        val celsiusmax = decimalFormat.format(day.maxTempK?.minus(273.15))
+        val celsiusmin = decimalFormat.format(day.minTempK?.minus(273.15))
+
+        val formattedTimestamp = remember {
+            LocalDateTime.ofInstant(
+                Instant.ofEpochSecond(day.date.toLong()), // Convert Int to Instant
+                ZoneId.systemDefault() // Convert to LocalDateTime
+            ).format(DateTimeFormatter.ofPattern("EEEE"))
+        }
+
+        Card(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically, // Align items vertically
-            horizontalArrangement = Arrangement.SpaceBetween // Spread items across the row
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .clickable { expanded = !expanded }, // Toggle expansion on click
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            Column {
-                Text(
-                    text = day.dayname,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
+            Column { // Wrap everything in a Column so expanded content aligns properly
+                Row(
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        text = formattedTimestamp,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(
+                        text = "${day.weatherCondition}",
+                        fontSize = 20.sp,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "$celsiusTemperature°",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Text(
+                            text = if (expanded) "▲" else "▼", // Use arrows to indicate expand/collapse
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+                }
+
+                // Show additional details when expanded
+                if (expanded) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp)
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                    ) {
+                        Text("Humidity: ${day.humidity}%")
+                        Text("UV Index: ${day.uvi}")
+                        Text("Wind Speed: ${day.windSpeed} km/h")
+                        Text("Min temp: $celsiusmin°")
+                        Text("Max temp: $celsiusmax°")
+                    }
+                }
             }
-            Text(
-                text = day.description,
-                fontSize = 24.sp,
-                color = Color.White
-            )
-            Text(
-                text = "${day.temperature}°C",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Yellow
-            )
         }
     }
-}
 
-@Composable
-fun DayItem(day: Day, index: Int) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-
-    ){
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically, // Align items vertically
-            horizontalArrangement = Arrangement.SpaceBetween // Spread items across the row
-        ){
-            Column(
-                modifier = Modifier.padding(12.dp)
-            ) {
-                Text(
-                    text = "${day.dayname}",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-            Text(
-                text = day.description,
-                fontSize = 16.sp,
-                color = Color.Gray
-            )
-            Text(
-                text = "${day.temperature}°C",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Blue
-            )
-        }
-    }
-}
 @Preview(showBackground = true)
 @Composable
-fun ScrollableDayList(modifier: Modifier = Modifier) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        // Show today's weather in a big box
-        HighlightedDay(Days[0])
+fun DayDropDownPreview() {
+    val dayData = DayData(
+        date = "1736428200",
+        location = 1,
+        updatedAt = 1736428200,
+        maxTempK = 300.0,
+        minTempK = 280.0,
+        tempK = 290.0,
+        humidity = 65.0,
+        uvi = 5.5,
+        windSpeed = 10.0,
+        windGustSpeed = 15.0,
+        weatherCondition = "Cloudy"
+    )
 
-        // Show the rest of the days
-        for (index in 1 until Days.size) {
-            DayItem(day = Days[index], index = index)
-        }
-    }
+    DayDropDown(dayData)
 }

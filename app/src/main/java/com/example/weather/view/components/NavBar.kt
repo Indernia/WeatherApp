@@ -1,6 +1,8 @@
 package com.example.weather.view.components
 
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -17,27 +19,36 @@ import com.example.weather.R
 
 @Preview(showBackground = true)
 @Composable
-fun NavBar(modifier: Modifier = Modifier) {
-    var selectedItem by remember {mutableStateOf(0) }
+fun NavBar(
+    modifier: Modifier = Modifier,
+    selectedItem: Int? = null,
+    onDailyClicked: () -> Unit = {},
+    onSelectorClicked: () -> Unit = {},
+    onHourlyClicked: () -> Unit = {},
+) {
+    NavigationBar(
+    ) {
 
-    NavigationBar {
         NavigationBarItem(
             icon = { Icon(painterResource(id = R.drawable.outline_location_city_24), contentDescription = "Location City") },
-            //label = { Text("Location") },
             selected = selectedItem == 0,
-            onClick = { selectedItem = 0 }
+            onClick = {
+                onSelectorClicked()
+            }
         )
         NavigationBarItem(
             icon = { Icon(painterResource(id = R.drawable.hourly), contentDescription = "hourly") },
             selected = selectedItem == 1,
-            onClick = { selectedItem = 1 }
+            onClick = {
+                onHourlyClicked()
+            }
         )
         NavigationBarItem(
             icon = { Icon(painterResource(id = R.drawable.daily), contentDescription = "daily") },
             selected = selectedItem == 2,
-            onClick = { selectedItem = 2 }
+            onClick = {
+                onDailyClicked()
+            }
         )
-
     }
 }
-

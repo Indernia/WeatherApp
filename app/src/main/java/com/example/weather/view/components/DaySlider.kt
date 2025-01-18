@@ -18,14 +18,17 @@ fun DaySlider(
     data: List<DayData>,
     modifier: Modifier = Modifier
 ) {
+    val limitedDayData = data.take(7)
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(data) { item -> DayBox(data = item)
+        items(data, key = { it.date }) { item ->
+            DayBox(data = item)
         }
     }
 }
-
+/*
 @Preview
 @Composable
 fun PreviewDaySlider() {
@@ -47,3 +50,5 @@ fun PreviewDaySlider() {
     }
     DaySlider(data = dayData)
 }
+
+ */

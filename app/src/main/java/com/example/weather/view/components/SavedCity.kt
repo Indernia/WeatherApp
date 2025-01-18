@@ -58,7 +58,7 @@ fun SavedCity(
 
                 )
                 Text(
-                    text = hourData.condition.name,
+                    text = hourData.condition,
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     fontSize = MaterialTheme.typography.titleLarge.fontSize
@@ -68,6 +68,7 @@ fun SavedCity(
     }
 }
 
+/*
 @Preview
 @Composable
 fun PreviewCityResumeLocationData() {
@@ -91,3 +92,6 @@ fun PreviewCityResumeLocationData() {
 
     SavedCity(locationData = locationData, hourData = hourData)
 }
+
+
+ */

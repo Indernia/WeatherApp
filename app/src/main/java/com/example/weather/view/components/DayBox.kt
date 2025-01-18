@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
@@ -20,6 +21,8 @@ import com.example.weather.model.DayData
 import com.example.weather.model.HourData
 import com.example.weather.model.Condition
 import com.example.weather.model.LocationData
+import java.time.Instant
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -28,17 +31,20 @@ fun DayBox(
     data: DayData,
     modifier: Modifier = Modifier
 ) {
+    val formattedDate = remember(data.date) {
+        Instant.ofEpochSecond(data.date.toLong())
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+            .format(DateTimeFormatter.ofPattern("EEEE"))
+    }
     OutlinedCard(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .size(width = 90.dp, height = 120.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
                     Text(
-                        text = data.dayOfWeek,
+                        text = formattedDate,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
@@ -55,7 +61,7 @@ fun DayBox(
     }
 }
 
-
+/*
 @Preview
 @Composable
 fun PreviewHourDayBox() {
@@ -76,3 +82,6 @@ fun PreviewHourDayBox() {
     DayBox(data = dayData)
 }
 
+
+
+ */

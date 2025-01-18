@@ -1,4 +1,4 @@
-package com.example.weather
+package com.example.weather.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -21,8 +21,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import com.example.weather.R
+import com.example.weather.UIControllers.MainScreenViewModel
+import com.example.weather.view.components.CityResume
+import com.example.weather.view.components.DayDropDownList
+import com.example.weather.view.components.HourDropDownList
 import com.example.weather.view.components.NavBar
-import com.example.weather.view.components.ScrollableDayList
 
 @Preview(showBackground = true)
 @Composable
@@ -30,6 +38,14 @@ fun DailyBreakdownScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
     handleClickBack: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val mainViewModel = remember { MainScreenViewModel(context = context) }
+    val hourDataList by mainViewModel.hourDataState.collectAsState()
+    val dayDataList by mainViewModel.dayDataState.collectAsState()
+
+    val firstDayData = dayDataList.firstOrNull()
+    val firstHourData = hourDataList.firstOrNull()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -67,18 +83,19 @@ fun DailyBreakdownScreen(
                         )
                     }
                 }
+                if (firstDayData != null && firstHourData != null) {
+                    CityResume(
+                        daydata = firstDayData,
+                        hourdata = firstHourData,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                } else{
 
+                }
 
-                ScrollableDayList(
-                    modifier = Modifier.fillMaxWidth()
-                )
+                DayDropDownList(days = dayDataList)
             }
 
-            NavBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp) // Standard height for bottom navigation bars
-            )
         }
     }
 }
