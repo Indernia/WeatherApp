@@ -30,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.weather.R
 import com.example.weather.model.Condition
 import com.example.weather.model.HourData
 import java.time.Instant
@@ -80,7 +82,7 @@ fun HourDropDown(
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = hour.condition,
+                    text = WeatherConditionText(hour.condition),
                     fontSize = 20.sp,
                     modifier = Modifier.align(Alignment.CenterVertically),
                 )
@@ -113,13 +115,13 @@ fun HourDropDown(
                         .background(MaterialTheme.colorScheme.primaryContainer) // Lighter theme color
                 ) {
                     Text(
-                        text = "Humidity: ${hour.humidity}%",
+                        text = "${stringResource(R.string.Humidity)}: ${hour.humidity}%",
                     )
                     Text(
                         text = "UV Index: ${hour.uv}",
                     )
                     Text(
-                        text = "Wind Speed: ${hour.windSpeed} km/h",
+                        text = "${stringResource(R.string.Windspeed)}: ${hour.windSpeed} km/h",
                     )
                 }
             }
