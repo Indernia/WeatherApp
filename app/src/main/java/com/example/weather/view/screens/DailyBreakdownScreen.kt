@@ -42,7 +42,7 @@ import com.example.weather.view.components.SnowBackground
 fun DailyBreakdownScreen(
     dailyViewModel: DailyBreakdownViewModel = viewModel(),
     modifier: Modifier = Modifier.fillMaxSize(),
-    handleClickBack: () -> Unit
+    handleClickBack: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val mainViewModel = remember { MainScreenViewModel(context = context) }
@@ -97,7 +97,7 @@ fun DailyBreakdownScreen(
                         .padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    IconButton(onClick = { /*handleClickBack()*/ }) {
+                    IconButton(onClick = { handleClickBack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "BackArrow"
