@@ -38,33 +38,55 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.view.components.ClearBackground
+import com.example.weather.view.components.CloudyBackground
+import com.example.weather.view.components.DrizzleBackground
+import com.example.weather.view.components.RainBackground
+import com.example.weather.view.components.SnowBackground
+import com.example.weather.view.components.ThunderstormBackground
 
 
 @Preview(showBackground = true)
 @Composable
 fun MainScreen (
+    mainViewModel: MainScreenViewModel = viewModel(),
     temperature: String = "10",
     city: String = "Copenhagen",
     onMainInfoClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
-    val context = LocalContext.current
-    val mainViewModel = remember { MainScreenViewModel(context = context) }
     val dayDataList by mainViewModel.dayDataState.collectAsState()
     val hourDataList by mainViewModel.hourDataState.collectAsState()
+    val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+
+    when (weatherCondition) {
+        "Cloudy" -> {
+            CloudyBackground()
+        }
+        "Snow"-> {
+            SnowBackground()
+        }
+        "Drizzle" -> {
+            DrizzleBackground()
+        }
+        "Rain" -> {
+            RainBackground()
+        }
+        "Thunderstorm" -> {
+            ThunderstormBackground()
+        }
+        else -> {
+            ClearBackground()
+        }
+    }
 
     Log.println(Log.DEBUG, "MainScreen", hourDataList.toString())
     Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-    Image(
-        painter = painterResource(id = R.drawable.background),
-        contentDescription = "Background Image",
-        contentScale = ContentScale.Crop, // Scale the image to fill the screen
-        modifier = Modifier.fillMaxSize()
-    )
     Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -86,14 +108,13 @@ fun MainScreen (
             Box(
                 modifier = Modifier
                     .background(Color.Transparent)
-                    .height(460.dp)
+                    .height(500.dp)
                     .wrapContentSize(Alignment.TopCenter)
             ) {
                 MainScreenInfoComponent(
                     city = city,
                     temp = temperature,
-                    R.drawable.hat,
-                    R.drawable.trunks,
+                    weatherCondition = weatherCondition,
                     onClick = { /* ToDO */ }
                 )
             }

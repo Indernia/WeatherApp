@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
+import com.example.weather.R
 import com.example.weather.model.HourData
 import java.time.Instant
 import java.time.ZoneId
@@ -35,9 +37,6 @@ fun HourBox(
             .format(DateTimeFormatter.ofPattern("HH:mm"))
     }
     OutlinedCard(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .size(width = 90.dp, height = 120.dp)
@@ -50,7 +49,7 @@ fun HourBox(
                             .padding(top = 8.dp),
                     )
                     Text(
-                        text = data.condition,
+                        text = WeatherConditionText(data.condition),
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(8.dp),
@@ -64,6 +63,20 @@ fun HourBox(
 
 
         }
+    }
+}
+
+@Composable
+fun WeatherConditionText(condition: String) : String {
+    return when (condition) {
+        "Thunderstorm" -> stringResource(R.string.Thunderstorm)
+        "Drizzle" -> stringResource(R.string.Drizzle)
+        "Rain" -> stringResource(R.string.Rain)
+        "Snow" -> stringResource(R.string.Snow)
+        "Atmosphere" -> stringResource(R.string.Atmosphere)
+        "Clear" -> stringResource(R.string.Clear)
+        "Clouds" -> stringResource(R.string.Clouds)
+        else -> stringResource(R.string.Clear)
     }
 }
 

@@ -63,7 +63,7 @@ fun AddCityComp(
         ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
-            .size(width = 280.dp, height = 80.dp)
+            .size(width = 350.dp, height = 130.dp)
             .padding(16.dp),
     ) {
         Box(

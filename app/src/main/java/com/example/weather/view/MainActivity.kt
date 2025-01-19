@@ -16,6 +16,8 @@ import com.example.weather.model.LocationData
 import com.example.weather.model.Settings
 import com.example.weather.ui.theme.WeatherTheme
 import com.example.weather.view.navigation.AppNavHost
+import com.example.weather.view.screens.setLocale
+import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -24,6 +26,7 @@ import java.time.Instant
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLocale(this, "da")
 
         val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
 

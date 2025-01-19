@@ -17,11 +17,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weather.R
+import com.example.weather.UIControllers.MainScreenViewModel
+import com.example.weather.view.components.AddCityComp
+import com.example.weather.view.components.ClearBackground
+import com.example.weather.view.components.CloudyBackground
+import com.example.weather.view.components.DrizzleBackground
+import com.example.weather.view.components.RainBackground
+import com.example.weather.view.components.SnowBackground
+import com.example.weather.view.components.ThunderstormBackground
 import com.example.weather.UIControllers.CitySelectorViewModel
 import com.example.weather.view.components.CitySelectionContainer
 
@@ -31,42 +38,75 @@ fun CitySelectorScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
     handleClickBack: () -> Unit = {}
 ) {
-    var context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
+        val context = LocalContext.current
+        val mainViewModel = remember { MainScreenViewModel(context = context) }
+        val hourDataList by mainViewModel.hourDataState.collectAsState()
+        val dayDataList by mainViewModel.dayDataState.collectAsState()
+        val firstDayData = dayDataList.firstOrNull()
+        val firstHourData = hourDataList.firstOrNull()
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .navigationBarsPadding()
         ) {
+            val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+
+            when (weatherCondition) {
+                "Cloudy" -> {
+                    CloudyBackground()
+                }
+
+                "Snow" -> {
+                    SnowBackground()
+                }
+
+                "Drizzle" -> {
+                    DrizzleBackground()
+                }
+
+                "Rain" -> {
+                    RainBackground()
+                }
+
+                "Thunderstorm" -> {
+                    ThunderstormBackground()
+                }
+
+                else -> {
+                    ClearBackground()
+                }
+            }
+
+
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    horizontalArrangement = Arrangement.Start
+                        .weight(1f)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top
                 ) {
-                    IconButton(onClick = { handleClickBack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "BackArrow"
-                        )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        IconButton(onClick = { handleClickBack() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "BackArrow"
+                            )
+                        }
                     }
                 }
 
