@@ -1,5 +1,6 @@
 package com.example.weather.view.screens
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,53 +26,105 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.weather.R
+
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.res.Configuration
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.key
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.UIControllers.SettingsViewModel
+import java.util.Locale
+
+fun setLocale(context: Context, language: String) {
+    val locale = Locale(language)
+    Locale.setDefault(locale)
+    val config = context.resources.configuration
+    config.setLocale(locale)
+    context.resources.updateConfiguration(config, context.resources.displayMetrics)
+}
+
+fun saveLanguagePreference(context: Context, language: String) {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("language_prefs", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString("selected_language", language)
+    editor.apply()
+}
+
+fun getLanguagePreference(context: Context): String {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("language_prefs", Context.MODE_PRIVATE)
+    return sharedPreferences.getString("selected_language", "da") ?: "da"
+}
 
 @Composable
 fun SettingsScreen(
     selectedOption: String,
-    onOptionSelected: (String) -> Unit
+    onOptionSelected: (String) -> Unit,
+    SettingsViewModel: SettingsViewModel = viewModel(),
+    context: Context = LocalContext.current
 ){
+    val currentLanguage = getLanguagePreference(context)
     val langOptions = listOf("Dansk", "English")
     var isSwitchChecked by remember { mutableStateOf(true) }
-    var selectedLanguage by remember { mutableStateOf(selectedOption) }
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        item {
-            Text(
-                text = "Settings",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
-
-        item {
-            SwitchSettingItem(
-                title = "Weather Alert",
-                description = "Enable or disable weather alerts",
-                isChecked = isSwitchChecked,
-                onCheckedChange = { isSwitchChecked = it}
-            )
-        }
-
-        item {
-            DropdownSettingItem(
-                title = "Language",
-                options = langOptions,
-                selectedOption = selectedLanguage,
-                onOptionSelected = { newOption ->
-                    selectedLanguage = newOption // Update state when an option is selected
-                }
-            )
-        }
-
-
+    val languageOptions = listOf("Dansk", "English")
+    val languageCodeMap = mapOf("Dansk" to "da", "English" to "en")
+    val selectedLanguageDisplay = when (currentLanguage) {
+        "da" -> "Dansk"
+        "en" -> "English"
+        else -> "Dansk"
     }
+    var selectedLanguage by remember { mutableStateOf(selectedLanguageDisplay) }
+
+    key(selectedLanguage) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            item {
+                Text(
+                    text = stringResource(R.string.Settings),
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
+
+            item {
+                SwitchSettingItem(
+                    title = stringResource(R.string.WeatherAlert),
+                    description = stringResource(R.string.EnableDisableAlert),
+                    isChecked = isSwitchChecked,
+                    onCheckedChange = { isSwitchChecked = it}
+                )
+            }
+
+            item {
+                DropdownSettingItem(
+                    title = stringResource(R.string.Language),
+                    options = langOptions,
+                    selectedOption = selectedLanguage,
+                    onOptionSelected = { newOption ->
+                        selectedLanguage = newOption
+                        val langCode = if (newOption == "Dansk") "da" else "en"
+                        SettingsViewModel.changeLanguage(langCode)
+                        saveLanguagePreference(context, langCode)
+                        setLocale(context, langCode)
+                    }
+                )
+            }
+
+
+        }
+    }
+
 }
 
 @Composable
@@ -101,10 +154,10 @@ fun SwitchSettingItem(
             checked = isChecked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = androidx.compose.ui.graphics.Color.Green,
-                uncheckedThumbColor = androidx.compose.ui.graphics.Color.Red,
-                checkedTrackColor = androidx.compose.ui.graphics.Color.LightGray,
-                uncheckedTrackColor = androidx.compose.ui.graphics.Color.Gray
+                checkedThumbColor = Color.Green,
+                uncheckedThumbColor = Color.Red,
+                checkedTrackColor = Color.LightGray,
+                uncheckedTrackColor = Color.Gray
             )
         )
     }
@@ -140,13 +193,19 @@ fun DropdownSettingItem(
                 value = selectedOption,
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Choose a language") },
+                label = { Text(stringResource(R.string.ChooseLanguage)) },
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .menuAnchor()
+                    .menuAnchor(),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
             )
 
             ExposedDropdownMenu(
@@ -165,15 +224,4 @@ fun DropdownSettingItem(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SettingsScreenPreview() {
-    val selectedOption = "Option 1"
-
-    SettingsScreen(
-        selectedOption = selectedOption,
-        onOptionSelected = {},
-    )
 }

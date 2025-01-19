@@ -15,6 +15,7 @@ import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
 import com.example.weather.UIControllers.NavViewModel
+import com.example.weather.UIControllers.SettingsViewModel
 
 
 enum class AppScreens {
@@ -103,9 +104,12 @@ fun AppNavHost(
             }
 
             composable(route = AppScreens.Settings.name) {
+                val context = LocalContext.current
+                val savedLanguage = getLanguagePreference(context)
                 SettingsScreen(
-                    selectedOption = "English",
-                    onOptionSelected = {  }
+                    selectedOption = savedLanguage,
+                    onOptionSelected = { },
+                    SettingsViewModel = SettingsViewModel()
                 )
             }
         }

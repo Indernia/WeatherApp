@@ -30,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.weather.R
 import com.example.weather.model.Condition
 import com.example.weather.model.DayData
 import com.example.weather.model.HourData
@@ -84,7 +86,7 @@ import java.time.format.DateTimeFormatter
                     Spacer(modifier = Modifier.weight(1f))
 
                     Text(
-                        text = "${day.weatherCondition}",
+                        text = "${day.weatherCondition?.let { WeatherConditionText(it) }}",
                         fontSize = 20.sp,
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )
@@ -116,9 +118,9 @@ import java.time.format.DateTimeFormatter
                             .padding(12.dp)
                             .background(MaterialTheme.colorScheme.primaryContainer)
                     ) {
-                        Text("Humidity: ${day.humidity}%")
+                        Text("${stringResource(R.string.Humidity)}: ${day.humidity}%")
                         Text("UV Index: ${day.uvi}")
-                        Text("Wind Speed: ${day.windSpeed} km/h")
+                        Text("${stringResource(R.string.Windspeed)}: ${day.windSpeed} km/h")
                         Text("Min temp: $celsiusmin°")
                         Text("Max temp: $celsiusmax°")
                     }
