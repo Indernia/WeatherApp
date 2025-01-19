@@ -55,7 +55,6 @@ import com.example.weather.view.components.WeatherBackground
 @Composable
 fun MainScreen (
     mainViewModel: MainScreenViewModel = viewModel(),
-    temperature: String = "10",
     city: String = "Copenhagen",
     onMainInfoClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
@@ -64,6 +63,7 @@ fun MainScreen (
     val dayDataList by mainViewModel.dayDataState.collectAsState()
     val hourDataList by mainViewModel.hourDataState.collectAsState()
     val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+    val temperature = dayDataList.firstOrNull()?.tempK?.minus(273.15)?.toInt().toString()
 
     WeatherBackground(weatherCondition)
 
