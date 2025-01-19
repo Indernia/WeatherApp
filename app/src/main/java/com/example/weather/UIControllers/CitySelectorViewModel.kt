@@ -2,6 +2,7 @@ package com.example.weather.UIControllers
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,6 +59,15 @@ class CitySelectorViewModel (
             )
         }
         return response
+    }
+
+    fun updateCurrentLocation(id: Long, context: Context) {
+        val weatherRepository = WeatherRepository()
+        viewModelScope.launch {
+            weatherRepository.setCurrentLocation(id, context)
+            Log.d("CitySelectorViewModel", "Current location updated to $id")
+        }
+
     }
 
 }
