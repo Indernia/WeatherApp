@@ -21,10 +21,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.weather.R
 
 @Composable
 fun CitySelectorPopup(
@@ -46,7 +48,7 @@ var cityName = ""
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Add a City",
+                    text = stringResource(R.string.AddCity),
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center
                 )
@@ -54,7 +56,7 @@ var cityName = ""
                 TextField(
                     value = cityName,
                     onValueChange = { cityName = it },
-                    placeholder = { Text("Enter city name") },
+                    placeholder = { Text(stringResource(R.string.InsertCity)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -63,14 +65,14 @@ var cityName = ""
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { onDismissRequest() }) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.Cancel))
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(onClick = {
                         onAddCity(cityName)
                         onDismissRequest()
                     }) {
-                        Text("Add")
+                        Text(stringResource(R.string.Add))
                     }
                 }
             }

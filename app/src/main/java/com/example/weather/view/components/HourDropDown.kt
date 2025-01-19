@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.weather.R
 import com.example.weather.model.Condition
 import com.example.weather.model.HourData
 import java.time.Instant
@@ -48,17 +51,19 @@ fun HourDropDown(
     val decimalFormat = remember { DecimalFormat("#.00") }
     val celsiusTemperature = decimalFormat.format(hour.temperature - 273.15)
 
-    val formattedTimestamp = remember {LocalDateTime.ofInstant(
-        Instant.ofEpochSecond(hour.timestamp.toLong()), // Convert Int to Instant
-        ZoneId.systemDefault() // Convert to LocalDateTime
-    ).format(DateTimeFormatter.ofPattern("HH:mm"))}
+    val formattedTimestamp = remember {
+        LocalDateTime.ofInstant(
+            Instant.ofEpochSecond(hour.timestamp.toLong()), // Convert Int to Instant
+            ZoneId.systemDefault() // Convert to LocalDateTime
+        ).format(DateTimeFormatter.ofPattern("HH:mm"))
+    }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { expanded = !expanded }, //  Toggle expansion on click
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF87CEEB)),
+            .clickable { expanded = !expanded }, // Toggle expansion on click
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary), // Use theme color
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column { // Wrap everything in a Column so expanded content aligns properly
@@ -71,16 +76,15 @@ fun HourDropDown(
                 Text(
                     text = formattedTimestamp,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = hour.condition,
+                    text = WeatherConditionText(hour.condition),
                     fontSize = 20.sp,
-                    color = Color.Gray,
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    modifier = Modifier.align(Alignment.CenterVertically),
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -93,13 +97,11 @@ fun HourDropDown(
                         text = "$celsiusTemperature°",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Blue
                     )
                     Text(
                         text = if (expanded) "▲" else "▼", // Use arrows to indicate expand/collapse
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Gray
                     )
                 }
             }
@@ -110,16 +112,23 @@ fun HourDropDown(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp)
-                        .background(Color(0xFFB0E0E6)) // Lighter color for better visibility
+                        .background(MaterialTheme.colorScheme.primaryContainer) // Lighter theme color
                 ) {
-                    Text("Humidity: ${hour.humidity}%")
-                    Text("UV Index: ${hour.uv}")
-                    Text("Wind Speed: ${hour.windSpeed} km/h")
+                    Text(
+                        text = "${stringResource(R.string.Humidity)}: ${hour.humidity}%",
+                    )
+                    Text(
+                        text = "UV Index: ${hour.uv}",
+                    )
+                    Text(
+                        text = "${stringResource(R.string.Windspeed)}: ${hour.windSpeed} km/h",
+                    )
                 }
             }
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

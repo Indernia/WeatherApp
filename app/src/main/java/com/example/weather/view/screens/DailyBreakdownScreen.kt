@@ -25,16 +25,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.R
+import com.example.weather.UIControllers.DailyBreakdownViewModel
 import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.components.CityResume
+import com.example.weather.view.components.ClearBackground
+import com.example.weather.view.components.CloudyBackground
 import com.example.weather.view.components.DayDropDownList
+import com.example.weather.view.components.DrizzleBackground
 import com.example.weather.view.components.HourDropDownList
 import com.example.weather.view.components.NavBar
+import com.example.weather.view.components.RainBackground
+import com.example.weather.view.components.SnowBackground
+import com.example.weather.view.components.ThunderstormBackground
 
-@Preview(showBackground = true)
 @Composable
 fun DailyBreakdownScreen(
+    dailyViewModel: DailyBreakdownViewModel = viewModel(),
     modifier: Modifier = Modifier.fillMaxSize(),
     handleClickBack: () -> Unit = {}
 ) {
@@ -51,12 +59,30 @@ fun DailyBreakdownScreen(
             .fillMaxSize()
             .navigationBarsPadding()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
+        val dayDataList by dailyViewModel.dayDataState.collectAsState()
+        val hourDataList by dailyViewModel.hourDataState.collectAsState()
+        val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+
+        when (weatherCondition) {
+            "Cloudy" -> {
+                CloudyBackground()
+            }
+            "Snow"-> {
+                SnowBackground()
+            }
+            "Drizzle" -> {
+                DrizzleBackground()
+            }
+            "Rain" -> {
+                RainBackground()
+            }
+            "Thunderstorm" -> {
+                ThunderstormBackground()
+            }
+            else -> {
+                ClearBackground()
+            }
+        }
 
         Column(
             modifier = Modifier.fillMaxSize(),

@@ -43,9 +43,6 @@ fun CityResume(
             .format(DateTimeFormatter.ofPattern("MMMM: dd"))
     }
     OutlinedCard(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .fillMaxWidth().height(120.dp)
@@ -55,19 +52,18 @@ fun CityResume(
             modifier = Modifier.fillMaxWidth().height(120.dp)
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(100.dp),
+                horizontalArrangement = Arrangement.spacedBy(50.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = formattedDate,
                     textAlign = TextAlign.Center,
-                    fontSize = MaterialTheme.typography.titleLarge.fontSize
-
+                    style = MaterialTheme.typography.titleLarge
                 )
                 Text(
                     text = Instant.ofEpochSecond(hourdata.timestamp.toLong()).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm")),
                     textAlign = TextAlign.Center,
-                    fontSize = MaterialTheme.typography.titleLarge.fontSize
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
         }
