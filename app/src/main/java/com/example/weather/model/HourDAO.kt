@@ -35,6 +35,14 @@ interface HourDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(hours: List<HourData>)
 
-
+    @Query("""
+        SELECT HourData.*
+        FROM HourData
+        LEFT JOIN Settings ON HourData.location = Settings.currentLocationID
+        WHERE Settings.id = 1 AND HourData.timestamp > :currentTime
+        ORDER BY HourData.timestamp ASC
+        LIMIT :limit
+    """)
+    fun getSelectedCityHourData(currentTime: Int, limit: Int = 24): Flow<List<HourData>>
 
 }

@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import java.time.ZonedDateTime
 import kotlin.contracts.contract
-
 class MainScreenViewModel (context: Context): ViewModel() {
 
     private val _dayDataState = MutableStateFlow<List<DayData>>(emptyList())
@@ -29,22 +28,24 @@ class MainScreenViewModel (context: Context): ViewModel() {
     init {
         viewModelScope.launch {
             val weatherRepository = WeatherRepository()
-
             launch {
-                weatherRepository.getDays(context, 55.67594, 12.56553, "Copenhagen")
+                weatherRepository.getDays(context, 25.67594, 11.56553, "Copenhagen")
                     .distinctUntilChanged()
                     .collect {
                     _dayDataState.value = it
                 }
+                Log.d("MainScreenViewModel", "Day data updated: ${dayDataState.value.toString()}")
             }
 
             launch {
-                weatherRepository.getHours(context, 55.67594, 12.56553, "Copenhagen")
+                weatherRepository.getHours(context, 25.67594, 11.56553, "Copenhagen")
                     .distinctUntilChanged()
                     .collect {
                     _hourDataState.value = it
                 }
+                Log.d("MainScreenViewModel", "Hour data updated: ${hourDataState.value.toString()}")
             }
+
         }
     }
 

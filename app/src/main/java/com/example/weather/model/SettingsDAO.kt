@@ -1,6 +1,8 @@
 package com.example.weather.model
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
@@ -24,6 +26,11 @@ interface SettingsDAO {
         SET currentLocationID = :id
         WHERE Settings.id = 1
         """)
-    fun updateCurrentLocation(id: Int)
+    fun updateCurrentLocation(id: Long)
+
+
+    // Note this should only be used on startup as we handle all settings in id = 1
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertSettings(settings: Settings)
 
 }

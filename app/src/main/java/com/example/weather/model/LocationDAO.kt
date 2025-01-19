@@ -31,8 +31,16 @@ interface LocationDAO {
     """)
     fun markLocationAsUnFavouriteLatLon(lat: Double, lon: Double)
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(location: LocationData): Long
+
+    @Query("""
+        SELECT LocationData.* 
+        FROM LocationData
+        LEFT JOIN Settings ON LocationData.id = Settings.currentLocationID
+        WHERE Settings.id = 1
+    """)
+    fun getCurrentLocation(): LocationData
 
 
 

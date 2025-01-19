@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -52,9 +53,11 @@ class WeatherRepository {
         }
     }
 
-    fun setCurrentLocation(LocationId: Int, context: Context){
+    suspend fun setCurrentLocation(LocationId: Long, context: Context){
         val db = AppDatabase.getDatabase(context)
-        db.settingsDao().updateCurrentLocation(id = LocationId)
+        withContext(Dispatchers.IO) {
+            db.settingsDao().updateCurrentLocation(id = LocationId)
+        }
     }
 
     fun markLocationAsFavouriteLatLon(
@@ -105,20 +108,31 @@ class WeatherRepository {
         name: String,
         limit: Int = 7
     ): Flow<List<DayData>> = flow {
+        Log.println(Log.DEBUG, "WeatherRepository", "Getting days")
         val db = AppDatabase.getDatabase(context)
-        val dayDataList = db.dayDao().getFromLatLon(lat, lon, currentTime = Instant.now().epochSecond.toInt(), limit).first()
+        val dayDataList = db.dayDao().getSelectedCityDayData(currentTime = Instant.now().epochSecond.toInt(), limit).first()
         emit(dayDataList)
 
         var latestUpdate = 0
 
         withContext(Dispatchers.IO) {
-            latestUpdate = db.dayDao().getLatestUpdate(lat, lon)
+            latestUpdate = db.dayDao().getLatestUpdateSelectedCity(Instant.now().epochSecond.toInt())
         }
 
         if (Instant.now().epochSecond - latestUpdate > dataStaleValue) {
             Log.println(Log.DEBUG, "WeatherRepository", "Updating data")
-            UpdataData(lat = lat, lon = lon, name = name, context = context)
-            val updatedDayDataList = db.dayDao().getFromLatLon(lat, lon, currentTime = Instant.now().epochSecond.toInt(), limit).first()
+            var location: LocationData = LocationData(0, "", 0.0, 0.0, 0, false)
+            withContext(Dispatchers.IO){
+                Log.d("WeatherRepository", "Current location: $location")
+                location = db.locationDao().getCurrentLocation()
+                Log.d("WeatherRepository", "Current location: ${db.locationDao().getAll().first().toString()}")
+
+                Log.d("WeatherRepository", "Current location: $location")
+            }
+
+            Log.d("WeatherRepository", "Current location: $location")
+            UpdataData(lat = location.latitude, lon = location.longitude, name = location.name, context = context)
+            val updatedDayDataList = db.dayDao().getSelectedCityDayData(currentTime = Instant.now().epochSecond.toInt(), limit).first()
             emit(updatedDayDataList)
         }
 
@@ -140,8 +154,9 @@ class WeatherRepository {
         limit: Int = 24
     ): Flow<List<HourData>> = flow {
         val db = AppDatabase.getDatabase(context)
-        val hourDataList = db.hourDao().getAllFromLatLon(lat, lon, currentTime = Instant.now().epochSecond.toInt(), limit).first()
+        val hourDataList = db.hourDao().getSelectedCityHourData(currentTime = Instant.now().epochSecond.toInt(), limit).first()
         emit(hourDataList)
+        Log.d("WeatherRepository", "Getting hours: $hourDataList")
 
         var latestUpdate = 0
         withContext(Dispatchers.IO) {
@@ -149,8 +164,15 @@ class WeatherRepository {
         }
 
         if (Instant.now().epochSecond - latestUpdate > dataStaleValue) {
-            UpdataData(lat = lat, lon = lon, name = name, context = context)
-            val updatedHourDataList = db.hourDao().getAllFromLatLon(lat, lon, currentTime = Instant.now().epochSecond.toInt(), limit).first()
+
+            var location: LocationData = LocationData(0, "", 0.0, 0.0, 0, false)
+            withContext(Dispatchers.IO){
+                // Doing this update as the UpdateData was made to take lat lon and not depend on the database to get the location
+                location = db.locationDao().getCurrentLocation()
+            }
+
+            UpdataData(lat = location.latitude, lon = location.longitude, name = location.name, context = context)
+            val updatedHourDataList = db.hourDao().getSelectedCityHourData(currentTime = Instant.now().epochSecond.toInt(), limit).first()
             emit(updatedHourDataList)
         }
 
@@ -194,10 +216,10 @@ class WeatherRepository {
         val jsonObj = Json.parseToJsonElement(responseJson).jsonObject
 
         var locationId: Long = 0
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             val location: Flow<LocationData?> = db.locationDao().getLocationByLatLon(lat, lon)
 
-            if(location.first() == null){
+            if (location.first() == null) {
                 val locationData = LocationData(
                     name = name,
                     latitude = lat,
@@ -206,12 +228,11 @@ class WeatherRepository {
                     id = 0, // placeholder as it is auto generated
                 )
                 locationId = db.locationDao().insert(locationData)
-            } else{
+            } else {
                 val locationTempData = location.first()
                 locationId = locationTempData?.id ?: 0
             }
         }
-
 
 
         val hourData: JsonArray? = jsonObj["hourly"]?.jsonArray
@@ -233,7 +254,7 @@ class WeatherRepository {
             )
         } ?: emptyList()
 
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             db.hourDao().insertAll(hourDataList)
         }
 
@@ -256,7 +277,7 @@ class WeatherRepository {
             )
         }
 
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             if (dayDataList != null) {
                 db.dayDao().insertAll(dayDataList)
             }
@@ -274,10 +295,10 @@ class WeatherRepository {
             windSpeed = currentData?.get("wind_speed")?.jsonPrimitive?.content?.toDouble() ?: 0.0
         )
 
-        withContext(Dispatchers.IO){
+
+        withContext(Dispatchers.IO) {
             db.currentDataDao().insertCurrentData(currentDataObject)
         }
-
 
 
     }

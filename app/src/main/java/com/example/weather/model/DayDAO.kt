@@ -35,4 +35,24 @@ interface DayDAO{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(days: List<DayData>)
 
+    @Query("""
+        SELECT DayData.*
+        FROM DayData
+        Left Join Settings ON DayData.location = Settings.currentLocationID
+        WHERE Settings.id = 1 AND DayData.date > :currentTime
+        ORDER BY DayData.date ASC
+        LIMIT :limit
+    """)
+    fun getSelectedCityDayData(currentTime: Int, limit: Int = 7): Flow<List<DayData>>
+
+    @Query("""
+        SELECT DayData.updatedAt
+        FROM DayData
+        LEFT JOIN Settings ON DayData.location = Settings.currentLocationID
+        WHERE Settings.id = 1 AND DayData.date > :currentTime
+        ORDER BY DayData.updatedAt DESC
+        LIMIT 1
+    """)
+    fun getLatestUpdateSelectedCity(currentTime: Int) : Int
+
 }
