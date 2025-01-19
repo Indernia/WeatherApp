@@ -36,9 +36,9 @@ import com.example.weather.view.components.DayDropDownList
 import com.example.weather.view.components.DrizzleBackground
 import com.example.weather.view.components.HourDropDownList
 import com.example.weather.view.components.NavBar
-import com.example.weather.view.components.RainBackground
 import com.example.weather.view.components.SnowBackground
 import com.example.weather.view.components.ThunderstormBackground
+import com.example.weather.view.components.WeatherBackground
 
 @Composable
 fun DailyBreakdownScreen(
@@ -63,26 +63,7 @@ fun DailyBreakdownScreen(
         val hourDataList by dailyViewModel.hourDataState.collectAsState()
         val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
 
-        when (weatherCondition) {
-            "Cloudy" -> {
-                CloudyBackground()
-            }
-            "Snow"-> {
-                SnowBackground()
-            }
-            "Drizzle" -> {
-                DrizzleBackground()
-            }
-            "Rain" -> {
-                RainBackground()
-            }
-            "Thunderstorm" -> {
-                ThunderstormBackground()
-            }
-            else -> {
-                ClearBackground()
-            }
-        }
+        WeatherBackground(weatherCondition)
 
         Column(
             modifier = Modifier.fillMaxSize(),
