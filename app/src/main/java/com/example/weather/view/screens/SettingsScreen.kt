@@ -79,7 +79,7 @@ fun SettingsScreen(
     val selectedLanguageDisplay = when (currentLanguage) {
         "da" -> "Dansk"
         "en" -> "English"
-        else -> "English" // default to English
+        else -> "Dansk"
     }
     var selectedLanguage by remember { mutableStateOf(selectedLanguageDisplay) }
 
