@@ -10,7 +10,7 @@ import com.example.weather.view.components.ThunderstormBackground
 @Composable
 fun WeatherBackground(weatherCondition: String) {
     when (weatherCondition) {
-        "Cloudy" -> CloudyBackground()
+        "Clouds" -> CloudyBackground()
         "Snow" -> SnowBackground()
         "Drizzle" -> DrizzleBackground()
         "Rain" -> RainBackground()
