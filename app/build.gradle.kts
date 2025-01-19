@@ -70,6 +70,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.play.services.location)
     val room_version = "2.6.1"
 
     implementation(libs.androidx.core.ktx)
@@ -125,4 +126,6 @@ dependencies {
 
     // Kotlin serialization imported from codelab on networking
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
+    implementation("com.google.android.gms:play-services-location:17.0.0")
 }

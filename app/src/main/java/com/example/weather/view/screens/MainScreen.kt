@@ -1,6 +1,7 @@
 package com.example.weather.view.screens
 
 
+import android.util.Log
 import com.example.weather.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +46,9 @@ import com.example.weather.view.components.DrizzleBackground
 
 import com.example.weather.view.components.SnowBackground
 import com.example.weather.view.components.ThunderstormBackground
+import kotlinx.coroutines.flow.first
 import com.example.weather.view.components.WeatherBackground
+
 
 
 @Preview(showBackground = true)
@@ -63,6 +66,9 @@ fun MainScreen (
     val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
 
     WeatherBackground(weatherCondition)
+
+    Log.println(Log.DEBUG, "MainScreen", hourDataList.toString())
+    Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -104,10 +110,12 @@ fun MainScreen (
 
             Spacer(modifier = Modifier.height(20.dp))
 
+        Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
             DaySlider(
                 data = dayDataList,
                 modifier = Modifier.height(100.dp)
             )
-            Spacer(modifier = Modifier.height(20.dp))
+
+        Spacer(modifier = Modifier.height(20.dp))
         }
 }   }

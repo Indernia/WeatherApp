@@ -16,11 +16,11 @@ interface HourDAO {
         SELECT HourData.*
         FROM HourData 
         LEFT JOIN LocationData on HourData.location = LocationData.id
-        WHERE LocationData.latitude = :lat AND LocationData.longitude = :lon
-        ORDER BY HourData.timestamp DESC
+        WHERE LocationData.latitude = :lat AND LocationData.longitude = :lon AND HourData.timestamp > :currentTime
+        ORDER BY HourData.timestamp ASC
         LIMIT :limit
     """)
-    fun getAllFromLatLon(lat: Double, lon: Double, limit: Int = 24) : Flow<List<HourData>>
+    fun getAllFromLatLon(lat: Double, lon: Double, currentTime: Int, limit: Int = 24) : Flow<List<HourData>>
 
     @Query("""
         SELECT HourData.updatedAt
@@ -35,6 +35,14 @@ interface HourDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(hours: List<HourData>)
 
-
+    @Query("""
+        SELECT HourData.*
+        FROM HourData
+        LEFT JOIN Settings ON HourData.location = Settings.currentLocationID
+        WHERE Settings.id = 1 AND HourData.timestamp > :currentTime
+        ORDER BY HourData.timestamp ASC
+        LIMIT :limit
+    """)
+    fun getSelectedCityHourData(currentTime: Int, limit: Int = 24): Flow<List<HourData>>
 
 }

@@ -11,6 +11,7 @@ composeBom = "2024.04.01"
 navigationCompose = "2.8.3"
 storage = "1.5.0"
 datastore = "1.1.1"
+playServicesLocation = "21.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,7 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
 
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref="datastore"}
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

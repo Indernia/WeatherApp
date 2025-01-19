@@ -33,7 +33,10 @@ import com.example.weather.view.components.DrizzleBackground
 
 import com.example.weather.view.components.SnowBackground
 import com.example.weather.view.components.ThunderstormBackground
+import com.example.weather.UIControllers.CitySelectorViewModel
+import com.example.weather.view.components.CitySelectionContainer
 import com.example.weather.view.components.WeatherBackground
+
 
 @Preview
 @Composable
@@ -87,9 +90,13 @@ fun CitySelectorScreen(
                             )
                         }
                     }
-                    AddCityComp()
-                }
 
+
+                    CitySelectionContainer(
+                        modifier = modifier,
+                        viewModel = CitySelectorViewModel(context = context)
+                    )
+                }
             }
 
         }
