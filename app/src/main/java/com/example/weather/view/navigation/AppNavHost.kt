@@ -109,7 +109,11 @@ fun AppNavHost(
                 SettingsScreen(
                     selectedOption = savedLanguage,
                     onOptionSelected = { },
-                    SettingsViewModel = SettingsViewModel()
+                    SettingsViewModel = SettingsViewModel(),
+                    handleClickBack = {
+                        navController.navigateUp()
+                        viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
+                    }
                 )
             }
         }
