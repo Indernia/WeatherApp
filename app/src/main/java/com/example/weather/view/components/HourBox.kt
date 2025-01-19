@@ -2,6 +2,7 @@ package com.example.weather.view.components
 
 import android.icu.text.DecimalFormat
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,19 +17,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.weather.R
 import com.example.weather.model.HourData
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 @Composable
 fun HourBox(
     data: HourData,
 ) {
     val decimalFormat = remember { DecimalFormat("#.00") }
-    val celsiusTemperature = decimalFormat.format(data.temperature - 273.15)
+    val celsiusTemperature = (data.temperature - 273.15).roundToInt()
 
     val formattedTimestamp = remember(data.timestamp) {
         Instant.ofEpochSecond(data.timestamp.toLong())
@@ -48,12 +52,32 @@ fun HourBox(
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
                     )
+                    /*
                     Text(
                         text = WeatherConditionText(data.condition),
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(8.dp),
-                    )
+                    )*/
+
+            val weatherImage = when (data.condition) {
+                "Clear" -> R.drawable.cloud
+                "Clouds" -> R.drawable.cloud
+                "Rain" -> R.drawable.rainy
+                "Snow" -> R.drawable.cloud
+                "Thunderstorm" -> R.drawable.cloud
+                else -> R.drawable.cloud
+            }
+
+            Image(
+                painter = painterResource(id = weatherImage),
+                contentDescription = "${data.condition} icon",
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(top = 30.dp),
+                contentScale = ContentScale.Fit
+            )
+
                     Text(
                         text = "$celsiusTemperature°C",
                         modifier = Modifier
