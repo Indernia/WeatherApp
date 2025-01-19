@@ -30,11 +30,13 @@ import com.example.weather.view.components.AddCityComp
 import com.example.weather.view.components.ClearBackground
 import com.example.weather.view.components.CloudyBackground
 import com.example.weather.view.components.DrizzleBackground
-import com.example.weather.view.components.RainBackground
+
 import com.example.weather.view.components.SnowBackground
 import com.example.weather.view.components.ThunderstormBackground
 import com.example.weather.UIControllers.CitySelectorViewModel
 import com.example.weather.view.components.CitySelectionContainer
+import com.example.weather.view.components.WeatherBackground
+
 
 @Preview
 @Composable
@@ -60,31 +62,7 @@ fun CitySelectorScreen(
         ) {
             val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
 
-            when (weatherCondition) {
-                "Cloudy" -> {
-                    CloudyBackground()
-                }
-
-                "Snow" -> {
-                    SnowBackground()
-                }
-
-                "Drizzle" -> {
-                    DrizzleBackground()
-                }
-
-                "Rain" -> {
-                    RainBackground()
-                }
-
-                "Thunderstorm" -> {
-                    ThunderstormBackground()
-                }
-
-                else -> {
-                    ClearBackground()
-                }
-            }
+            WeatherBackground(weatherCondition)
 
 
             Column(

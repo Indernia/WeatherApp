@@ -32,6 +32,7 @@ import com.example.weather.view.components.DaySlider
 import com.example.weather.view.components.MainScreenInfoComponent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.painterResource
@@ -42,10 +43,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.view.components.ClearBackground
 import com.example.weather.view.components.CloudyBackground
 import com.example.weather.view.components.DrizzleBackground
-import com.example.weather.view.components.RainBackground
+
 import com.example.weather.view.components.SnowBackground
 import com.example.weather.view.components.ThunderstormBackground
 import kotlinx.coroutines.flow.first
+import com.example.weather.view.components.WeatherBackground
+
 
 
 @Preview(showBackground = true)
@@ -62,26 +65,7 @@ fun MainScreen (
     val hourDataList by mainViewModel.hourDataState.collectAsState()
     val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
 
-    when (weatherCondition) {
-        "Cloudy" -> {
-            CloudyBackground()
-        }
-        "Snow"-> {
-            SnowBackground()
-        }
-        "Drizzle" -> {
-            DrizzleBackground()
-        }
-        "Rain" -> {
-            RainBackground()
-        }
-        "Thunderstorm" -> {
-            ThunderstormBackground()
-        }
-        else -> {
-            ClearBackground()
-        }
-    }
+    WeatherBackground(weatherCondition)
 
     Log.println(Log.DEBUG, "MainScreen", hourDataList.toString())
     Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())

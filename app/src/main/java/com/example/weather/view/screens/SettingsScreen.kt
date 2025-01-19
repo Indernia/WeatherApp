@@ -34,6 +34,12 @@ import com.example.weather.R
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -69,6 +75,7 @@ fun SettingsScreen(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     SettingsViewModel: SettingsViewModel = viewModel(),
+    handleClickBack: () -> Unit = {},
     context: Context = LocalContext.current
 ){
     val currentLanguage = getLanguagePreference(context)
@@ -83,46 +90,81 @@ fun SettingsScreen(
     }
     var selectedLanguage by remember { mutableStateOf(selectedLanguageDisplay) }
 
-    key(selectedLanguage) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            item {
-                Text(
-                    text = stringResource(R.string.Settings),
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-            }
-
-            item {
-                SwitchSettingItem(
-                    title = stringResource(R.string.WeatherAlert),
-                    description = stringResource(R.string.EnableDisableAlert),
-                    isChecked = isSwitchChecked,
-                    onCheckedChange = { isSwitchChecked = it}
-                )
-            }
-
-            item {
-                DropdownSettingItem(
-                    title = stringResource(R.string.Language),
-                    options = langOptions,
-                    selectedOption = selectedLanguage,
-                    onOptionSelected = { newOption ->
-                        selectedLanguage = newOption
-                        val langCode = if (newOption == "Dansk") "da" else "en"
-                        SettingsViewModel.changeLanguage(langCode)
-                        saveLanguagePreference(context, langCode)
-                        setLocale(context, langCode)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    IconButton(onClick = { handleClickBack() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "BackArrow"
+                        )
                     }
-                )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    key(selectedLanguage) {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp)
+                        ) {
+                            item {
+                                Text(
+                                    text = stringResource(R.string.Settings),
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    modifier = Modifier.padding(bottom = 16.dp)
+                                )
+                            }
+                            item {
+                                SwitchSettingItem(
+                                    title = stringResource(R.string.WeatherAlert),
+                                    description = stringResource(R.string.EnableDisableAlert),
+                                    isChecked = isSwitchChecked,
+                                    onCheckedChange = { isSwitchChecked = it }
+                                )
+                            }
+                            item {
+                                DropdownSettingItem(
+                                    title = stringResource(R.string.Language),
+                                    options = langOptions,
+                                    selectedOption = selectedLanguage,
+                                    onOptionSelected = { newOption ->
+                                        selectedLanguage = newOption
+                                        val langCode = if (newOption == "Dansk") "da" else "en"
+                                        SettingsViewModel.changeLanguage(langCode)
+                                        saveLanguagePreference(context, langCode)
+                                        setLocale(context, langCode)
+                                    }
+                                )
+                            }
+                        }
+                    }
+
+                }
             }
-
-
         }
+
     }
 
 }
