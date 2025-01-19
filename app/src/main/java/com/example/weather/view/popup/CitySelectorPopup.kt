@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -35,13 +34,18 @@ import com.example.weather.UIControllers.CitySelectorViewModel
 import com.example.weather.model.LocationData
 import java.time.Instant
 import com.example.weather.R
+import android.util.Log
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun CitySelectorPopup(
     onDismissRequest: () -> Unit,
-    onAddCity: (String) -> Unit
+    onAddCity: (LocationData) -> Unit,
+    onSearchCity: (String) -> Unit,
+    viewModel: CitySelectorViewModel
 ) {
-var cityName = ""
+var cityName by remember {mutableStateOf("")}
+val items by viewModel.possibleLocations.collectAsState()
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
             modifier = Modifier

@@ -16,6 +16,16 @@ interface CurrentDataDao {
     """)
     fun getCurrentDataFromLocation(locationId: Long): Flow<CurrentData>
 
+    @Query("""
+        SELECT CurrentData.* 
+        FROM CurrentData
+        LEFT JOIN Settings ON CurrentData.locationID = Settings.currentLocationID
+        WHERE Settings.id = 1
+        ORDER BY CurrentData.timestamp DESC
+        LIMIT 1
+    """)
+    fun getCurrentDataForCurrentLocation(): Flow<CurrentData>
+
     @Insert
     fun insertCurrentData(currentData: CurrentData)
 }

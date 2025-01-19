@@ -45,6 +45,7 @@ import com.example.weather.view.components.DrizzleBackground
 import com.example.weather.view.components.RainBackground
 import com.example.weather.view.components.SnowBackground
 import com.example.weather.view.components.ThunderstormBackground
+import kotlinx.coroutines.flow.first
 
 
 @Preview(showBackground = true)

@@ -13,5 +13,6 @@ data class CurrentData(
     var humidity: Double,
     var uvi: Double,
     var windSpeed: Double,
+    var condition: String
 
 )

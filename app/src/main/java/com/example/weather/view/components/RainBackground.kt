@@ -34,14 +34,14 @@ fun RainBackground() {
 
 @Composable
 fun Rain() {
-    val raindrops = remember { mutableStateListOf<RainDrop>() }
+    val raindrops = remember { mutableStateListOf<RaindropRain>() }
     val dropCount = 100
 
     LaunchedEffect(Unit) {
         while (raindrops
             .size < dropCount) {
             raindrops.add(
-                RainDrop(
+                RaindropRain(
                     x = (0..1000).random() / 1000f,
                     y = -0.1f,
                     speed = (2..5).random() / 100f
@@ -66,7 +66,7 @@ fun Rain() {
     }
 }
 
-fun DrawScope.drawRaindrop(drop: RainDrop) {
+private fun DrawScope.drawRaindrop(drop: RaindropRain) {
     val width = size.width
     val height = size.height
     val startX = drop.x * width
@@ -83,4 +83,4 @@ fun DrawScope.drawRaindrop(drop: RainDrop) {
 }
 
 
-data class RainDrop(var x: Float, var y: Float, var speed: Float)
+private data class RaindropRain(var x: Float, var y: Float, var speed: Float)

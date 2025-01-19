@@ -60,6 +60,12 @@ class WeatherRepository {
         }
     }
 
+    fun getCurrentDataLatestForCurrentLocation(context: Context): Flow<CurrentData> = flow {
+        val db = AppDatabase.getDatabase(context)
+        val currentData: Flow<CurrentData> = db.currentDataDao().getCurrentDataForCurrentLocation()
+        emit(currentData.first())
+    }
+
     fun markLocationAsFavouriteLatLon(
         lat: Double,
         lon: Double,
@@ -292,7 +298,8 @@ class WeatherRepository {
             feelsLike = currentData?.get("feels_like")?.jsonPrimitive?.content?.toDouble() ?: 0.0,
             humidity = currentData?.get("humidity")?.jsonPrimitive?.content?.toDouble() ?: 0.0,
             uvi = currentData?.get("uvi")?.jsonPrimitive?.content?.toDouble() ?: 0.0,
-            windSpeed = currentData?.get("wind_speed")?.jsonPrimitive?.content?.toDouble() ?: 0.0
+            windSpeed = currentData?.get("wind_speed")?.jsonPrimitive?.content?.toDouble() ?: 0.0,
+            condition = currentData?.get("weather")?.jsonArray?.get(0)?.jsonObject?.get("main")?.jsonPrimitive?.content ?: "condition not found"
         )
 
 
