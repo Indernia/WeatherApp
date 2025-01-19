@@ -13,7 +13,7 @@ fun WeatherBackground(weatherCondition: String) {
         "Cloudy" -> CloudyBackground()
         "Snow" -> SnowBackground()
         "Drizzle" -> DrizzleBackground()
-        "Rain" -> RainBackground()
+        "Rain" -> SnowBackground()
         "Thunderstorm" -> ThunderstormBackground()
         else -> ClearBackground()
     }
