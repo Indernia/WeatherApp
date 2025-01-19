@@ -28,10 +28,16 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.weather.R
 import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.components.CityResume
+import com.example.weather.view.components.ClearBackground
+import com.example.weather.view.components.CloudyBackground
+import com.example.weather.view.components.DrizzleBackground
 import com.example.weather.view.components.HourDropDown
 import com.example.weather.view.components.HourDropDownList
 import com.example.weather.view.components.HourDropDownListPreview
 import com.example.weather.view.components.NavBar
+import com.example.weather.view.components.RainBackground
+import com.example.weather.view.components.SnowBackground
+import com.example.weather.view.components.ThunderstormBackground
 
 @Preview(showBackground = true)
 @Composable
@@ -43,7 +49,6 @@ fun HourlyBreakdownScreen(
     val mainViewModel = remember { MainScreenViewModel(context = context) }
     val hourDataList by mainViewModel.hourDataState.collectAsState()
     val dayDataList by mainViewModel.dayDataState.collectAsState()
-
     val firstDayData = dayDataList.firstOrNull()
     val firstHourData = hourDataList.firstOrNull()
 
@@ -52,12 +57,33 @@ fun HourlyBreakdownScreen(
             .fillMaxSize()
             .navigationBarsPadding()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
+        val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+
+        when (weatherCondition) {
+            "Cloudy" -> {
+                CloudyBackground()
+            }
+
+            "Snow" -> {
+                SnowBackground()
+            }
+
+            "Drizzle" -> {
+                DrizzleBackground()
+            }
+
+            "Rain" -> {
+                RainBackground()
+            }
+
+            "Thunderstorm" -> {
+                ThunderstormBackground()
+            }
+
+            else -> {
+                ClearBackground()
+            }
+        }
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -90,7 +116,7 @@ fun HourlyBreakdownScreen(
                         hourdata = firstHourData,
                         modifier = Modifier.fillMaxSize()
                     )
-                } else{
+                } else {
 
                 }
 

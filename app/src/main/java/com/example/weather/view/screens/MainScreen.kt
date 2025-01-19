@@ -41,7 +41,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.view.components.ClearBackground
 import com.example.weather.view.components.CloudyBackground
 import com.example.weather.view.components.DrizzleBackground
+import com.example.weather.view.components.RainBackground
 import com.example.weather.view.components.SnowBackground
+import com.example.weather.view.components.ThunderstormBackground
 
 
 @Preview(showBackground = true)
@@ -69,7 +71,10 @@ fun MainScreen (
             DrizzleBackground()
         }
         "Rain" -> {
-            SnowBackground()
+            RainBackground()
+        }
+        "Thunderstorm" -> {
+            ThunderstormBackground()
         }
         else -> {
             ClearBackground()

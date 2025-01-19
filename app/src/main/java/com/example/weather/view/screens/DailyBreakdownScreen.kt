@@ -36,7 +36,9 @@ import com.example.weather.view.components.DayDropDownList
 import com.example.weather.view.components.DrizzleBackground
 import com.example.weather.view.components.HourDropDownList
 import com.example.weather.view.components.NavBar
+import com.example.weather.view.components.RainBackground
 import com.example.weather.view.components.SnowBackground
+import com.example.weather.view.components.ThunderstormBackground
 
 @Composable
 fun DailyBreakdownScreen(
@@ -72,7 +74,10 @@ fun DailyBreakdownScreen(
                 DrizzleBackground()
             }
             "Rain" -> {
-                SnowBackground()
+                RainBackground()
+            }
+            "Thunderstorm" -> {
+                ThunderstormBackground()
             }
             else -> {
                 ClearBackground()
