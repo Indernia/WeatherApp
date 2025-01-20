@@ -29,9 +29,9 @@ class MainScreenViewModel (context: Context): ViewModel() {
 
     init {
         viewModelScope.launch {
-            val weatherRepository = WeatherRepository()
+
             launch {
-                weatherRepository.getDays(context, 25.67594, 11.56553, "Copenhagen")
+                WeatherRepository.getDays(context, 25.67594, 11.56553, "Copenhagen")
                     .distinctUntilChanged()
                     .collect {
                     _dayDataState.value = it
@@ -40,7 +40,7 @@ class MainScreenViewModel (context: Context): ViewModel() {
             }
 
             launch {
-                weatherRepository.getHours(context, 25.67594, 11.56553, "Copenhagen")
+                WeatherRepository.getHours(context, 25.67594, 11.56553, "Copenhagen")
                     .distinctUntilChanged()
                     .collect {
                     _hourDataState.value = it

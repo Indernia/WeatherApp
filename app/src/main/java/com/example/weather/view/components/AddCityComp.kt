@@ -91,9 +91,8 @@ fun AddCityComp(
                 }
             },
             onAddCity = {
-                val repo = WeatherRepository()
                 CoroutineScope(Dispatchers.IO).launch {
-                    repo.UpdataData(
+                    WeatherRepository.UpdataData(
                         name = it.name,
                         lat = it.latitude,
                         lon = it.longitude,

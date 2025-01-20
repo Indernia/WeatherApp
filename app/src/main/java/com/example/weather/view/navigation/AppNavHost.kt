@@ -70,7 +70,6 @@ fun AppNavHost(
         ) {
             composable(route = AppScreens.MainScreen.name) {
                 MainScreen(
-                    mainViewModel = MainScreenViewModel(context = LocalContext.current),
                     onSettingsClicked = {navController.navigate(AppScreens.Settings.name)}
                 )
             }
