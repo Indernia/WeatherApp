@@ -129,13 +129,16 @@ class WeatherRepository {
             Log.println(Log.DEBUG, "WeatherRepository", "Updating data")
             var location: LocationData = LocationData(0, "", 0.0, 0.0, 0, false)
             withContext(Dispatchers.IO){
-                Log.d("WeatherRepository", "Current location: $location")
+                Log.d("WeatherRepository", "Current location: test $location")
                 location = db.locationDao().getCurrentLocation()
-                Log.d("WeatherRepository", "Current location: ${db.locationDao().getAll().first().toString()}")
+                Log.d("WeatherRepository", "Current location: all location ${db.locationDao().getAll().first().toString()}")
 
-                Log.d("WeatherRepository", "Current location: $location")
+                Log.d("WeatherRepository", "Current location: location post new location $location")
             }
 
+            if (location == null) {
+                return@flow
+            }
             Log.d("WeatherRepository", "Current location: $location")
             UpdataData(lat = location.latitude, lon = location.longitude, name = location.name, context = context)
             val updatedDayDataList = db.dayDao().getSelectedCityDayData(currentTime = Instant.now().epochSecond.toInt(), limit).first()
@@ -166,7 +169,9 @@ class WeatherRepository {
 
         var latestUpdate = 0
         withContext(Dispatchers.IO) {
-            latestUpdate = db.hourDao().getLatestUpdate(lat, lon)
+            latestUpdate = db.hourDao().getLatestUpdateSelectedCity()
+            Log.d("WeatherRepository", "Latest update: $latestUpdate")
+            Log.d("WeatherRepository", "having lat: $lat and lon: $lon")
         }
 
         if (Instant.now().epochSecond - latestUpdate > dataStaleValue) {
@@ -175,8 +180,13 @@ class WeatherRepository {
             withContext(Dispatchers.IO){
                 // Doing this update as the UpdateData was made to take lat lon and not depend on the database to get the location
                 location = db.locationDao().getCurrentLocation()
+                Log.d("WeatherRepository", "Current location: $location")
             }
 
+
+            if (location == null) {
+                return@flow
+            }
             UpdataData(lat = location.latitude, lon = location.longitude, name = location.name, context = context)
             val updatedHourDataList = db.hourDao().getSelectedCityHourData(currentTime = Instant.now().epochSecond.toInt(), limit).first()
             emit(updatedHourDataList)
@@ -208,9 +218,12 @@ class WeatherRepository {
                 exclude = "minutely",
                 apiKey = context.getString(R.string.api_key)
             )
+            Log.d("WeatherRepository", "Response: $response")
+            Log.d("WeatherRepository", "having called the api at: ${Instant.now().epochSecond.toString()}")
         } catch (e: Exception) {
             e.printStackTrace()
             response = ResponseBody.create(null, "")
+            Log.d("WeatherRepository", "Exception: $e")
         }
         if (response.contentLength() == 0L) {
             return
