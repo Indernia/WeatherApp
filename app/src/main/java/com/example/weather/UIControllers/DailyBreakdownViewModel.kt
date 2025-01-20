@@ -21,10 +21,9 @@ class DailyBreakdownViewModel(context: Context): ViewModel() {
 
     init {
         viewModelScope.launch {
-            val weatherRepository = WeatherRepository()
 
             launch {
-                weatherRepository.getDays(context, 55.67594, 12.56553, "Copenhagen")
+                WeatherRepository.getDays(context, 55.67594, 12.56553, "Copenhagen")
                     .distinctUntilChanged()
                     .collect {
                         _dayDataState.value = it
@@ -32,7 +31,7 @@ class DailyBreakdownViewModel(context: Context): ViewModel() {
             }
 
             launch {
-                weatherRepository.getHours(context, 55.67594, 12.56553, "Copenhagen")
+                WeatherRepository.getHours(context, 55.67594, 12.56553, "Copenhagen")
                     .distinctUntilChanged()
                     .collect {
                         _hourDataState.value = it
