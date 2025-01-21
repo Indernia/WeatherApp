@@ -32,10 +32,12 @@ enum class AppScreens {
 fun AppNavHost(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier,
-    viewModel: NavViewModel = viewModel()
+    viewModel: NavViewModel = viewModel(),
+    settingsViewModel: SettingsViewModel = viewModel()
 ) {
     val context = LocalContext.current
     val selectedItem = viewModel.selectedItem.value
+    val savedLanguage = settingsViewModel.getLanguagePreference(context)
     if(WeatherRepository.currentCity.equals("")) {
         WeatherRepository.currentCity = "Copenhagen"
         CitySelectorViewModel(LocalContext.current).updateCurrentLocation(1, context = context, "Copenhagen")
@@ -112,11 +114,10 @@ fun AppNavHost(
 
             composable(route = AppScreens.Settings.name) {
                 val context = LocalContext.current
-                val savedLanguage = getLanguagePreference(context)
                 SettingsScreen(
                     selectedOption = savedLanguage,
                     onOptionSelected = { },
-                    SettingsViewModel = SettingsViewModel(),
+                    settingsViewModel = SettingsViewModel(),
                     handleClickBack = {
                         navController.navigateUp()
                         viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp

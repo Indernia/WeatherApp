@@ -8,26 +8,32 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
 import androidx.core.app.ActivityCompat
 import com.example.weather.Repository.LocationFetchUtil
 import com.example.weather.Repository.LocationFetchUtil.Companion.LOCATION_PERMISSION_REQUEST_CODE
 import com.example.weather.Repository.WeatherRepository
+import com.example.weather.UIControllers.SettingsViewModel
 import com.example.weather.model.AppDatabase
 import com.example.weather.model.LocationData
 import com.example.weather.model.Settings
 import com.example.weather.ui.theme.WeatherTheme
 import com.example.weather.view.navigation.AppNavHost
-import com.example.weather.view.screens.setLocale
-import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.time.Instant
 
 class MainActivity : ComponentActivity() {
+    private val settingsViewModel: SettingsViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setLocale(this, "da")
+        val context = this
+        val savedLanguage = settingsViewModel.getLanguagePreference(context)
+
+        settingsViewModel.setLocale(context, savedLanguage)
 
         val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
 
