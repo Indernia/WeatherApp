@@ -39,8 +39,7 @@ fun Drizzle() {
     val drizzleCount = 100
 
     LaunchedEffect(Unit) {
-        while (drizzleDrops
-            .size < drizzleCount) {
+        while (true) {
             drizzleDrops.add(
                 DrizzleDrop(
                     x = Random.nextFloat(),
@@ -54,8 +53,8 @@ fun Drizzle() {
     }
 
     Canvas(modifier = Modifier
-        .fillMaxSize()) {
-        drizzleDrops.forEach { drop ->
+        .fillMaxSize()) { drizzleDrops
+            .forEach { drop ->
             drawDrizzleDrop(drop)
             drop.y += drop.speed
 

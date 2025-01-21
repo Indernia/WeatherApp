@@ -38,8 +38,7 @@ fun Snow() {
     val flakeCount = 150
 
     LaunchedEffect(Unit) {
-        while (SnowFlakes
-            .size < flakeCount) {
+        while (true) {
             SnowFlakes.add(
                 Snowflake(
                     x = (0..1000).random() / 1000f,
@@ -55,6 +54,7 @@ fun Snow() {
     Canvas(
         modifier = Modifier
             .fillMaxSize()) {
+
         SnowFlakes.forEach { flake ->
             drawSnowflake(flake)
             flake.y += flake.speed

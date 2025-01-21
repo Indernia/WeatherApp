@@ -42,8 +42,7 @@ fun RaindropEffect() {
     val dropCount = 200
 
     LaunchedEffect(Unit) {
-        while (raindrops
-                .size < dropCount) {
+        while (true) {
             raindrops.add(
                 Raindrop(
                     x = Random.nextFloat(),

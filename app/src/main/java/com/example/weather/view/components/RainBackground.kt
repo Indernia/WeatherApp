@@ -38,8 +38,7 @@ fun Rain() {
     val dropCount = 100
 
     LaunchedEffect(Unit) {
-        while (raindrops
-            .size < dropCount) {
+        while (true) {
             raindrops.add(
                 RaindropRain(
                     x = (0..1000).random() / 1000f,
@@ -47,7 +46,7 @@ fun Rain() {
                     speed = (2..5).random() / 100f
                 )
             )
-            delay(100)
+            delay(50)
         }
     }
 
