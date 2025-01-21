@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -49,14 +50,12 @@ import com.example.weather.view.components.SnowBackground
 import com.example.weather.view.components.ThunderstormBackground
 import kotlinx.coroutines.flow.first
 import com.example.weather.view.components.WeatherBackground
-
+import kotlinx.coroutines.launch
 
 
 @Preview(showBackground = true)
 @Composable
 fun MainScreen (
-    mainViewModel: MainScreenViewModel = viewModel(),
-    city: String = "Copenhagen",
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ) {
@@ -105,7 +104,7 @@ fun MainScreen (
                         .wrapContentSize(Alignment.TopCenter)
                 ) {
                     MainScreenInfoComponent(
-                        city = WeatherRepository.currentCity,
+                        city = mainViewModel.currentCity.value,
                         temp = temperature,
                         weatherCondition = weatherCondition,
                         onClick = { /* ToDO */ }

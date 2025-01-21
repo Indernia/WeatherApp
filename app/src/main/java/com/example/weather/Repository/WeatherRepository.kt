@@ -33,12 +33,22 @@ import java.time.Instant
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 
-object WeatherRepository {
+class WeatherRepository {
 
     // We should make some study or something to check what interval would be good here, it does not make sense to wait indefinitely, but it also does not make sense to update it every frame
     private val dataStaleValue: Int = 60 * 10 // Keep formatting as seconds in minute * minutes so default 60 seconds in a minute * 10 minutes
 
-    var currentCity : String = ""
+    // var currentCity : String = "" Commented out as the repo should never contain state
+
+    suspend fun getCurrentCity(context: Context): String {
+        val db = AppDatabase.getDatabase(context)
+        var string: String = ""
+        withContext(Dispatchers.IO){
+           string = db.locationDao().getCurrentLocation().name
+        }
+        return string
+
+    }
 
     fun getLocations(
         context: Context
@@ -55,11 +65,9 @@ object WeatherRepository {
         }
     }
 
-    suspend fun setCurrentLocation(LocationId: Long, context: Context){
+    fun setCurrentLocation(LocationId: Long, context: Context){
         val db = AppDatabase.getDatabase(context)
-        withContext(Dispatchers.IO) {
-            db.settingsDao().updateCurrentLocation(id = LocationId)
-        }
+        db.settingsDao().updateCurrentLocation(id = LocationId)
     }
 
     fun getCurrentDataLatestForCurrentLocation(context: Context): Flow<CurrentData> = flow {
