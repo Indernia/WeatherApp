@@ -85,9 +85,9 @@ fun HourDropDown(
         Column { // Wrap everything in a Column so expanded content aligns properly
             Row(
                 modifier = Modifier
-                    .padding(12.dp)
+                    .padding(6.dp)
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -96,7 +96,6 @@ fun HourDropDown(
                     fontWeight = FontWeight.SemiBold,
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
 
                 Image(
                     painter = painterResource(id = weatherImage),
@@ -107,7 +106,6 @@ fun HourDropDown(
                     contentScale = ContentScale.Fit
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
