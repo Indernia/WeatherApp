@@ -43,6 +43,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 @Composable
 fun HourDropDown(
@@ -53,7 +54,7 @@ fun HourDropDown(
     var expanded by remember { mutableStateOf(false) }
 
     val decimalFormat = remember { DecimalFormat("#.00") }
-    val celsiusTemperature = decimalFormat.format(hour.temperature - 273.15)
+    val celsiusTemperature = (hour.temperature - 273.15).roundToInt()
 
     val formattedTimestamp = remember {
         LocalDateTime.ofInstant(

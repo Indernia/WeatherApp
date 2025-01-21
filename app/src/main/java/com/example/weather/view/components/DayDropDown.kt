@@ -44,9 +44,10 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 
-    @Composable
+@Composable
     fun DayDropDown(
         day: DayData,
         modifier: Modifier = Modifier
@@ -55,9 +56,9 @@ import java.time.format.DateTimeFormatter
         var expanded by remember { mutableStateOf(false) }
 
         val decimalFormat = remember { DecimalFormat("#.00") }
-        val celsiusTemperature = decimalFormat.format(day.tempK?.minus(273.15))
-        val celsiusmax = decimalFormat.format(day.maxTempK?.minus(273.15))
-        val celsiusmin = decimalFormat.format(day.minTempK?.minus(273.15))
+        val celsiusTemperature = (day.tempK?.minus(273.15))?.roundToInt()
+        val celsiusmax = (day.maxTempK?.minus(273.15))?.roundToInt()
+        val celsiusmin = (day.minTempK?.minus(273.15))?.roundToInt()
 
         val formattedTimestamp = remember {
             LocalDateTime.ofInstant(
