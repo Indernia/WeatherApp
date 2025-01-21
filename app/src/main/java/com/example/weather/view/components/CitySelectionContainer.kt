@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
 import com.example.weather.UIControllers.CitySelectorViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import kotlinx.coroutines.withContext
 @Composable
 fun CitySelectionContainer(
     modifier: Modifier = Modifier,
-    viewModel: CitySelectorViewModel
+    viewModel: CitySelectorViewModel,
+    navController: NavHostController
     ) {
     val data = viewModel.LocationDataState.collectAsState()
     val context = LocalContext.current
@@ -40,6 +42,7 @@ fun CitySelectionContainer(
                         composableScope.launch {
                             viewModel.deleteLocation(item.id, context = context)
                         }
+                        navController.navigateUp()
                     }
                 )
             }

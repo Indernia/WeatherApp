@@ -34,7 +34,7 @@ fun MainScreenInfoComponent(
     val baseFigureRes = when (weatherCondition) {
         "Clear" -> R.drawable.standard
         "Rain", "Drizzle", "Thunderstorm" -> R.drawable.rain
-        "Snowy" -> R.drawable.winter
+        "Snow" -> R.drawable.winter
         else -> R.drawable.standard
     }
 

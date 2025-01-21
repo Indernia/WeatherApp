@@ -38,16 +38,19 @@ fun Snow() {
     val flakeCount = 150
 
     LaunchedEffect(Unit) {
-        while (SnowFlakes
-            .size < flakeCount) {
-            SnowFlakes.add(
-                Snowflake(
-                    x = (0..1000).random() / 1000f,
-                    y = -0.1f,
-                    size = (3..8).random().toFloat(),
-                    speed = (3..7).random() / 100f
+        while (true) {
+            if (SnowFlakes.size < flakeCount) {
+                SnowFlakes.add(
+                    Snowflake(
+                        x = (0..1000).random() / 1000f,
+                        y = -0.1f,
+                        size = (3..8).random().toFloat(),
+                        speed = (3..7).random() / 100f
+                    )
                 )
-            )
+            } else {
+                SnowFlakes.removeAt(0)
+            }
             delay(50)
         }
     }
@@ -55,6 +58,7 @@ fun Snow() {
     Canvas(
         modifier = Modifier
             .fillMaxSize()) {
+
         SnowFlakes.forEach { flake ->
             drawSnowflake(flake)
             flake.y += flake.speed

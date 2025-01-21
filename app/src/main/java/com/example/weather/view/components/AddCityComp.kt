@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.CardDefaults
@@ -56,12 +57,10 @@ fun AddCityComp(
     // the list of cities should be stored elsewhere
     val cities = remember { mutableStateListOf<String>() }
 
-    OutlinedCard(
+    Card(
         onClick = { showDialog.value = true },
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
-        border = BorderStroke(1.dp, Color.Black),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         modifier = Modifier
             .size(width = 350.dp, height = 130.dp)
             .padding(16.dp),
@@ -91,9 +90,8 @@ fun AddCityComp(
                 }
             },
             onAddCity = {
-                val repo = WeatherRepository()
                 CoroutineScope(Dispatchers.IO).launch {
-                    repo.UpdataData(
+                    WeatherRepository.UpdataData(
                         name = it.name,
                         lat = it.latitude,
                         lon = it.longitude,

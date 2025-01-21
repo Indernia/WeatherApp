@@ -1,16 +1,20 @@
 package com.example.weather.view.components
 
 import android.icu.text.DecimalFormat
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.weather.R
 import com.example.weather.model.Condition
@@ -40,9 +46,10 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 
-    @Composable
+@Composable
     fun DayDropDown(
         day: DayData,
         modifier: Modifier = Modifier
@@ -51,9 +58,13 @@ import java.time.format.DateTimeFormatter
         var expanded by remember { mutableStateOf(false) }
 
         val decimalFormat = remember { DecimalFormat("#.00") }
-        val celsiusTemperature = decimalFormat.format(day.tempK?.minus(273.15))
-        val celsiusmax = decimalFormat.format(day.maxTempK?.minus(273.15))
-        val celsiusmin = decimalFormat.format(day.minTempK?.minus(273.15))
+        val celsiusTemperature = (day.tempK?.minus(273.15))?.roundToInt()
+        val celsiusmax = (day.maxTempK?.minus(273.15))?.roundToInt()
+        val celsiusmin = (day.minTempK?.minus(273.15))?.roundToInt()
+        val uvi = day.uvi?.roundToInt()
+        val humidity = day.humidity?.roundToInt()
+        val windSpeed = day.windSpeed.roundToInt()
+
 
         val formattedTimestamp = remember {
             LocalDateTime.ofInstant(
@@ -61,6 +72,15 @@ import java.time.format.DateTimeFormatter
                 ZoneId.systemDefault() // Convert to LocalDateTime
             ).format(DateTimeFormatter.ofPattern("EEEE"))
         }
+        val weatherImage = when (day.weatherCondition) {
+            "Clear" -> R.drawable.cloud
+            "Clouds" -> R.drawable.cloud
+            "Rain" -> R.drawable.rainy
+            "Snow" -> R.drawable.cloud
+            "Thunderstorm" -> R.drawable.cloud
+            else -> R.drawable.cloud
+        }
+
 
         Card(
             modifier = Modifier
@@ -70,30 +90,33 @@ import java.time.format.DateTimeFormatter
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            Column { // Wrap everything in a Column so expanded content aligns properly
-                Row(
+            Column {
+                Box(
                     modifier = Modifier
-                        .padding(12.dp)
+                        .padding(6.dp)
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start
+
                 ) {
                     Text(
                         text = formattedTimestamp,
                         fontSize = 20.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold ,
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
                     )
 
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    Text(
-                        text = "${day.weatherCondition?.let { WeatherConditionText(it) }}",
-                        fontSize = 20.sp,
-                        modifier = Modifier.align(Alignment.CenterVertically)
+                    Image(
+                        painter = painterResource(id = weatherImage),
+                        contentDescription = "${day.weatherCondition} icon",
+                        modifier = Modifier
+                            .size(80.dp)
+                            .align(Alignment.Center)
+                            .offset(x = 16.dp),
+                        contentScale = ContentScale.Fit
                     )
-
-                    Spacer(modifier = Modifier.weight(1f))
 
                     Row(
+                        modifier = Modifier.align(Alignment.CenterEnd),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -118,11 +141,11 @@ import java.time.format.DateTimeFormatter
                             .padding(12.dp)
                             .background(MaterialTheme.colorScheme.primaryContainer)
                     ) {
-                        Text("${stringResource(R.string.Humidity)}: ${day.humidity}%")
-                        Text("UV Index: ${day.uvi}")
-                        Text("${stringResource(R.string.Windspeed)}: ${day.windSpeed} km/h")
+                        Text("${stringResource(R.string.Humidity)}: $humidity%")
+                        Text("${stringResource(R.string.UVI)}: $uvi")
+                        Text("${stringResource(R.string.Windspeed)}: $windSpeed m/s")
                         Text("Min temp: $celsiusmin°")
-                        Text("Max temp: $celsiusmax°")
+                        Text("${stringResource(R.string.MaxTemp)}: $celsiusmax°")
                     }
                 }
             }

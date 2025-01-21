@@ -50,35 +50,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.UIControllers.SettingsViewModel
 import java.util.Locale
 
-fun setLocale(context: Context, language: String) {
-    val locale = Locale(language)
-    Locale.setDefault(locale)
-    val config = context.resources.configuration
-    config.setLocale(locale)
-    context.resources.updateConfiguration(config, context.resources.displayMetrics)
-}
-
-fun saveLanguagePreference(context: Context, language: String) {
-    val sharedPreferences: SharedPreferences = context.getSharedPreferences("language_prefs", Context.MODE_PRIVATE)
-    val editor = sharedPreferences.edit()
-    editor.putString("selected_language", language)
-    editor.apply()
-}
-
-fun getLanguagePreference(context: Context): String {
-    val sharedPreferences: SharedPreferences = context.getSharedPreferences("language_prefs", Context.MODE_PRIVATE)
-    return sharedPreferences.getString("selected_language", "da") ?: "da"
-}
-
 @Composable
 fun SettingsScreen(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
-    SettingsViewModel: SettingsViewModel = viewModel(),
+    settingsViewModel: SettingsViewModel = viewModel(),
     handleClickBack: () -> Unit = {},
     context: Context = LocalContext.current
 ){
-    val currentLanguage = getLanguagePreference(context)
+    val currentLanguage = settingsViewModel.getLanguagePreference(context)
     val langOptions = listOf("Dansk", "English")
     var isSwitchChecked by remember { mutableStateOf(true) }
     val languageOptions = listOf("Dansk", "English")
@@ -152,9 +132,9 @@ fun SettingsScreen(
                                     onOptionSelected = { newOption ->
                                         selectedLanguage = newOption
                                         val langCode = if (newOption == "Dansk") "da" else "en"
-                                        SettingsViewModel.changeLanguage(langCode)
-                                        saveLanguagePreference(context, langCode)
-                                        setLocale(context, langCode)
+                                        settingsViewModel.changeLanguage(langCode)
+                                        settingsViewModel.saveLanguagePreference(context, langCode)
+                                        settingsViewModel.setLocale(context, langCode)
                                     }
                                 )
                             }

@@ -40,12 +40,20 @@ fun CloudyBackground() {
                 )
             )
     ) {
-        // Multiple clouds
+
         val clouds = listOf(
-            Cloud(size = 150.dp, alignment = Alignment.TopStart, rotationDuration = 3000),
-            Cloud(size = 100.dp, alignment = Alignment.TopStart, rotationDuration = 4000),
-            Cloud(size = 200.dp, alignment = Alignment.TopEnd, rotationDuration = 3500),
-            Cloud(size = 120.dp, alignment = Alignment.TopCenter, rotationDuration = 5000)
+            Cloud(size = 150.dp,
+                alignment = Alignment.TopStart,
+                rotationDuration = 3000),
+            Cloud(size = 100.dp,
+                alignment = Alignment.TopStart,
+                rotationDuration = 4000),
+            Cloud(size = 200.dp,
+                alignment = Alignment.TopEnd,
+                rotationDuration = 3500),
+            Cloud(size = 120.dp,
+                alignment = Alignment.TopCenter,
+                rotationDuration = 5000)
         )
 
         clouds
@@ -62,11 +70,11 @@ fun CloudyBackground() {
 
 @Composable
 fun RotatingCloud(modifier: Modifier = Modifier, rotationDuration: Int = 3000) {
-    // Rotating animation
+
     val infiniteTransition = rememberInfiniteTransition()
     val rotationAngle by infiniteTransition.animateFloat(
-        initialValue = -10f, // Rotation angle
-        targetValue = 10f,   // Rotation angle
+        initialValue = -10f,
+        targetValue = 10f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = rotationDuration, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse

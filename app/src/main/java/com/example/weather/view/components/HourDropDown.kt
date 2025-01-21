@@ -1,16 +1,20 @@
 package com.example.weather.view.components
 
 import android.icu.text.DecimalFormat
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.weather.R
 import com.example.weather.model.Condition
@@ -39,6 +45,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 @Composable
 fun HourDropDown(
@@ -49,13 +56,24 @@ fun HourDropDown(
     var expanded by remember { mutableStateOf(false) }
 
     val decimalFormat = remember { DecimalFormat("#.00") }
-    val celsiusTemperature = decimalFormat.format(hour.temperature - 273.15)
+    val celsiusTemperature = (hour.temperature - 273.15).roundToInt()
+    val uvi = hour.uv.roundToInt()
+    val humidity = hour.humidity.roundToInt()
+    val windSpeed = hour.windSpeed.roundToInt()
 
     val formattedTimestamp = remember {
         LocalDateTime.ofInstant(
             Instant.ofEpochSecond(hour.timestamp.toLong()), // Convert Int to Instant
             ZoneId.systemDefault() // Convert to LocalDateTime
         ).format(DateTimeFormatter.ofPattern("HH:mm"))
+    }
+    val weatherImage = when (hour.condition) {
+        "Clear" -> R.drawable.cloud
+        "Clouds" -> R.drawable.cloud
+        "Rain" -> R.drawable.rainy
+        "Snow" -> R.drawable.cloud
+        "Thunderstorm" -> R.drawable.cloud
+        else -> R.drawable.cloud
     }
 
     Card(
@@ -67,29 +85,32 @@ fun HourDropDown(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column { // Wrap everything in a Column so expanded content aligns properly
-            Row(
+            Box(
                 modifier = Modifier
-                    .padding(12.dp)
+                    .padding(6.dp)
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start
             ) {
                 Text(
                     text = formattedTimestamp,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.SemiBold ,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
 
-                Text(
-                    text = WeatherConditionText(hour.condition),
-                    fontSize = 20.sp,
-                    modifier = Modifier.align(Alignment.CenterVertically),
+                Image(
+                    painter = painterResource(id = weatherImage),
+                    contentDescription = "${hour.condition} icon",
+                    modifier = Modifier
+                        .size(80.dp)
+                        .align(Alignment.Center),
+                    contentScale = ContentScale.Fit
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
 
                 Row(
+                    modifier = Modifier.align(Alignment.CenterEnd),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -115,13 +136,13 @@ fun HourDropDown(
                         .background(MaterialTheme.colorScheme.primaryContainer) // Lighter theme color
                 ) {
                     Text(
-                        text = "${stringResource(R.string.Humidity)}: ${hour.humidity}%",
+                        text = "${stringResource(R.string.Humidity)}: $humidity%",
                     )
                     Text(
-                        text = "UV Index: ${hour.uv}",
+                        text = "${stringResource(R.string.UVI)}UV Index: $uvi",
                     )
                     Text(
-                        text = "${stringResource(R.string.Windspeed)}: ${hour.windSpeed} km/h",
+                        text = "${stringResource(R.string.Windspeed)}: $windSpeed m/s",
                     )
                 }
             }

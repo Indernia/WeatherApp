@@ -10,8 +10,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.Repository.WeatherRepository
+import com.example.weather.UIControllers.CitySelectorViewModel
 import com.example.weather.UIControllers.DailyBreakdownViewModel
-import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
 import com.example.weather.UIControllers.NavViewModel
@@ -30,9 +31,16 @@ enum class AppScreens {
 fun AppNavHost(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier,
-    viewModel: NavViewModel = viewModel()
+    viewModel: NavViewModel = viewModel(),
+    settingsViewModel: SettingsViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val selectedItem = viewModel.selectedItem.value
+    val savedLanguage = settingsViewModel.getLanguagePreference(context)
+    if(WeatherRepository.currentCity.equals("")) {
+        WeatherRepository.currentCity = "Copenhagen"
+        CitySelectorViewModel(LocalContext.current).updateCurrentLocation(1, context = context, "Copenhagen")
+    }
 
     Scaffold(
         modifier = modifier,
@@ -70,7 +78,7 @@ fun AppNavHost(
         ) {
             composable(route = AppScreens.MainScreen.name) {
                 MainScreen(
-                    mainViewModel = MainScreenViewModel(context = LocalContext.current),
+                    WeatherRepository.currentCity,
                     onSettingsClicked = {navController.navigate(AppScreens.Settings.name)}
                 )
             }
@@ -80,7 +88,8 @@ fun AppNavHost(
                     handleClickBack = {
                         navController.navigateUp()
                         viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
-                    }
+                    },
+                    navController = navController
                 )
             }
 
@@ -105,11 +114,10 @@ fun AppNavHost(
 
             composable(route = AppScreens.Settings.name) {
                 val context = LocalContext.current
-                val savedLanguage = getLanguagePreference(context)
                 SettingsScreen(
                     selectedOption = savedLanguage,
                     onOptionSelected = { },
-                    SettingsViewModel = SettingsViewModel(),
+                    settingsViewModel = SettingsViewModel(),
                     handleClickBack = {
                         navController.navigateUp()
                         viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp

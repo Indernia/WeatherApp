@@ -33,10 +33,9 @@ class CitySelectorViewModel (
 
     init {
         viewModelScope.launch {
-            val weatherRepository = WeatherRepository()
 
             launch {
-                weatherRepository.getLocations(context)
+                WeatherRepository.getLocations(context)
                     .distinctUntilChanged()
                     .collect {
                         _LocationDataState.value = it
@@ -61,10 +60,11 @@ class CitySelectorViewModel (
         return response
     }
 
-    fun updateCurrentLocation(id: Long, context: Context) {
-        val weatherRepository = WeatherRepository()
+    fun updateCurrentLocation(id: Long, context: Context, city: String) {
+
         viewModelScope.launch {
-            weatherRepository.setCurrentLocation(id, context)
+            WeatherRepository.setCurrentLocation(id, context)
+            WeatherRepository.currentCity = city
             Log.d("CitySelectorViewModel", "Current location updated to $id")
         }
     }
