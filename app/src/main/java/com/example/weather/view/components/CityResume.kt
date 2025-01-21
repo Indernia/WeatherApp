@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -26,6 +27,7 @@ import com.example.weather.model.Condition
 import com.example.weather.model.DayData
 import com.example.weather.model.HourData
 import java.time.Instant
+import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -42,28 +44,34 @@ fun CityResume(
             .toLocalDate()
             .format(DateTimeFormatter.ofPattern("MMMM: dd"))
     }
-    OutlinedCard(
-        border = BorderStroke(1.dp, Color.Black),
+    Card(
         modifier = Modifier
-            .fillMaxWidth().height(120.dp)
+            .fillMaxWidth()
+            .height(120.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxWidth().height(120.dp)
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(50.dp),
+                horizontalArrangement = Arrangement.spacedBy(30.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = formattedDate,
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier
+                        .padding(start = 4.dp)
                 )
                 Text(
-                    text = Instant.ofEpochSecond(hourdata.timestamp.toLong()).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm")),
+                    text = LocalTime.now(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm")),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier
+                        .padding(end = 4.dp)
                 )
             }
         }
