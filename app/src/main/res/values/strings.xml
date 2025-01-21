@@ -37,4 +37,10 @@
     <string name="EnableDisableAlert">Enable or disable weather alerts</string>
     <string name="Language">Language</string>
     <string name="ChooseLanguage">Choose a language</string>
+    <string name="UVI">UV Index</string>
+    <string name="MaxTemp">Max temp</string>
+
+
+
+
 </resources>

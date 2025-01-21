@@ -143,10 +143,10 @@ import kotlin.math.roundToInt
                             .background(MaterialTheme.colorScheme.primaryContainer)
                     ) {
                         Text("${stringResource(R.string.Humidity)}: $humidity%")
-                        Text("UV Index: $uvi")
+                        Text("${stringResource(R.string.UVI)}: $uvi")
                         Text("${stringResource(R.string.Windspeed)}: $windSpeed m/s")
                         Text("Min temp: $celsiusmin°")
-                        Text("Max temp: $celsiusmax°")
+                        Text("${stringResource(R.string.MaxTemp)}: $celsiusmax°")
                     }
                 }
             }

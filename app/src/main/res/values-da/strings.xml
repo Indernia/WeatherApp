@@ -37,4 +37,6 @@
     <string name="EnableDisableAlert">Slå vejr alarm til eller fra</string>
     <string name="Language">Sprog</string>
     <string name="ChooseLanguage">Vælg et sprog</string>
+    <string name="UVI">UV Indeks</string>
+    <string name="MaxTemp">Maks temp</string>
 </resources>
