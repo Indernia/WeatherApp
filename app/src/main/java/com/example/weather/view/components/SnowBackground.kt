@@ -39,14 +39,18 @@ fun Snow() {
 
     LaunchedEffect(Unit) {
         while (true) {
-            SnowFlakes.add(
-                Snowflake(
-                    x = (0..1000).random() / 1000f,
-                    y = -0.1f,
-                    size = (3..8).random().toFloat(),
-                    speed = (3..7).random() / 100f
+            if (SnowFlakes.size < flakeCount) {
+                SnowFlakes.add(
+                    Snowflake(
+                        x = (0..1000).random() / 1000f,
+                        y = -0.1f,
+                        size = (3..8).random().toFloat(),
+                        speed = (3..7).random() / 100f
+                    )
                 )
-            )
+            } else {
+                SnowFlakes.removeAt(0)
+            }
             delay(50)
         }
     }
