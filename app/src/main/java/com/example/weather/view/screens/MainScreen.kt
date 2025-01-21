@@ -93,7 +93,7 @@ fun MainScreen (
             Box(
                 modifier = Modifier
                     .background(Color.Transparent)
-                    .height(500.dp)
+                    .weight(10f)
                     .wrapContentSize(Alignment.TopCenter)
             ) {
                 MainScreenInfoComponent(
@@ -105,17 +105,16 @@ fun MainScreen (
             }
             HourSlider(
                 data = hourDataList,
-                modifier = Modifier.height(100.dp)
+                modifier = Modifier.weight(0.6f)
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.weight(0.2f))
 
         Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
             DaySlider(
                 data = dayDataList,
-                modifier = Modifier.height(100.dp)
+                modifier = Modifier.weight(0.6f)
             )
 
-        Spacer(modifier = Modifier.height(20.dp))
         }
 }   }

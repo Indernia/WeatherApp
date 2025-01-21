@@ -67,7 +67,20 @@ class CitySelectorViewModel (
             weatherRepository.setCurrentLocation(id, context)
             Log.d("CitySelectorViewModel", "Current location updated to $id")
         }
+    }
 
+    suspend fun deleteLocation(id: Long, context: Context) {
+        val weatherRepository = WeatherRepository()
+        withContext(Dispatchers.IO) {
+            weatherRepository.deleteLocation(id, context)
+        }
+    }
+
+    fun toggleFavourite(id: Long, context: Context) {
+        val weatherRepository = WeatherRepository()
+        viewModelScope.launch{
+            weatherRepository.toggleLocationFavourite(id = id, context = context)
+        }
     }
 
 }

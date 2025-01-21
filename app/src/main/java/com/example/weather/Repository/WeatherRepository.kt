@@ -74,10 +74,12 @@ class WeatherRepository {
         withContext(Dispatchers.IO) {
             val favourite = db.locationDao().getLocationById(id).firstOrNull()?.isFavourite ?: false
 
-            if (favourite) {
+            if (!favourite) {
                 db.locationDao().markLocationAsFavouriteId(id = id)
+                Log.d("WeatherRepository", "Toggled location $id to favourite")
             } else {
                 db.locationDao().markLocationAsUnFavouriteId(id = id)
+                Log.d("WeatherRepository", "Toggled location $id to unfavourite")
             }
         }
 
@@ -216,6 +218,7 @@ class WeatherRepository {
             Log.d("WeatherRepository", "Exception: $e")
         }
         if (response.contentLength() == 0L) {
+            Log.d("WeatherRepository", "Response is empty")
             return
         }
 
@@ -237,9 +240,13 @@ class WeatherRepository {
                     id = 0, // placeholder as it is auto generated
                 )
                 locationId = db.locationDao().insert(locationData)
+                Log.d("WeatherRepository", "Location inserted: $locationData")
             } else {
                 val locationTempData = location.first()
                 locationId = locationTempData?.id ?: 0
+                db.locationDao().setLocationAsNotDeleted(locationId)
+                Log.d("WeatherRepository", "Location already exists: $locationTempData")
+
             }
         }
 
