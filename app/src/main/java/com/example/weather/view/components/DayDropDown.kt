@@ -5,12 +5,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -89,33 +91,32 @@ import kotlin.math.roundToInt
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
             Column {
-                Row(
+                Box(
                     modifier = Modifier
                         .padding(6.dp)
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
 
                 ) {
                     Text(
                         text = formattedTimestamp,
                         fontSize = 20.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold ,
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
                     )
-
-
 
                     Image(
                         painter = painterResource(id = weatherImage),
                         contentDescription = "${day.weatherCondition} icon",
                         modifier = Modifier
                             .size(80.dp)
-                            .padding(top = 30.dp),
+                            .align(Alignment.Center)
+                            .offset(x = 16.dp),
                         contentScale = ContentScale.Fit
                     )
 
-
                     Row(
+                        modifier = Modifier.align(Alignment.CenterEnd),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
