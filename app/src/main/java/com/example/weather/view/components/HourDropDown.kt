@@ -81,9 +81,9 @@ fun HourDropDown(
         Column { // Wrap everything in a Column so expanded content aligns properly
             Row(
                 modifier = Modifier
-                    .padding(12.dp)
+                    .padding(6.dp)
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(

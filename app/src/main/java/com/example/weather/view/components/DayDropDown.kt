@@ -86,9 +86,9 @@ import java.time.format.DateTimeFormatter
             Column {
                 Row(
                     modifier = Modifier
-                        .padding(12.dp)
+                        .padding(6.dp)
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
 
                 ) {
@@ -98,7 +98,6 @@ import java.time.format.DateTimeFormatter
                         fontWeight = FontWeight.SemiBold
                     )
 
-                    Spacer(modifier = Modifier.weight(1f))
 
 
                     Image(
@@ -110,7 +109,6 @@ import java.time.format.DateTimeFormatter
                         contentScale = ContentScale.Fit
                     )
 
-                    Spacer(modifier = Modifier.weight(1f))
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
