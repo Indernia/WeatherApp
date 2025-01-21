@@ -14,4 +14,5 @@ data class LocationData(
     var longitude: Double = 0.0,
     var updatedAt: Int = 0,
     var isFavourite: Boolean = false,
+    var isDeleted: Boolean = false,
 )

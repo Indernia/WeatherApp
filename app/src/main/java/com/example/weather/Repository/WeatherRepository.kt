@@ -49,7 +49,7 @@ class WeatherRepository {
         val db = AppDatabase.getDatabase(context)
         val settings: Flow<Settings> = db.settingsDao().getSettings()
         return settings.flatMapLatest { settings ->
-            db.locationDao().getLocationById(settings.currentLocationID)
+            db.locationDao().getLocationById(settings.currentLocationID.toLong())
         }
     }
 
@@ -66,40 +66,29 @@ class WeatherRepository {
         emit(currentData.first())
     }
 
-    fun markLocationAsFavouriteLatLon(
-        lat: Double,
-        lon: Double,
-        name: String,
-        favourite: Boolean,
-        context: Context
-    ){
-        val db = AppDatabase.getDatabase(context)
-        if (favourite) {
-            db.locationDao().markLocationAsFavouriteLatLon(lat, lon)
-        } else {
-            db.locationDao().markLocationAsUnFavouriteLatLon(lat, lon)
-        }
-    }
-
     suspend fun toggleLocationFavourite(
-        lat: Double,
-        lon: Double,
-        context: Context
+        context: Context,
+        id: Long
     ){
         val db = AppDatabase.getDatabase(context)
         withContext(Dispatchers.IO) {
-            val favourite = db.locationDao().getLocationByLatLon(lat, lon).firstOrNull()?.isFavourite ?: false
+            val favourite = db.locationDao().getLocationById(id).firstOrNull()?.isFavourite ?: false
 
             if (favourite) {
-                db.locationDao().markLocationAsFavouriteLatLon(lat, lon)
+                db.locationDao().markLocationAsFavouriteId(id = id)
             } else {
-                db.locationDao().markLocationAsUnFavouriteLatLon(lat, lon)
+                db.locationDao().markLocationAsUnFavouriteId(id = id)
             }
         }
 
     }
 
+    fun deleteLocation(id: Long, context: Context) {
+        val db = AppDatabase.getDatabase(context)
+        db.locationDao().setLocationAsDeleted(id)
+    }
     /**
+     *
      * @param context Application context
      * @param lat Latitude of location
      * @param lon longitude of location
@@ -136,6 +125,7 @@ class WeatherRepository {
                 Log.d("WeatherRepository", "Current location: location post new location $location")
             }
 
+            // not always long as the weird generated DAO code will return null if nothing is available, check to prevent crash
             if (location == null) {
                 return@flow
             }
@@ -322,5 +312,6 @@ class WeatherRepository {
 
 
     }
+
 
 }
