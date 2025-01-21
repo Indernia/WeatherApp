@@ -55,6 +55,9 @@ fun HourDropDown(
 
     val decimalFormat = remember { DecimalFormat("#.00") }
     val celsiusTemperature = (hour.temperature - 273.15).roundToInt()
+    val uvi = hour.uv.roundToInt()
+    val humidity = hour.humidity.roundToInt()
+    val windSpeed = hour.windSpeed.roundToInt()
 
     val formattedTimestamp = remember {
         LocalDateTime.ofInstant(
@@ -132,13 +135,13 @@ fun HourDropDown(
                         .background(MaterialTheme.colorScheme.primaryContainer) // Lighter theme color
                 ) {
                     Text(
-                        text = "${stringResource(R.string.Humidity)}: ${hour.humidity}%",
+                        text = "${stringResource(R.string.Humidity)}: $humidity%",
                     )
                     Text(
-                        text = "UV Index: ${hour.uv}",
+                        text = "UV Index: $uvi",
                     )
                     Text(
-                        text = "${stringResource(R.string.Windspeed)}: ${hour.windSpeed} km/h",
+                        text = "${stringResource(R.string.Windspeed)}: $windSpeed m/s",
                     )
                 }
             }

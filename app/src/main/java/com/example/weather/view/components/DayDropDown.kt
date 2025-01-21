@@ -59,6 +59,10 @@ import kotlin.math.roundToInt
         val celsiusTemperature = (day.tempK?.minus(273.15))?.roundToInt()
         val celsiusmax = (day.maxTempK?.minus(273.15))?.roundToInt()
         val celsiusmin = (day.minTempK?.minus(273.15))?.roundToInt()
+        val uvi = day.uvi?.roundToInt()
+        val humidity = day.humidity?.roundToInt()
+        val windSpeed = day.windSpeed.roundToInt()
+
 
         val formattedTimestamp = remember {
             LocalDateTime.ofInstant(
@@ -138,9 +142,9 @@ import kotlin.math.roundToInt
                             .padding(12.dp)
                             .background(MaterialTheme.colorScheme.primaryContainer)
                     ) {
-                        Text("${stringResource(R.string.Humidity)}: ${day.humidity}%")
-                        Text("UV Index: ${day.uvi}")
-                        Text("${stringResource(R.string.Windspeed)}: ${day.windSpeed} km/h")
+                        Text("${stringResource(R.string.Humidity)}: $humidity%")
+                        Text("UV Index: $uvi")
+                        Text("${stringResource(R.string.Windspeed)}: $windSpeed m/s")
                         Text("Min temp: $celsiusmin°")
                         Text("Max temp: $celsiusmax°")
                     }
