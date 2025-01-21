@@ -56,7 +56,6 @@ import com.example.weather.view.components.WeatherBackground
 fun MainScreen (
     mainViewModel: MainScreenViewModel = viewModel(),
     city: String = "Copenhagen",
-    onMainInfoClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ){
