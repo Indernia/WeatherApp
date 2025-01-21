@@ -8,28 +8,28 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LocationDAO {
-    @Query("SELECT * FROM LocationData")
+    @Query("SELECT * FROM LocationData WHERE isDeleted = 0")
     fun getAll(): Flow<List<LocationData>>
 
     @Query("SELECT * FROM LocationData WHERE longitude = :lon AND latitude = :lat")
     fun getLocationByLatLon(lat: Double, lon: Double): Flow<LocationData?>
 
     @Query("SELECT * FROM LocationData WHERE id = :id")
-    fun getLocationById(id: Int): Flow<LocationData>
+    fun getLocationById(id: Long): Flow<LocationData>
 
     @Query("""
             UPDATE LocationData
             SET isFavourite = 1
-            WHERE latitude = :lat AND longitude = :lon
+            WHERE LocationData.id = :id
     """)
-    fun markLocationAsFavouriteLatLon(lat: Double, lon: Double)
+    fun markLocationAsFavouriteId(id: Long)
 
     @Query("""
             UPDATE LocationData
             SET isFavourite = 0
-            WHERE latitude = :lat AND longitude = :lon
+            WHERE LocationData.id = :id
     """)
-    fun markLocationAsUnFavouriteLatLon(lat: Double, lon: Double)
+    fun markLocationAsUnFavouriteId(id: Long)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(location: LocationData): Long
@@ -42,6 +42,12 @@ interface LocationDAO {
     """)
     fun getCurrentLocation(): LocationData
 
+    @Query("""
+        UPDATE LocationData
+        SET isDeleted = 1
+        WHERE id = :id
+    """)
+    fun setLocationAsDeleted(id: Long)
 
 
 }

@@ -32,6 +32,16 @@ interface HourDAO {
     """)
     fun getLatestUpdate(lat: Double, lon: Double): Int
 
+    @Query("""
+        SELECT HourData.updatedAt
+        FROM HourData
+        LEFT JOIN Settings ON HourData.location = Settings.currentLocationID
+        WHERE Settings.id = 1
+        ORDER BY HourData.updatedAt DESC
+        LIMIT 1
+    """)
+    fun getLatestUpdateSelectedCity(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(hours: List<HourData>)
 

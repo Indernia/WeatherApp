@@ -1,6 +1,7 @@
 package com.example.weather.view.components
 
 import android.icu.text.DecimalFormat
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.weather.R
 import com.example.weather.model.Condition
@@ -57,6 +61,14 @@ fun HourDropDown(
             ZoneId.systemDefault() // Convert to LocalDateTime
         ).format(DateTimeFormatter.ofPattern("HH:mm"))
     }
+    val weatherImage = when (hour.condition) {
+        "Clear" -> R.drawable.cloud
+        "Clouds" -> R.drawable.cloud
+        "Rain" -> R.drawable.rainy
+        "Snow" -> R.drawable.cloud
+        "Thunderstorm" -> R.drawable.cloud
+        else -> R.drawable.cloud
+    }
 
     Card(
         modifier = Modifier
@@ -71,7 +83,8 @@ fun HourDropDown(
                 modifier = Modifier
                     .padding(12.dp)
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = formattedTimestamp,
@@ -81,10 +94,13 @@ fun HourDropDown(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                Text(
-                    text = WeatherConditionText(hour.condition),
-                    fontSize = 20.sp,
-                    modifier = Modifier.align(Alignment.CenterVertically),
+                Image(
+                    painter = painterResource(id = weatherImage),
+                    contentDescription = "${hour.condition} icon",
+                    modifier = Modifier
+                        .size(80.dp)
+                        .padding(top = 30.dp),
+                    contentScale = ContentScale.Fit
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
