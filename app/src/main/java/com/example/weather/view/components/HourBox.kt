@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
@@ -40,10 +41,11 @@ fun HourBox(
             .toLocalDateTime()
             .format(DateTimeFormatter.ofPattern("HH:mm"))
     }
-    OutlinedCard(
-        border = BorderStroke(1.dp, Color.Black),
+    Card(
         modifier = Modifier
-            .size(width = 90.dp, height = 120.dp)
+            .size(width = 90.dp, height = 120.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
                     Text(
