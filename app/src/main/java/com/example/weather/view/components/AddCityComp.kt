@@ -58,9 +58,6 @@ fun AddCityComp(
 
     OutlinedCard(
         onClick = { showDialog.value = true },
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        ),
         border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .size(width = 350.dp, height = 130.dp)
