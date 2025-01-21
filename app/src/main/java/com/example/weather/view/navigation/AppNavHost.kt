@@ -10,6 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.Repository.WeatherRepository
+import com.example.weather.UIControllers.CitySelectorViewModel
 import com.example.weather.UIControllers.DailyBreakdownViewModel
 import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.screens.*
@@ -32,7 +34,12 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     viewModel: NavViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val selectedItem = viewModel.selectedItem.value
+    if(WeatherRepository.currentCity.equals("")) {
+        WeatherRepository.currentCity = "Copenhagen"
+        CitySelectorViewModel(LocalContext.current).updateCurrentLocation(1, context = context, "Copenhagen")
+    }
 
     Scaffold(
         modifier = modifier,
@@ -70,6 +77,7 @@ fun AppNavHost(
         ) {
             composable(route = AppScreens.MainScreen.name) {
                 MainScreen(
+                    WeatherRepository.currentCity,
                     onSettingsClicked = {navController.navigate(AppScreens.Settings.name)}
                 )
             }

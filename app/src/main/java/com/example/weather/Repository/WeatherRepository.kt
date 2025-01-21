@@ -38,6 +38,8 @@ object WeatherRepository {
     // We should make some study or something to check what interval would be good here, it does not make sense to wait indefinitely, but it also does not make sense to update it every frame
     private val dataStaleValue: Int = 60 * 10 // Keep formatting as seconds in minute * minutes so default 60 seconds in a minute * 10 minutes
 
+    var currentCity : String = ""
+
     fun getLocations(
         context: Context
     ): Flow<List<LocationData>> {

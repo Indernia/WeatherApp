@@ -40,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.Repository.WeatherRepository
 import com.example.weather.view.components.ClearBackground
 import com.example.weather.view.components.CloudyBackground
 import com.example.weather.view.components.DrizzleBackground
@@ -103,7 +104,7 @@ fun MainScreen (
                         .wrapContentSize(Alignment.TopCenter)
                 ) {
                     MainScreenInfoComponent(
-                        city = city,
+                        city = WeatherRepository.currentCity,
                         temp = temperature,
                         weatherCondition = weatherCondition,
                         onClick = { /* ToDO */ }

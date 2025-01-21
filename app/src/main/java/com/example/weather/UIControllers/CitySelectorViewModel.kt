@@ -60,10 +60,11 @@ class CitySelectorViewModel (
         return response
     }
 
-    fun updateCurrentLocation(id: Long, context: Context) {
+    fun updateCurrentLocation(id: Long, context: Context, city: String) {
 
         viewModelScope.launch {
             WeatherRepository.setCurrentLocation(id, context)
+            WeatherRepository.currentCity = city
             Log.d("CitySelectorViewModel", "Current location updated to $id")
         }
 
