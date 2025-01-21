@@ -65,9 +65,11 @@ class WeatherRepository {
         }
     }
 
-    fun setCurrentLocation(LocationId: Long, context: Context){
+    suspend fun setCurrentLocation(LocationId: Long, context: Context){
         val db = AppDatabase.getDatabase(context)
-        db.settingsDao().updateCurrentLocation(id = LocationId)
+        withContext(Dispatchers.IO) {
+            db.settingsDao().updateCurrentLocation(id = LocationId)
+        }
     }
 
     fun getCurrentDataLatestForCurrentLocation(context: Context): Flow<CurrentData> = flow {
@@ -324,11 +326,4 @@ class WeatherRepository {
 
 
         withContext(Dispatchers.IO) {
-            db.currentDataDao().insertCurrentData(currentDataObject)
-        }
-
-
-    }
-
-
-}
+            db.currentDataDao()
