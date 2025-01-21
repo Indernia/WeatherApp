@@ -92,7 +92,6 @@ fun HourDropDown(
                     fontWeight = FontWeight.SemiBold,
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
 
                 Image(
                     painter = painterResource(id = weatherImage),
@@ -103,7 +102,6 @@ fun HourDropDown(
                     contentScale = ContentScale.Fit
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
