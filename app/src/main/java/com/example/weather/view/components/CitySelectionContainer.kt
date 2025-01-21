@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
 import com.example.weather.UIControllers.CitySelectorViewModel
 
 @Composable
 fun CitySelectionContainer(
     modifier: Modifier = Modifier,
-    viewModel: CitySelectorViewModel
+    viewModel: CitySelectorViewModel,
+    navController: NavHostController
     ) {
     val data = viewModel.LocationDataState.collectAsState()
     val context = LocalContext.current
@@ -27,6 +29,7 @@ fun CitySelectionContainer(
                     onClick = {
                         viewModel.updateCurrentLocation(item.id, context = context, item.name)
                         Log.d("CitySelectionContainer", "Current location updated to ${item.id}")
+                        navController.navigateUp()
                     }
                 )
             }

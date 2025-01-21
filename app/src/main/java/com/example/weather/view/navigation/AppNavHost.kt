@@ -13,7 +13,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.Repository.WeatherRepository
 import com.example.weather.UIControllers.CitySelectorViewModel
 import com.example.weather.UIControllers.DailyBreakdownViewModel
-import com.example.weather.UIControllers.MainScreenViewModel
 import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
 import com.example.weather.UIControllers.NavViewModel
@@ -89,7 +88,8 @@ fun AppNavHost(
                     handleClickBack = {
                         navController.navigateUp()
                         viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
-                    }
+                    },
+                    navController = navController
                 )
             }
 
