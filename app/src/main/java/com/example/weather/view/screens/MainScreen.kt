@@ -40,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weather.Repository.WeatherRepository
 import com.example.weather.view.components.ClearBackground
 import com.example.weather.view.components.CloudyBackground
 import com.example.weather.view.components.DrizzleBackground
@@ -54,11 +55,12 @@ import com.example.weather.view.components.WeatherBackground
 @Preview(showBackground = true)
 @Composable
 fun MainScreen (
-    mainViewModel: MainScreenViewModel = viewModel(),
     city: String = "Copenhagen",
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-){
+) {
+    val context = LocalContext.current
+    val mainViewModel = remember { MainScreenViewModel(context = context) }
     val dayDataList by mainViewModel.dayDataState.collectAsState()
     val hourDataList by mainViewModel.hourDataState.collectAsState()
     val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
@@ -69,52 +71,60 @@ fun MainScreen (
     Log.println(Log.DEBUG, "MainScreen", hourDataList.toString())
     Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    if (dayDataList.isEmpty() || hourDataList.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("Loading weather data...", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        }
+    } else {
 
-    Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier =  Modifier.fillMaxSize()
-        ) {
-        Row(
-            horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            IconButton(
-                onClick = { onSettingsClicked() }
+        Box(modifier = Modifier.fillMaxSize()) {
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize()
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.settings_24px),
-                    contentDescription = "Daily Breakdown"
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    IconButton(
+                        onClick = { onSettingsClicked() }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.settings_24px),
+                            contentDescription = "Daily Breakdown"
+                        )
+                    }
+                }
+                Box(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                        .height(500.dp)
+                        .wrapContentSize(Alignment.TopCenter)
+                ) {
+                    MainScreenInfoComponent(
+                        city = WeatherRepository.currentCity,
+                        temp = temperature,
+                        weatherCondition = weatherCondition,
+                        onClick = { /* ToDO */ }
+                    )
+                }
+                HourSlider(
+                    data = hourDataList,
+                    modifier = Modifier.height(100.dp)
                 )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
+                DaySlider(
+                    data = dayDataList,
+                    modifier = Modifier.height(100.dp)
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
-            Box(
-                modifier = Modifier
-                    .background(Color.Transparent)
-                    .height(500.dp)
-                    .wrapContentSize(Alignment.TopCenter)
-            ) {
-                MainScreenInfoComponent(
-                    city = city,
-                    temp = temperature,
-                    weatherCondition = weatherCondition,
-                    onClick = { /* ToDO */ }
-                )
-            }
-            HourSlider(
-                data = hourDataList,
-                modifier = Modifier.height(100.dp)
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-        Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
-            DaySlider(
-                data = dayDataList,
-                modifier = Modifier.height(100.dp)
-            )
-
-        Spacer(modifier = Modifier.height(20.dp))
-        }
-}   }
+    }
+}

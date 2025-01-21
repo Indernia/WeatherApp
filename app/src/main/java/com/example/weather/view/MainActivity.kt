@@ -11,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.core.app.ActivityCompat
 import com.example.weather.Repository.LocationFetchUtil
 import com.example.weather.Repository.LocationFetchUtil.Companion.LOCATION_PERMISSION_REQUEST_CODE
+import com.example.weather.Repository.WeatherRepository
 import com.example.weather.model.AppDatabase
 import com.example.weather.model.LocationData
 import com.example.weather.model.Settings
@@ -80,6 +81,9 @@ class MainActivity : ComponentActivity() {
                 )
             )
             Log.d("MainActivity", "Location inserted")
+            // set default location
+            WeatherRepository.currentCity = "Copenhagen"
+            WeatherRepository.setCurrentLocation(1, context)
         }
     }
 

@@ -25,7 +25,7 @@ fun CitySelectionContainer(
                     modifier = modifier,
                     location = item,
                     onClick = {
-                        viewModel.updateCurrentLocation(item.id, context = context)
+                        viewModel.updateCurrentLocation(item.id, context = context, item.name)
                         Log.d("CitySelectionContainer", "Current location updated to ${item.id}")
                     }
                 )

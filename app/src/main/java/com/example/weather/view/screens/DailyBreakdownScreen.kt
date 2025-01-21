@@ -20,11 +20,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.R
 import com.example.weather.UIControllers.DailyBreakdownViewModel
@@ -53,56 +56,60 @@ fun DailyBreakdownScreen(
 
     val firstDayData = dayDataList.firstOrNull()
     val firstHourData = hourDataList.firstOrNull()
+    val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .navigationBarsPadding()
-    ) {
-        val dayDataList by dailyViewModel.dayDataState.collectAsState()
-        val hourDataList by dailyViewModel.hourDataState.collectAsState()
-        val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+    WeatherBackground(weatherCondition)
 
-        WeatherBackground(weatherCondition)
+    if (dayDataList.isEmpty() || hourDataList.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("Loading weather data...", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        }
+    } else {
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .navigationBarsPadding()
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    horizontalArrangement = Arrangement.Start
+                        .weight(1f)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top
                 ) {
-                    IconButton(onClick = { handleClickBack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "BackArrow"
-                        )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        IconButton(onClick = { handleClickBack() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "BackArrow"
+                            )
+                        }
                     }
-                }
-                if (firstDayData != null && firstHourData != null) {
-                    CityResume(
-                        daydata = firstDayData,
-                        hourdata = firstHourData,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else{
+                    if (firstDayData != null && firstHourData != null) {
+                        CityResume(
+                            daydata = firstDayData,
+                            hourdata = firstHourData,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
 
+                    }
+
+                    DayDropDownList(days = dayDataList)
                 }
 
-                DayDropDownList(days = dayDataList)
             }
-
         }
     }
 }
