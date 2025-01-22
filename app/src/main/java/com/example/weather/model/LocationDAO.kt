@@ -31,7 +31,7 @@ interface LocationDAO {
     """)
     fun markLocationAsUnFavouriteId(id: Long)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(location: LocationData): Long
 
     @Query("""
@@ -48,6 +48,13 @@ interface LocationDAO {
         WHERE id = :id
     """)
     fun setLocationAsDeleted(id: Long)
+
+    @Query("""
+        UPDATE LocationData
+        SET isDeleted = 0
+        WHERE id = :id
+    """)
+    fun setLocationAsNotDeleted(id: Long)
 
 
 }

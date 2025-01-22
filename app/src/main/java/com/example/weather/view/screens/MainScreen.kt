@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -49,13 +50,12 @@ import com.example.weather.view.components.SnowBackground
 import com.example.weather.view.components.ThunderstormBackground
 import kotlinx.coroutines.flow.first
 import com.example.weather.view.components.WeatherBackground
-
+import kotlinx.coroutines.launch
 
 
 @Preview(showBackground = true)
 @Composable
 fun MainScreen (
-    city: String = "Copenhagen",
     onSettingsClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ) {
@@ -100,11 +100,11 @@ fun MainScreen (
                 Box(
                     modifier = Modifier
                         .background(Color.Transparent)
-                        .height(500.dp)
+                        .weight(10f)
                         .wrapContentSize(Alignment.TopCenter)
                 ) {
                     MainScreenInfoComponent(
-                        city = WeatherRepository.currentCity,
+                        city = mainViewModel.currentCity.value,
                         temp = temperature,
                         weatherCondition = weatherCondition,
                         onClick = { /* ToDO */ }
@@ -112,15 +112,15 @@ fun MainScreen (
                 }
                 HourSlider(
                     data = hourDataList,
-                    modifier = Modifier.height(100.dp)
+                    modifier = Modifier.weight(0.6f)
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.weight(0.2f))
 
                 Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
                 DaySlider(
                     data = dayDataList,
-                    modifier = Modifier.height(100.dp)
+                    modifier = Modifier.weight(0.6f)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
