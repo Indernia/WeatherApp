@@ -32,7 +32,6 @@ import kotlin.math.roundToInt
 fun HourBox(
     data: HourData,
 ) {
-    val decimalFormat = remember { DecimalFormat("#.00") }
     val celsiusTemperature = (data.temperature - 273.15).roundToInt()
 
     val formattedTimestamp = remember(data.timestamp) {

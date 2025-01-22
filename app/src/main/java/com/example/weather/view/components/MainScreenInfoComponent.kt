@@ -17,7 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.weather.R
+import com.example.weather.model.DayData
 import com.example.weather.view.components.FigureComponent
+import kotlin.math.roundToInt
 
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
@@ -25,8 +27,8 @@ import com.example.weather.view.components.FigureComponent
 fun MainScreenInfoComponent(
     city: String,
     temp: String,
+    data: DayData?,
     weatherCondition: String,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -110,7 +112,6 @@ fun MainScreenInfoComponent(
                 .height((500 * heightRatio.value).dp)
               //  .width(300.dp)
               //  .height(500.dp)
-                .clickable { onClick() }
                 .background(Color.Transparent),
             contentAlignment = Alignment.TopCenter
         ) {
@@ -129,6 +130,16 @@ fun MainScreenInfoComponent(
                     style = MaterialTheme.typography.titleLarge
 
                 )
+                val mincelsiusTemperature = (data?.minTempK?.minus(273.15))?.roundToInt()
+                val maxcelsiusTemperature = (data?.maxTempK?.minus(273.15))?.roundToInt()
+
+                if (data != null) {
+                    Text(
+                        text = "Min: $mincelsiusTemperature° Max: $maxcelsiusTemperature°",
+                        style = MaterialTheme.typography.titleSmall
+
+                    )
+                }
                 Spacer(modifier = Modifier.height(3.dp))
 
                 FigureComponent(
@@ -148,7 +159,7 @@ fun MainScreenInfoComponent(
         }
     }
 }
-
+/*
 @Preview(showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
 fun PreviewMainScreenInfoComponent() {
@@ -169,4 +180,6 @@ fun PreviewMainScreenInfoComponent() {
         }
     }
 }
+
+ */
 

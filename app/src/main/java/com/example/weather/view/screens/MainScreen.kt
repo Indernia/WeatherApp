@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.Repository.WeatherRepository
+import com.example.weather.model.DayData
 import com.example.weather.view.components.ClearBackground
 import com.example.weather.view.components.CloudyBackground
 import com.example.weather.view.components.DrizzleBackground
@@ -65,7 +66,7 @@ fun MainScreen (
     val hourDataList by mainViewModel.hourDataState.collectAsState()
     val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
     val temperature = dayDataList.firstOrNull()?.tempK?.minus(273.15)?.toInt().toString()
-
+    val today = dayDataList.firstOrNull()
     WeatherBackground(weatherCondition)
 
     Log.println(Log.DEBUG, "MainScreen", hourDataList.toString())
@@ -107,7 +108,7 @@ fun MainScreen (
                         city = mainViewModel.currentCity.value,
                         temp = temperature,
                         weatherCondition = weatherCondition,
-                        onClick = { /* ToDO */ }
+                        data = today,
                     )
                 }
                 HourSlider(
