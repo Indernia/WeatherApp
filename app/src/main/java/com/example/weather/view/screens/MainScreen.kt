@@ -58,6 +58,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen (
     onSettingsClicked: () -> Unit = {},
+    onSelectorClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ) {
     val context = LocalContext.current
@@ -86,15 +87,25 @@ fun MainScreen (
                 modifier = Modifier.fillMaxSize()
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     IconButton(
                         onClick = { onSettingsClicked() }
+
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.settings_24px),
                             contentDescription = "Daily Breakdown"
+                        )
+                    }
+                    IconButton(
+                        onClick = { onSelectorClicked() }
+
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.search_24px),
+                            contentDescription = "City Selector"
                         )
                     }
                 }
@@ -118,7 +129,6 @@ fun MainScreen (
 
                 Spacer(modifier = Modifier.weight(0.2f))
 
-                Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
                 DaySlider(
                     data = dayDataList,
                     modifier = Modifier.weight(0.6f)

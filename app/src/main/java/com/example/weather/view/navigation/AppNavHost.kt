@@ -59,9 +59,9 @@ fun AppNavHost(
                         popUpTo(AppScreens.MainScreen.name) { inclusive = false }
                     }
                 },
-                onSelectorClicked = {
+                onMainClicked = {
                     viewModel.onNavItemSelected(0) // Update selected item in ViewModel
-                    navController.navigate(AppScreens.CitySelector.name){
+                    navController.navigate(AppScreens.MainScreen.name){
                         launchSingleTop = true
                         popUpTo(AppScreens.MainScreen.name) { inclusive = false }
                     }
@@ -83,7 +83,8 @@ fun AppNavHost(
         ) {
             composable(route = AppScreens.MainScreen.name) {
                 MainScreen(
-                    onSettingsClicked = {navController.navigate(AppScreens.Settings.name)}
+                    onSettingsClicked = {navController.navigate(AppScreens.Settings.name)},
+                    onSelectorClicked = {navController.navigate(AppScreens.CitySelector.name)}
                 )
             }
 
@@ -91,7 +92,6 @@ fun AppNavHost(
                 CitySelectorScreen(
                     handleClickBack = {
                         navController.navigateUp()
-                        viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
                     },
                     navController = navController
                 )
@@ -99,32 +99,21 @@ fun AppNavHost(
 
             composable(route = AppScreens.DailyBreakdown.name) {
                 DailyBreakdownScreen(
-                    dailyViewModel = DailyBreakdownViewModel(context = LocalContext.current),
-                    handleClickBack = {
-                        navController.navigateUp()
-                        viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
-                    }
                 )
             }
 
             composable(route = AppScreens.HourlyBreakdown.name) {
                 HourlyBreakdownScreen(
-                    handleClickBack = {
-                        navController.navigateUp()
-                        viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
-                    }
                 )
             }
 
             composable(route = AppScreens.Settings.name) {
-                val context = LocalContext.current
                 SettingsScreen(
                     selectedOption = savedLanguage,
                     onOptionSelected = { },
                     settingsViewModel = SettingsViewModel(),
                     handleClickBack = {
                         navController.navigateUp()
-                        viewModel.resetSelectedItem() // Reset selected item in ViewModel on navigateUp
                     }
                 )
             }
