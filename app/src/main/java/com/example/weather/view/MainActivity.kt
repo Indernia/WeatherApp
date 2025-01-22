@@ -88,7 +88,8 @@ class MainActivity : ComponentActivity() {
             )
             Log.d("MainActivity", "Location inserted")
             // set default location
-            WeatherRepository().setCurrentLocation(1, context)
+            WeatherRepository.currentCity = "Copenhagen"
+            WeatherRepository.setCurrentLocation(1, context)
         }
     }
 

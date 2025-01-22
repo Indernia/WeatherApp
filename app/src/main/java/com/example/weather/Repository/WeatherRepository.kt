@@ -33,22 +33,12 @@ import java.time.Instant
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 
-class WeatherRepository {
+object WeatherRepository {
 
     // We should make some study or something to check what interval would be good here, it does not make sense to wait indefinitely, but it also does not make sense to update it every frame
     private val dataStaleValue: Int = 60 * 10 // Keep formatting as seconds in minute * minutes so default 60 seconds in a minute * 10 minutes
 
-    // var currentCity : String = "" Commented out as the repo should never contain state
-
-    suspend fun getCurrentCity(context: Context): String {
-        val db = AppDatabase.getDatabase(context)
-        var string: String = ""
-        withContext(Dispatchers.IO){
-           string = db.locationDao().getCurrentLocation().name
-        }
-        return string
-
-    }
+    var currentCity : String = ""
 
     fun getLocations(
         context: Context
@@ -86,12 +76,10 @@ class WeatherRepository {
         withContext(Dispatchers.IO) {
             val favourite = db.locationDao().getLocationById(id).firstOrNull()?.isFavourite ?: false
 
-            if (!favourite) {
+            if (favourite) {
                 db.locationDao().markLocationAsFavouriteId(id = id)
-                Log.d("WeatherRepository", "Toggled location $id to favourite")
             } else {
                 db.locationDao().markLocationAsUnFavouriteId(id = id)
-                Log.d("WeatherRepository", "Toggled location $id to unfavourite")
             }
         }
 
@@ -230,7 +218,6 @@ class WeatherRepository {
             Log.d("WeatherRepository", "Exception: $e")
         }
         if (response.contentLength() == 0L) {
-            Log.d("WeatherRepository", "Response is empty")
             return
         }
 
@@ -252,13 +239,9 @@ class WeatherRepository {
                     id = 0, // placeholder as it is auto generated
                 )
                 locationId = db.locationDao().insert(locationData)
-                Log.d("WeatherRepository", "Location inserted: $locationData")
             } else {
                 val locationTempData = location.first()
                 locationId = locationTempData?.id ?: 0
-                db.locationDao().setLocationAsNotDeleted(locationId)
-                Log.d("WeatherRepository", "Location already exists: $locationTempData")
-
             }
         }
 
@@ -326,7 +309,11 @@ class WeatherRepository {
 
 
         withContext(Dispatchers.IO) {
-            db.currentDataDao()
+            db.currentDataDao().insertCurrentData(currentDataObject)
         }
+
+
     }
+
+
 }

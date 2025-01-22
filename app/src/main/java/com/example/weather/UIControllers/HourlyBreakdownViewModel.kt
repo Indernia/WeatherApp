@@ -19,7 +19,7 @@ class HourlyBreakdownViewModel(context: Context): ViewModel() {
     init {
         viewModelScope.launch {
 
-            WeatherRepository().getHours(context, 55.67594, 12.56553, "Copenhagen")
+            WeatherRepository.getHours(context, 55.67594, 12.56553, "Copenhagen")
                     .distinctUntilChanged()
                     .collect {
                         _hourDataState.value = it
