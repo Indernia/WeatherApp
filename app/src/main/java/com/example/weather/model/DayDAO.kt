@@ -39,7 +39,7 @@ interface DayDAO{
         SELECT DayData.*
         FROM DayData
         Left Join Settings ON DayData.location = Settings.currentLocationID
-        WHERE Settings.id = 1 AND DayData.date > :currentTime
+        WHERE Settings.id = 1 AND DayData.date > :currentTime-86400
         ORDER BY DayData.date ASC
         LIMIT :limit
     """)

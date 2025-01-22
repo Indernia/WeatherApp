@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 
 @Database(entities = [LocationData::class, DayData::class, HourData::class, CurrentData::class, Settings::class],
-    version = 18
+    version = 19
 
 )
 abstract class AppDatabase: RoomDatabase() {
