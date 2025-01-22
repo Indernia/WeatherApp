@@ -23,7 +23,7 @@ fun NavBar(
     modifier: Modifier = Modifier,
     selectedItem: Int? = null,
     onDailyClicked: () -> Unit = {},
-    onSelectorClicked: () -> Unit = {},
+    onMainClicked: () -> Unit = {},
     onHourlyClicked: () -> Unit = {},
 ) {
     NavigationBar(
@@ -33,7 +33,7 @@ fun NavBar(
             icon = { Icon(painterResource(id = R.drawable.outline_location_city_24), contentDescription = "Location City") },
             selected = selectedItem == 0,
             onClick = {
-                onSelectorClicked()
+                onMainClicked()
             }
         )
         NavigationBarItem(

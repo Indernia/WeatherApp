@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -45,18 +46,16 @@ import com.example.weather.view.components.WeatherBackground
 
 @Composable
 fun DailyBreakdownScreen(
-    dailyViewModel: DailyBreakdownViewModel = viewModel(),
     modifier: Modifier = Modifier.fillMaxSize(),
-    handleClickBack: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    val mainViewModel = remember { MainScreenViewModel(context = context) }
-    val hourDataList by mainViewModel.hourDataState.collectAsState()
-    val dayDataList by mainViewModel.dayDataState.collectAsState()
-
+    val dailyViewModel = remember { DailyBreakdownViewModel(context = context) }
+    val hourDataList by dailyViewModel.hourDataState.collectAsState()
+    val dayDataList by dailyViewModel.dayDataState.collectAsState()
     val firstDayData = dayDataList.firstOrNull()
     val firstHourData = hourDataList.firstOrNull()
     val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
+    val city = dailyViewModel.currentCity.value
 
     WeatherBackground(weatherCondition)
 
@@ -87,14 +86,12 @@ fun DailyBreakdownScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 8.dp),
-                        horizontalArrangement = Arrangement.Start
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        IconButton(onClick = { handleClickBack() }) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "BackArrow"
-                            )
-                        }
+                        Text(
+                            text = city,
+                            style = MaterialTheme.typography.titleLarge
+                        )
                     }
                     if (firstDayData != null && firstHourData != null) {
                         CityResume(

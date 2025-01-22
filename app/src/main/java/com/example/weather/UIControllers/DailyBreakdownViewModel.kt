@@ -1,6 +1,7 @@
 package com.example.weather.UIControllers
 
 import android.content.Context
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.Repository.WeatherRepository
@@ -19,6 +20,9 @@ class DailyBreakdownViewModel(context: Context): ViewModel() {
     private val _hourDataState = MutableStateFlow<List<HourData>>(emptyList())
     val hourDataState: StateFlow<List<HourData>> = _hourDataState
 
+    val currentCity = mutableStateOf("")
+
+
     init {
         viewModelScope.launch {
 
@@ -36,6 +40,10 @@ class DailyBreakdownViewModel(context: Context): ViewModel() {
                     .collect {
                         _hourDataState.value = it
                     }
+            }
+
+            launch {
+                currentCity.value = WeatherRepository().getCurrentCity(context)
             }
         }
     }
