@@ -58,7 +58,7 @@ fun HourlyBreakdownScreen(
             .fillMaxSize()
             .navigationBarsPadding()
     ) {
-        val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+        val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
 
         WeatherBackground(weatherCondition)
 

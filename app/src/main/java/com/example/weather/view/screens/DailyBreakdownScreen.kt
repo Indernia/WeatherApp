@@ -56,7 +56,7 @@ fun DailyBreakdownScreen(
 
     val firstDayData = dayDataList.firstOrNull()
     val firstHourData = hourDataList.firstOrNull()
-    val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+    val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
 
     WeatherBackground(weatherCondition)
 

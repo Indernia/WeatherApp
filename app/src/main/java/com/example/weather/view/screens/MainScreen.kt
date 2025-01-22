@@ -63,7 +63,7 @@ fun MainScreen (
     val mainViewModel = remember { MainScreenViewModel(context = context) }
     val dayDataList by mainViewModel.dayDataState.collectAsState()
     val hourDataList by mainViewModel.hourDataState.collectAsState()
-    val weatherCondition = dayDataList.firstOrNull()?.weatherCondition ?: "Clear"
+    val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
     val temperature = dayDataList.firstOrNull()?.tempK?.minus(273.15)?.toInt().toString()
 
     WeatherBackground(weatherCondition)
