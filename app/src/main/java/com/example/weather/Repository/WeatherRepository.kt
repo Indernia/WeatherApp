@@ -327,3 +327,6 @@ class WeatherRepository {
 
         withContext(Dispatchers.IO) {
             db.currentDataDao()
+        }
+    }
+}
