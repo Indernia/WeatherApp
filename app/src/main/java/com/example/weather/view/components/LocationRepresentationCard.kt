@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
@@ -54,14 +55,20 @@ fun LocationRepresentationCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = modifier.weight(1f).padding(8.dp),
+                modifier = modifier
+                    .weight(1f)
+                    .padding(8.dp)
+                    .fillMaxWidth(),
                 text = location.name,
                 textAlign = TextAlign.Center
             )
 
             IconButton(
                 onClick = onDeleteClick,
-                modifier = modifier.weight(1f).padding(8.dp)
+                modifier = modifier
+                    .weight(1f)
+                    .padding(8.dp)
+                    .offset(x = 32.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.round_delete_24),
@@ -73,7 +80,9 @@ fun LocationRepresentationCard(
             if( location.isFavourite) {
                 IconButton(
                     onClick = onFavouriteClick,
-                    modifier = modifier.weight(1f).padding(8.dp)
+                    modifier = modifier
+                        .weight(1f)
+                        .padding(8.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_star_24),
