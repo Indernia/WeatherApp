@@ -35,7 +35,7 @@ fun MainScreenInfoComponent(
         "Clear" -> R.drawable.standard
         "Rain", "Drizzle", "Thunderstorm" -> R.drawable.rain
         "Snow" -> R.drawable.winter
-        else -> R.drawable.standard
+        else -> R.drawable.winter
     }
 
     /*val clothingRes = when (weatherCondition) {

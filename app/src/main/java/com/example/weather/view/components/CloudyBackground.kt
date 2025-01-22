@@ -83,8 +83,8 @@ fun RotatingCloud(modifier: Modifier = Modifier, rotationDuration: Int = 3000) {
 
     Image(
         painter = painterResource
-            (id = R.drawable.cloud),
-        contentDescription = "Cloud",
+            (id = R.drawable.darkcloud),
+        contentDescription = "darkcloud",
         modifier = modifier.rotate(rotationAngle)
     )
 }
