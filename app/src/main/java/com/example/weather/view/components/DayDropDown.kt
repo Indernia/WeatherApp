@@ -72,14 +72,14 @@ import kotlin.math.roundToInt
                 ZoneId.systemDefault() // Convert to LocalDateTime
             ).format(DateTimeFormatter.ofPattern("EEEE"))
         }
-        val weatherImage = when (day.weatherCondition) {
-            "Clear" -> R.drawable.cloud
-            "Clouds" -> R.drawable.cloud
-            "Rain" -> R.drawable.rainy
-            "Snow" -> R.drawable.cloud
-            "Thunderstorm" -> R.drawable.cloud
-            else -> R.drawable.cloud
-        }
+    val weatherImage = when (day.weatherCondition) {
+        "Clear" -> R.drawable.sun
+        "Clouds" -> R.drawable.darkcloud
+        "Rain" -> R.drawable.rainy
+        "Snow" -> R.drawable.snow
+        "Thunderstorm" -> R.drawable.thunder
+        else -> R.drawable.darkcloud
+    }
 
 
         Card(

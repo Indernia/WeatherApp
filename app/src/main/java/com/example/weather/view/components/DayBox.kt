@@ -57,12 +57,12 @@ fun DayBox(
                         textAlign = TextAlign.Center,
                     )
             val weatherImage = when (data.weatherCondition) {
-                "Clear" -> R.drawable.cloud
-                "Clouds" -> R.drawable.cloud
+                "Clear" -> R.drawable.sun
+                "Clouds" -> R.drawable.darkcloud
                 "Rain" -> R.drawable.rainy
-                "Snow" -> R.drawable.cloud
-                "Thunderstorm" -> R.drawable.cloud
-                else -> R.drawable.cloud
+                "Snow" -> R.drawable.snow
+                "Thunderstorm" -> R.drawable.thunder
+                else -> R.drawable.darkcloud
             }
 
             Image(
