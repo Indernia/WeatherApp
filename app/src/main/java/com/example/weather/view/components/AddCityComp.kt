@@ -94,7 +94,7 @@ fun AddCityComp(
             },
             onAddCity = {
                 CoroutineScope(Dispatchers.IO).launch {
-                    WeatherRepository.UpdataData(
+                    WeatherRepository().UpdataData(
                         name = it.name,
                         lat = it.latitude,
                         lon = it.longitude,

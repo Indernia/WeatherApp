@@ -37,10 +37,15 @@ fun AppNavHost(
     val context = LocalContext.current
     val selectedItem = viewModel.selectedItem.value
     val savedLanguage = settingsViewModel.getLanguagePreference(context)
-    if(WeatherRepository.currentCity.equals("")) {
+
+    /*
+    Commenting out as the only way this returns true is if the database breaks which we will not handle in this project
+    if(WeatherRepository().getCurrentCity(context).equals("")) {
         WeatherRepository.currentCity = "Copenhagen"
-        CitySelectorViewModel(LocalContext.current).updateCurrentLocation(1, context = context, "Copenhagen")
+        CitySelectorViewModel(LocalContext.current).updateCurrentLocation(1, context = context)
     }
+    */
+
 
     Scaffold(
         modifier = modifier,
@@ -78,7 +83,6 @@ fun AppNavHost(
         ) {
             composable(route = AppScreens.MainScreen.name) {
                 MainScreen(
-                    WeatherRepository.currentCity,
                     onSettingsClicked = {navController.navigate(AppScreens.Settings.name)}
                 )
             }
