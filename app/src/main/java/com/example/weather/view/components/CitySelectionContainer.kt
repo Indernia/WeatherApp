@@ -27,7 +27,6 @@ fun CitySelectionContainer(
         LazyColumn {
             items(data.value.sortedByDescending { it.isFavourite }) { item ->
                 LocationRepresentationCard(
-                    modifier = modifier,
                     location = item,
                     onClick = {
                         viewModel.updateCurrentLocation(item.id, context = context)
