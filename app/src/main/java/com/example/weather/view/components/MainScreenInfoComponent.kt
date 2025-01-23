@@ -23,14 +23,16 @@ fun MainScreenInfoComponent(
     temp: String,
     data: DayData?,
     weatherCondition: String,
+    feelsLike: Double,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
 
-    val baseFigureRes = when (weatherCondition) {
-        "Clear" -> R.drawable.standard
-        "Rain", "Drizzle", "Thunderstorm" -> R.drawable.rain
-        "Snow" -> R.drawable.winter
+    val baseFigureRes = when {
+        feelsLike < 10 -> R.drawable.winter
+        weatherCondition == "Clear" -> R.drawable.standard
+        weatherCondition in listOf("Rain", "Drizzle", "Thunderstorm") -> R.drawable.rain
+        weatherCondition == "Snow" -> R.drawable.winter
         else -> R.drawable.winter
     }
 
@@ -169,8 +171,7 @@ fun PreviewMainScreenInfoComponent() {
             MainScreenInfoComponent(
                 city = "Copenhagen",
                 temp = "10",
-                weatherCondition = "Rainy",
-                onClick = { /* ToDO */ }
+                weatherCondition = "Rainy"
             )
         }
     }

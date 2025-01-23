@@ -191,7 +191,55 @@ class WeatherRepository {
 
     }
 
+    /**
+     * @param context Application context
+     * @param lat Latitude of location
+     * @param lon Longitude of location
+     *
+     * Sends a flow with the current weather data and makes sure to update it if the data is stale and sends it back
+     */
+    fun getCurrent(
+        context: Context,
+        lat: Double,
+        lon: Double,
+        name: String
+    ): Flow<CurrentData> = flow {
+        val db = AppDatabase.getDatabase(context)
 
+        // Get the current data from the database
+        val currentData = db.currentDataDao().getCurrentDataForCurrentLocation().first()
+        Log.d("WeatherRepository", "Getting current data: $currentData")
+        emit(currentData)
+
+        var latestUpdate = 0
+        withContext(Dispatchers.IO) {
+            latestUpdate = db.currentDataDao().getLatestUpdateSelectedCity(
+            )
+            Log.d("WeatherRepository", "Latest current data update: $latestUpdate")
+        }
+
+        // Check if the current data is stale
+        if (Instant.now().epochSecond - latestUpdate > dataStaleValue) {
+            Log.println(Log.DEBUG, "WeatherRepository", "Updating current data")
+
+            var location: LocationData = LocationData(0, "", 0.0, 0.0, 0, false)
+            withContext(Dispatchers.IO){
+                location = db.locationDao().getCurrentLocation()
+                Log.d("WeatherRepository", "Current location: $location")
+            }
+
+            if (location == null) {
+                return@flow
+            }
+
+            // Call the UpdataData function to update the data
+            UpdataData(lat = location.latitude, lon = location.longitude, name = location.name, context = context)
+
+            // Fetch the updated current data
+            val updatedCurrentData = db.currentDataDao().getCurrentDataForCurrentLocation().first()
+            emit(updatedCurrentData)
+        }
+    }
 
 
     suspend fun UpdataData(
@@ -309,6 +357,7 @@ class WeatherRepository {
         val currentDataObject: CurrentData = CurrentData(
             timestamp = currentData?.get("dt")?.jsonPrimitive?.content?.toInt() ?: 0,
             locationID = locationId,
+            updatedAt = currentTimestamp.toInt(DurationUnit.SECONDS),
             temperature = currentData?.get("temp")?.jsonPrimitive?.content?.toDouble() ?: 0.0,
             feelsLike = currentData?.get("feels_like")?.jsonPrimitive?.content?.toDouble() ?: 0.0,
             humidity = currentData?.get("humidity")?.jsonPrimitive?.content?.toDouble() ?: 0.0,
@@ -319,7 +368,7 @@ class WeatherRepository {
 
 
         withContext(Dispatchers.IO) {
-            db.currentDataDao()
+            db.currentDataDao().insertCurrentData(currentData = currentDataObject)
         }
     }
 }
