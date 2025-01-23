@@ -39,13 +39,17 @@ fun Rain() {
 
     LaunchedEffect(Unit) {
         while (true) {
-            raindrops.add(
-                RaindropRain(
-                    x = (0..1000).random() / 1000f,
-                    y = -0.1f,
-                    speed = (2..5).random() / 100f
+            if (raindrops.size < dropCount) {
+                raindrops.add(
+                    RaindropRain(
+                        x = (0..1000).random() / 1000f,
+                        y = -0.1f,
+                        speed = (2..5).random() / 100f
+                    )
                 )
-            )
+            } else {
+                raindrops.removeAt(0)
+            }
             delay(50)
         }
     }
