@@ -129,7 +129,7 @@ fun HourDropDown(
                         text = "${stringResource(R.string.Humidity)}: $humidity%",
                     )
                     Text(
-                        text = "${stringResource(R.string.UVI)}UV Index: $uvi",
+                        text = "${stringResource(R.string.UVI)}: $uvi",
                     )
                     Text(
                         text = "${stringResource(R.string.Windspeed)}: $windSpeed m/s",
