@@ -79,7 +79,6 @@ fun HourlyBreakdownScreen(
                 if (firstDayData != null && firstHourData != null) {
                     CityResume(
                         daydata = firstDayData,
-                        hourdata = firstHourData,
                         modifier = Modifier.fillMaxSize()
                     )
                 } else {

@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import com.example.weather.data.DayData
-import com.example.weather.data.HourData
 import java.time.Instant
 import java.time.LocalTime
 import java.time.ZoneId
@@ -26,7 +25,6 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun CityResume(
     daydata: DayData,
-    hourdata: HourData,
     modifier: Modifier = Modifier
 ) {
     val formattedDate = remember(daydata.date) {
