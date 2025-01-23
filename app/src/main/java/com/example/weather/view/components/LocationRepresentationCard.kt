@@ -33,7 +33,7 @@ fun LocationRepresentationCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp)
+            .height(98.dp)
             .padding(horizontal = 16.dp, vertical = 2.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -42,19 +42,19 @@ fun LocationRepresentationCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp), // Matches the card height for consistency
+                .height(130.dp), // Matches the card height for consistency
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = modifier.weight(1f).padding(8.dp),
+                modifier = modifier.weight(2f).padding(8.dp),
                 text = location.name,
                 textAlign = TextAlign.Center
             )
 
             IconButton(
                 onClick = onDeleteClick,
-                modifier = modifier.weight(1f).padding(8.dp)
+                modifier = modifier.weight(0.5f).padding(8.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.round_delete_24),
