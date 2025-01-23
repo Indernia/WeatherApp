@@ -22,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import com.example.weather.viewmodel.HourlyBreakdownViewModel
 import com.example.weather.view.components.CityResume
 import com.example.weather.view.components.HourDropDownList
@@ -71,7 +72,8 @@ fun HourlyBreakdownScreen(
                 ) {
                     Text(
                         text = city,
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
+                        textAlign = TextAlign.Center
                     )
                 }
                 if (firstDayData != null && firstHourData != null) {

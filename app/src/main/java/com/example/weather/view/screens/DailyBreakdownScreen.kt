@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.weather.viewmodel.DailyBreakdownViewModel
 import com.example.weather.view.components.CityResume
@@ -75,7 +76,8 @@ fun DailyBreakdownScreen(
                     ) {
                         Text(
                             text = city,
-                            style = MaterialTheme.typography.titleLarge
+                            style = MaterialTheme.typography.titleLarge,
+                            textAlign = TextAlign.Center
                         )
                     }
                     if (firstDayData != null && firstHourData != null) {
