@@ -208,8 +208,8 @@ class WeatherRepository {
 
         // Get the current data from the database
         val currentData = db.currentDataDao().getCurrentDataForCurrentLocation().first()
-        emit(currentData)
         Log.d("WeatherRepository", "Getting current data: $currentData")
+        emit(currentData)
 
         var latestUpdate = 0
         withContext(Dispatchers.IO) {
@@ -368,7 +368,7 @@ class WeatherRepository {
 
 
         withContext(Dispatchers.IO) {
-            db.currentDataDao()
+            db.currentDataDao().insertCurrentData(currentData = currentDataObject)
         }
     }
 }

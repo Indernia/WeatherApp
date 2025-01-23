@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 
 @Database(entities = [LocationData::class, DayData::class, HourData::class, CurrentData::class, Settings::class],
-    version = 20
+    version = 21
 
 )
 abstract class AppDatabase: RoomDatabase() {
@@ -49,6 +49,7 @@ abstract class AppDatabase: RoomDatabase() {
         }
     }
 
+    // NOt used as funcitonality is moved to oncreate with shared preferences (: 
     private class DatabaseCallback (private val context: Context): RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
