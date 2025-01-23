@@ -32,6 +32,7 @@ fun CitySelectionContainer(
                     onClick = {
                         viewModel.updateCurrentLocation(item.id, context = context)
                         Log.d("CitySelectionContainer", "Current location updated to ${item.id}")
+                        navController.navigateUp()
                     },
                     onFavouriteClick = {
                         viewModel.toggleFavourite(item.id, context = context)
@@ -40,7 +41,6 @@ fun CitySelectionContainer(
                         composableScope.launch {
                             viewModel.deleteLocation(item.id, context = context)
                         }
-                        navController.navigateUp()
                     }
                 )
             }
