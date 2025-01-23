@@ -36,7 +36,7 @@ fun DayBox(
     }
     Card(
         modifier = Modifier
-            .size(width = 90.dp, height = 120.dp),
+            .size(width = 98.dp, height = 120.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
