@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.core.view.WindowCompat
 import com.example.weather.domain.WeatherRepository
 import com.example.weather.viewmodel.SettingsViewModel
 import com.example.weather.data.AppDatabase
@@ -41,6 +42,11 @@ class MainActivity : ComponentActivity() {
                 .putBoolean("is_first_launch", false)
                 .apply()
         }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        window.navigationBarColor = android.graphics.Color.TRANSPARENT
+
 
         Log.d("MainActivity", "Database initialized")
         setContent {

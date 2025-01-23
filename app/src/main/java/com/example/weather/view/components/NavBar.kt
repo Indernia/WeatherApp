@@ -1,5 +1,11 @@
 package com.example.weather.view.components
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +33,8 @@ fun NavBar(
     onHourlyClicked: () -> Unit = {},
 ) {
     NavigationBar(
+        modifier = modifier
+            .padding(WindowInsets.navigationBars.asPaddingValues()),
     ) {
 
         NavigationBarItem(
