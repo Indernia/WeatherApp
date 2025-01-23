@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.unit.dp
 import com.example.weather.R
 import com.example.weather.data.DayData
@@ -114,7 +115,8 @@ fun MainScreenInfoComponent(
             ) {
                 Text(
                     text = city,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = Center
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
