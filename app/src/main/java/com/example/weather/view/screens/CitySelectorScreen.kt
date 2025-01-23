@@ -47,6 +47,9 @@ fun CitySelectorScreen(
         val dayDataList by mainViewModel.dayDataState.collectAsState()
         val firstDayData = dayDataList.firstOrNull()
         val firstHourData = hourDataList.firstOrNull()
+        val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
+
+        WeatherBackground(weatherCondition)
 
         Box(
             modifier = Modifier
@@ -54,10 +57,6 @@ fun CitySelectorScreen(
                 .navigationBarsPadding()
                 .padding(WindowInsets.statusBars.asPaddingValues()),
         ) {
-            val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
-
-            WeatherBackground(weatherCondition)
-
 
             Column(
                 modifier = Modifier.fillMaxSize(),

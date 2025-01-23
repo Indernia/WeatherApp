@@ -41,6 +41,9 @@ fun HourlyBreakdownScreen(
     val firstDayData = dayDataList.firstOrNull()
     val firstHourData = hourDataList.firstOrNull()
     val city = hourlyViewModel.currentCity.value
+    val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
+
+    WeatherBackground(weatherCondition)
 
     Box(
         modifier = Modifier
@@ -48,9 +51,6 @@ fun HourlyBreakdownScreen(
             .navigationBarsPadding()
             .padding(WindowInsets.statusBars.asPaddingValues()),
     ) {
-        val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
-
-        WeatherBackground(weatherCondition)
 
         Column(
             modifier = Modifier.fillMaxSize(),
