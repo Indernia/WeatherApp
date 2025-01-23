@@ -31,6 +31,7 @@ import com.example.weather.view.components.HourSlider
 import com.example.weather.view.components.DaySlider
 import com.example.weather.view.components.MainScreenInfoComponent
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
@@ -74,7 +75,7 @@ fun MainScreen (
                 modifier = Modifier.fillMaxSize()
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(9.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     IconButton(
