@@ -28,4 +28,14 @@ interface CurrentDataDao {
 
     @Insert
     fun insertCurrentData(currentData: CurrentData)
+
+    @Query("""
+        SELECT CurrentData.updatedAt
+        FROM CurrentData
+        LEFT JOIN Settings ON CurrentData.locationID = Settings.currentLocationID
+        WHERE Settings.id = 1
+        ORDER BY CurrentData.updatedAt DESC
+        LIMIT 1
+    """)
+    fun getLatestUpdateSelectedCity() : Int
 }

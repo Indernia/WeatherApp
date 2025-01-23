@@ -1,5 +1,6 @@
 package com.example.weather.data
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -8,6 +9,7 @@ data class CurrentData(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     var timestamp: Int,
     var locationID: Long,
+    var updatedAt: Int,
     var temperature: Double,
     var feelsLike: Double,
     var humidity: Double,

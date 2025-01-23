@@ -37,6 +37,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.weather.data.CurrentData
 
 import com.example.weather.view.components.WeatherBackground
 
@@ -52,7 +53,9 @@ fun MainScreen (
     val mainViewModel = remember { MainScreenViewModel(context = context) }
     val dayDataList by mainViewModel.dayDataState.collectAsState()
     val hourDataList by mainViewModel.hourDataState.collectAsState()
+    val currentData by mainViewModel.currentDataState.collectAsState()
     val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
+    val feelsLike = currentData.firstOrNull()?.feelsLike?.minus(273.15) ?: 0.0
     val temperature = dayDataList.firstOrNull()?.tempK?.minus(273.15)?.toInt().toString()
     val today = dayDataList.firstOrNull()
     WeatherBackground(weatherCondition)
@@ -107,6 +110,7 @@ fun MainScreen (
                         temp = temperature,
                         weatherCondition = weatherCondition,
                         data = today,
+                        feelsLike = feelsLike
                     )
                 }
                 HourSlider(

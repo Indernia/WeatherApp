@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.weather.data.CurrentData
 import com.example.weather.domain.WeatherRepository
 import com.example.weather.data.DayData
 import com.example.weather.data.HourData
@@ -20,6 +21,9 @@ class MainScreenViewModel (context: Context): ViewModel() {
 
     private val _hourDataState = MutableStateFlow<List<HourData>>(emptyList())
     val hourDataState: StateFlow<List<HourData>> = _hourDataState
+
+    private val _currentDataState = MutableStateFlow<List<CurrentData>>(emptyList())
+    val currentDataState: MutableStateFlow<List<CurrentData>> = _currentDataState
 
     val currentCity = mutableStateOf("")
 
@@ -42,6 +46,15 @@ class MainScreenViewModel (context: Context): ViewModel() {
                     _hourDataState.value = it
                 }
                 Log.d("MainScreenViewModel", "Hour data updated: ${hourDataState.value.toString()}")
+            }
+
+            launch {
+                WeatherRepository().getCurrent(context, 25.67594, 11.56553, "Copenhagen")
+                    .distinctUntilChanged()
+                    .collect {
+                        _currentDataState.value = listOf(it)
+                    }
+                Log.d("MainScreenViewModel", "Current data updated: ${currentDataState.value.toString()}")
             }
 
             launch {
