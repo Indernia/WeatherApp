@@ -1,4 +1,4 @@
-package com.example.weather.Repository
+package com.example.weather.domain
 
 import android.util.Log
 import kotlinx.serialization.json.Json

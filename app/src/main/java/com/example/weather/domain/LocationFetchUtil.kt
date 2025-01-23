@@ -1,4 +1,4 @@
-package com.example.weather.Repository
+package com.example.weather.domain
 
 import android.app.Activity
 import android.content.Context
@@ -9,7 +9,6 @@ import android.Manifest
 import android.util.Log
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import okhttp3.internal.wait
 import java.lang.Thread.sleep
 import kotlin.coroutines.resumeWithException
 

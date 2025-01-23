@@ -10,13 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.weather.Repository.WeatherRepository
-import com.example.weather.UIControllers.CitySelectorViewModel
-import com.example.weather.UIControllers.DailyBreakdownViewModel
 import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
-import com.example.weather.UIControllers.NavViewModel
-import com.example.weather.UIControllers.SettingsViewModel
+import com.example.weather.viewmodel.NavViewModel
+import com.example.weather.viewmodel.SettingsViewModel
 
 
 enum class AppScreens {

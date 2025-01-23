@@ -6,8 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.weather.model.DayData
-import com.example.weather.model.HourData
+import com.example.weather.data.HourData
 
 @Composable
 fun HourDropDownList(

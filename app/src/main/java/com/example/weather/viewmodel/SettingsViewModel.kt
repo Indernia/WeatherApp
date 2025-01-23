@@ -1,4 +1,4 @@
-package com.example.weather.UIControllers
+package com.example.weather.viewmodel
 
 import android.content.Context
 import android.content.SharedPreferences

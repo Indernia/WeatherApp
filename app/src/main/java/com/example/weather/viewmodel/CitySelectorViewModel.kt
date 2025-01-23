@@ -1,18 +1,14 @@
-package com.example.weather.UIControllers
+package com.example.weather.viewmodel
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.R
-import com.example.weather.Repository.CityGeoLocatorData
-import com.example.weather.Repository.GeoLocationAPI
-import com.example.weather.Repository.WeatherRepository
-import com.example.weather.model.DayData
-import com.example.weather.model.HourData
-import com.example.weather.model.LocationData
+import com.example.weather.domain.CityGeoLocatorData
+import com.example.weather.domain.GeoLocationAPI
+import com.example.weather.domain.WeatherRepository
+import com.example.weather.data.LocationData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

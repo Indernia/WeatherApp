@@ -1,4 +1,4 @@
-package com.example.weather.UIControllers
+package com.example.weather.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State

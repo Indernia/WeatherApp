@@ -15,11 +15,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.weather.model.Condition
-import com.example.weather.model.HourData
-import com.example.weather.model.LocationData
-import java.time.ZonedDateTime
+import com.example.weather.data.HourData
+import com.example.weather.data.LocationData
 
 @Composable
 fun SavedCity(

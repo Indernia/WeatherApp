@@ -1,25 +1,18 @@
-package com.example.weather.UIControllers
+package com.example.weather.viewmodel
 
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.Repository.WeatherRepository
-import com.example.weather.model.Condition
-import com.example.weather.model.CurrentData
-import com.example.weather.model.DayData
-import com.example.weather.model.HourData
-import com.example.weather.model.LocationData
+import com.example.weather.domain.WeatherRepository
+import com.example.weather.data.DayData
+import com.example.weather.data.HourData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-import java.time.ZonedDateTime
-import kotlin.contracts.contract
+
 class MainScreenViewModel (context: Context): ViewModel() {
 
     private val _dayDataState = MutableStateFlow<List<DayData>>(emptyList())
