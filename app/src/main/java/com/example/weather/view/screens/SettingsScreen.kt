@@ -31,6 +31,9 @@ import com.example.weather.R
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -62,7 +65,12 @@ fun SettingsScreen(
     }
     var selectedLanguage by remember { mutableStateOf(selectedLanguageDisplay) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(WindowInsets.statusBars.asPaddingValues()),
+    )
+
+    {
 
         Column(
             modifier = Modifier.fillMaxSize(),
