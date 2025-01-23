@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -39,13 +40,17 @@ fun Rain() {
 
     LaunchedEffect(Unit) {
         while (true) {
-            raindrops.add(
-                RaindropRain(
-                    x = (0..1000).random() / 1000f,
-                    y = -0.1f,
-                    speed = (2..5).random() / 100f
+            if (raindrops.size < dropCount) {
+                raindrops.add(
+                    RaindropRain(
+                        x = (0..1000).random() / 1000f,
+                        y = -0.1f,
+                        speed = (3..7).random() / 100f
+                    )
                 )
-            )
+            } else {
+                raindrops.removeAt(0)
+            }
             delay(50)
         }
     }
@@ -75,8 +80,8 @@ private fun DrawScope.drawRaindrop(drop: RaindropRain) {
 
     drawLine(
         color = Color.White.copy(alpha = 0.5f),
-        start = androidx.compose.ui.geometry.Offset(startX, startY),
-        end = androidx.compose.ui.geometry.Offset(endX, endY),
+        start = Offset(startX, startY),
+        end = Offset(endX, endY),
         strokeWidth = 2f
     )
 }
