@@ -28,7 +28,7 @@ fun MainScreenInfoComponent(
     val context = LocalContext.current
 
     val baseFigureRes = when {
-        feelsLike < 10.0 -> R.drawable.winter
+        feelsLike < 10 -> R.drawable.winter
         weatherCondition == "Clear" -> R.drawable.standard
         weatherCondition in listOf("Rain", "Drizzle", "Thunderstorm") -> R.drawable.rain
         weatherCondition == "Snow" -> R.drawable.winter
@@ -169,8 +169,7 @@ fun PreviewMainScreenInfoComponent() {
             MainScreenInfoComponent(
                 city = "Copenhagen",
                 temp = "10",
-                weatherCondition = "Rainy",
-                onClick = { /* ToDO */ }
+                weatherCondition = "Rainy"
             )
         }
     }

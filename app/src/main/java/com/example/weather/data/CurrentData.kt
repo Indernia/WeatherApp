@@ -2,9 +2,20 @@ package com.example.weather.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    primaryKeys = ["timestamp", "location"],
+    foreignKeys = [
+        ForeignKey(
+            entity = LocationData::class,
+            parentColumns = ["id"],
+            childColumns = ["location"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class CurrentData(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     var timestamp: Int,

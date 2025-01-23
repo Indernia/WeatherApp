@@ -56,8 +56,11 @@ fun MainScreen (
     val currentData by mainViewModel.currentDataState.collectAsState()
     val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
     val feelsLike = currentData.firstOrNull()?.feelsLike?.minus(273.15) ?: 0.0
-    val temperature = dayDataList.firstOrNull()?.tempK?.minus(273.15)?.toInt().toString()
+    val temperature = currentData.firstOrNull()?.temperature?.minus(273.15)?.toInt().toString()
     val today = dayDataList.firstOrNull()
+
+    Log.d("WeatherApp", "currentData: ${currentData.size}")
+
     WeatherBackground(weatherCondition)
 
     Log.println(Log.DEBUG, "MainScreen", hourDataList.toString())
