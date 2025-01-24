@@ -105,6 +105,7 @@ val items by viewModel.possibleLocations.collectAsState()
                     items(items, key = null) { item ->
                         Log.d("CitySelectorPopup", "Item: $item")
                         Card (
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                             onClick = {
                                 onAddCity(
                                     LocationData(
