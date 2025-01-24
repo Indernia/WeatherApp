@@ -1,19 +1,16 @@
 package com.example.weather.view.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -24,6 +21,9 @@ import com.example.weather.view.screens.*
 import com.example.weather.view.components.NavBar
 import com.example.weather.viewmodel.NavViewModel
 import com.example.weather.viewmodel.SettingsViewModel
+import com.example.weather.viewmodel.MainScreenViewModel
+import com.example.weather.data.CurrentData
+
 
 
 enum class AppScreens {
@@ -39,12 +39,14 @@ fun AppNavHost(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier,
     viewModel: NavViewModel = viewModel(),
-    settingsViewModel: SettingsViewModel = viewModel()
+    settingsViewModel: SettingsViewModel = viewModel(),
 ) {
     val context = LocalContext.current
+    val mainViewModel = remember { MainScreenViewModel(context = context) }
     val selectedItem = viewModel.selectedItem.value
     val savedLanguage = settingsViewModel.getLanguagePreference(context)
-
+    val currentData by mainViewModel.currentDataState.collectAsState()
+    val weatherCondition = remember {currentData.firstOrNull()?.condition ?: ""}
     /*
     Commenting out as the only way this returns true is if the database breaks which we will not handle in this project
     if(WeatherRepository().getCurrentCity(context).equals("")) {
@@ -93,7 +95,8 @@ fun AppNavHost(
             composable(route = AppScreens.MainScreen.name) {
                 MainScreen(
                     onSettingsClicked = {navController.navigate(AppScreens.Settings.name)},
-                    onSelectorClicked = {navController.navigate(AppScreens.CitySelector.name)}
+                    onSelectorClicked = {navController.navigate(AppScreens.CitySelector.name)},
+                    weatherCondition = weatherCondition
                 )
             }
 
@@ -102,17 +105,20 @@ fun AppNavHost(
                     handleClickBack = {
                         navController.navigateUp()
                     },
-                    navController = navController
+                    navController = navController,
+                    weatherCondition = weatherCondition
                 )
             }
 
             composable(route = AppScreens.DailyBreakdown.name) {
                 DailyBreakdownScreen(
+                    weatherCondition = weatherCondition
                 )
             }
 
             composable(route = AppScreens.HourlyBreakdown.name) {
                 HourlyBreakdownScreen(
+                    weatherCondition = weatherCondition
                 )
             }
 

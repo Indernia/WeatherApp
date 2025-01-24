@@ -79,8 +79,6 @@ val items by viewModel.possibleLocations.collectAsState()
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(onClick = {
                         onSearchCity(cityName)
-                        //onAddCity(cityName)
-                        //onDismissRequest()
                     }) {
                         Text("Search")
                     }
@@ -116,15 +114,4 @@ val items by viewModel.possibleLocations.collectAsState()
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun CitySelectorPopupPreview() {
-    CitySelectorPopup(
-        onDismissRequest = {},
-        onSearchCity = { "" },
-        onAddCity = { city -> println("Added city: $city") },
-        viewModel = CitySelectorViewModel(LocalContext.current)
-    )
 }

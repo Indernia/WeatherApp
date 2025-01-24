@@ -64,7 +64,8 @@ fun AddCityComp(
                 contentDescription = "Add City",
                 modifier = Modifier.size(30.dp)
             )
-        }    }
+        }
+    }
     val context = LocalContext.current
     // Show CitySelectorPopup when dialog is visible
     if (showDialog.value) {
@@ -98,10 +99,3 @@ suspend fun fetchLocationData(cityName: String, context: Context, viewModel: Cit
     return GeoLocationRepository().convertResponseBodyToGeoLocationData(responseBody)
 }
 
-@Preview
-@Composable
-fun AddCityPreview() {
-    AddCityComp(
-        citySelectorViewModel = CitySelectorViewModel(LocalContext.current)
-    )
-}

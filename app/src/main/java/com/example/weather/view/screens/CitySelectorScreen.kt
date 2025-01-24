@@ -35,19 +35,15 @@ import com.example.weather.view.components.WeatherBackground
 fun CitySelectorScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
     handleClickBack: () -> Unit = {},
-    navController: NavHostController
+    navController: NavHostController,
+    weatherCondition: String
+
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
         val context = LocalContext.current
-        val mainViewModel = remember { MainScreenViewModel(context = context) }
-        val hourDataList by mainViewModel.hourDataState.collectAsState()
-        val dayDataList by mainViewModel.dayDataState.collectAsState()
-        val firstDayData = dayDataList.firstOrNull()
-        val firstHourData = hourDataList.firstOrNull()
-        val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
 
         WeatherBackground(weatherCondition)
 

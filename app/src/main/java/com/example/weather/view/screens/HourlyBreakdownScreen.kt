@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBars
@@ -29,10 +28,10 @@ import com.example.weather.view.components.HourDropDownList
 
 import com.example.weather.view.components.WeatherBackground
 
-@Preview(showBackground = true)
 @Composable
 fun HourlyBreakdownScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
+    weatherCondition: String
 ) {
     val context = LocalContext.current
     val hourlyViewModel = remember { HourlyBreakdownViewModel(context = context) }
@@ -41,7 +40,6 @@ fun HourlyBreakdownScreen(
     val firstDayData = dayDataList.firstOrNull()
     val firstHourData = hourDataList.firstOrNull()
     val city = hourlyViewModel.currentCity.value
-    val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
 
     WeatherBackground(weatherCondition)
 

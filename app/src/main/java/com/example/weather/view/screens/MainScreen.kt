@@ -36,33 +36,27 @@ import com.example.weather.view.components.MainScreenInfoComponent
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.windowInsetsPadding
-
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.example.weather.data.CurrentData
 
 import com.example.weather.view.components.WeatherBackground
 
 
-@Preview(showBackground = true)
 @Composable
 fun MainScreen (
     onSettingsClicked: () -> Unit = {},
     onSelectorClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    weatherCondition: String
 ) {
     val context = LocalContext.current
     val mainViewModel = remember { MainScreenViewModel(context = context) }
     val dayDataList by mainViewModel.dayDataState.collectAsState()
     val hourDataList by mainViewModel.hourDataState.collectAsState()
     val currentData by mainViewModel.currentDataState.collectAsState()
-    val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
     val feelsLike = currentData.firstOrNull()?.feelsLike?.minus(273.15) ?: 0.0
     val temperature = currentData.firstOrNull()?.temperature?.minus(273.15)?.toInt().toString()
     val today = dayDataList.firstOrNull()
