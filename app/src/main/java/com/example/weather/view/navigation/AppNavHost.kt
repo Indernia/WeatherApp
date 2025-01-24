@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -39,20 +40,28 @@ fun AppNavHost(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier,
     viewModel: NavViewModel = viewModel(),
-    settingsViewModel: SettingsViewModel = viewModel(),
 ) {
     val context = LocalContext.current
     val mainViewModel = remember { MainScreenViewModel(context = context) }
     val selectedItem = viewModel.selectedItem.value
-    val savedLanguage = settingsViewModel.getLanguagePreference(context)
     val currentData by mainViewModel.currentDataState.collectAsState()
+
     val weatherCondition = remember {currentData.firstOrNull()?.condition ?: ""}
+
+    val weatherCondition = currentData.firstOrNull()?.condition ?: ""
+    /*
+    Commenting out as the only way this returns true is if the database breaks which we will not handle in this project
+    if(WeatherRepository().getCurrentCity(context).equals("")) {
+        WeatherRepository.currentCity = "Copenhagen"
+        CitySelectorViewModel(LocalContext.current).updateCurrentLocation(1, context = context)
+    }
+    */
 
 
     Scaffold(
         modifier = modifier
             .fillMaxSize()
-            .consumeWindowInsets(WindowInsets.systemBars),
+            .consumeWindowInsets(WindowInsets.statusBars),
         bottomBar = {
             NavBar(
                 selectedItem = selectedItem, // Pass selected item state to NavBar
@@ -117,9 +126,6 @@ fun AppNavHost(
 
             composable(route = AppScreens.Settings.name) {
                 SettingsScreen(
-                    selectedOption = savedLanguage,
-                    onOptionSelected = { },
-                    settingsViewModel = SettingsViewModel(),
                     handleClickBack = {
                         navController.navigateUp()
                     }

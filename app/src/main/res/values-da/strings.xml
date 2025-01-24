@@ -9,7 +9,7 @@
     <string name="Clouds">Skyet</string>
     <string name="AddCity">Tilføj By</string>
     <string name="InsertCity">Indsæt Bynavn</string>
-    <string name="Add">Tilføj</string>
+    <string name="Search">Søg</string>
     <string name="Cancel">Fortryd</string>
     <string name="January">Januar</string>
     <string name="February">Februar</string>
@@ -39,4 +39,8 @@
     <string name="ChooseLanguage">Vælg et sprog</string>
     <string name="UVI">UV Indeks</string>
     <string name="MaxTemp">Maks temp</string>
+    <string name="DeleteCity">Slet by?</string>
+    <string name="Delete">Slet</string>
+    <string name="Youaredeleting">Du sletter</string>
+    <string name="SliderDescription">Slideren definerer når det er koldt</string>"
 </resources>

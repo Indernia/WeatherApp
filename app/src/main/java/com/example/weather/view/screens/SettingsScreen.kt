@@ -14,8 +14,6 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,26 +36,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.key
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.viewmodel.SettingsViewModel
 
 @Composable
 fun SettingsScreen(
-    selectedOption: String,
-    onOptionSelected: (String) -> Unit,
     settingsViewModel: SettingsViewModel = viewModel(),
     handleClickBack: () -> Unit = {},
     context: Context = LocalContext.current
 ){
     val currentLanguage = settingsViewModel.getLanguagePreference(context)
     val langOptions = listOf("Dansk", "English")
-    var isSwitchChecked by remember { mutableStateOf(true) }
-    val languageOptions = listOf("Dansk", "English")
-    val languageCodeMap = mapOf("Dansk" to "da", "English" to "en")
     val selectedLanguageDisplay = when (currentLanguage) {
         "da" -> "Dansk"
         "en" -> "English"
@@ -117,14 +112,6 @@ fun SettingsScreen(
                                 )
                             }
                             item {
-                                SwitchSettingItem(
-                                    title = stringResource(R.string.WeatherAlert),
-                                    description = stringResource(R.string.EnableDisableAlert),
-                                    isChecked = isSwitchChecked,
-                                    onCheckedChange = { isSwitchChecked = it }
-                                )
-                            }
-                            item {
                                 DropdownSettingItem(
                                     title = stringResource(R.string.Language),
                                     options = langOptions,
@@ -136,6 +123,13 @@ fun SettingsScreen(
                                         settingsViewModel.saveLanguagePreference(context, langCode)
                                         settingsViewModel.setLocale(context, langCode)
                                     }
+                                )
+                            }
+                            item{
+                                Spacer(modifier = Modifier.height(10.dp))
+                            }
+                            item {
+                                SliderItem(
                                 )
                             }
                         }
@@ -150,38 +144,25 @@ fun SettingsScreen(
 }
 
 @Composable
-fun SwitchSettingItem(
-    title: String,
-    description: String,
-    isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+fun SliderItem(
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(text = title, style = MaterialTheme.typography.bodyLarge)
-            Text(
-                text = description,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        Switch(
-            checked = isChecked,
-            onCheckedChange = onCheckedChange,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.Green,
-                uncheckedThumbColor = Color.Red,
-                checkedTrackColor = Color.LightGray,
-                uncheckedTrackColor = Color.Gray
-            )
+    val context = LocalContext.current
+    val initialSliderValue = SettingsViewModel().getSliderPosition(context)
+    var sliderValue by remember { mutableFloatStateOf(initialSliderValue)}
+    Column {
+        Text(text = stringResource(R.string.SliderDescription))
+        Slider(
+            value = sliderValue,
+            onValueChange = {
+                                SettingsViewModel().setSliderPosition(context, it);
+                                sliderValue = it;
+                            },
+            colors = SliderDefaults.colors(MaterialTheme.colorScheme.secondary),
+            steps = 34,
+            valueRange = -5f..30f
         )
+        Text(text = "${sliderValue.toInt().toString()}°C")
+
     }
 }
 

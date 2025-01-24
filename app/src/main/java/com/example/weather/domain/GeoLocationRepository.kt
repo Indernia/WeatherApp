@@ -29,6 +29,11 @@ class GeoLocationRepository {
                 country = cityElement.jsonObject["country"]?.jsonPrimitive?.content ?: "",
             )
         }
+        if(cityList.isEmpty()){
+            return mutableListOf(CityGeoLocatorData(
+                name = "No City Found", lat = 0.0, lon = 0.0, state = "", country = "")
+            )
+        }
         return cityList
     }
 }

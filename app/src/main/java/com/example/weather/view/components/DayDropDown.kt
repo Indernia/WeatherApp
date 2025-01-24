@@ -111,7 +111,7 @@ import kotlin.math.roundToInt
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "$celsiusTemperature°",
+                            text = "$celsiusTemperature°C",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                         )
@@ -134,8 +134,8 @@ import kotlin.math.roundToInt
                         Text("${stringResource(R.string.Humidity)}: $humidity%")
                         Text("${stringResource(R.string.UVI)}: $uvi")
                         Text("${stringResource(R.string.Windspeed)}: $windSpeed m/s")
-                        Text("Min temp: $celsiusmin°")
-                        Text("${stringResource(R.string.MaxTemp)}: $celsiusmax°")
+                        Text("Min temp: $celsiusmin°C")
+                        Text("${stringResource(R.string.MaxTemp)}: $celsiusmax°C")
                     }
                 }
             }

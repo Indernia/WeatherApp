@@ -10,7 +10,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import com.example.weather.R
+
 
 @Composable
 fun DeleteSavedCityPopup(
@@ -21,7 +24,7 @@ fun DeleteSavedCityPopup(
     AlertDialog(
         title = {
             Text(
-                text = "Delete City?",
+                text = stringResource(R.string.DeleteCity),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleMedium
@@ -29,7 +32,7 @@ fun DeleteSavedCityPopup(
         },
         text = {
             Text(
-                text = "You are deleting $city",
+                text = "${stringResource(R.string.Youaredeleting)} $city",
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
@@ -44,7 +47,7 @@ fun DeleteSavedCityPopup(
                     onConfirmation()
                 }
             ) {
-                Text("Delete")
+                Text(stringResource(R.string.Delete))
             }
         },
         dismissButton = {
@@ -53,7 +56,7 @@ fun DeleteSavedCityPopup(
                     onDismissRequest()
                 }
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.Cancel))
             }
         }
     )

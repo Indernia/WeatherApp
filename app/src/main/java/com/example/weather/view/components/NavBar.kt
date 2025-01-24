@@ -1,9 +1,16 @@
 package com.example.weather.view.components
 
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -25,10 +32,12 @@ fun NavBar(
 ) {
     NavigationBar(
         modifier = modifier
-            .padding(WindowInsets.navigationBars.asPaddingValues()),
+            .consumeWindowInsets(WindowInsets.systemBars)
     ) {
 
         NavigationBarItem(
+            modifier = Modifier
+                .padding(WindowInsets.navigationBars.only(WindowInsetsSides.Bottom).asPaddingValues()),
             icon = { Icon(painterResource(id = R.drawable.outline_location_city_24), contentDescription = "Location City") },
             selected = selectedItem == 0,
             onClick = {
@@ -36,6 +45,8 @@ fun NavBar(
             }
         )
         NavigationBarItem(
+            modifier = Modifier
+                .padding(WindowInsets.navigationBars.only(WindowInsetsSides.Bottom).asPaddingValues()),
             icon = { Icon(painterResource(id = R.drawable.hourly), contentDescription = "hourly") },
             selected = selectedItem == 1,
             onClick = {
@@ -43,6 +54,8 @@ fun NavBar(
             }
         )
         NavigationBarItem(
+            modifier = Modifier
+                .padding(WindowInsets.navigationBars.only(WindowInsetsSides.Bottom).asPaddingValues()),
             icon = { Icon(painterResource(id = R.drawable.daily), contentDescription = "daily") },
             selected = selectedItem == 2,
             onClick = {

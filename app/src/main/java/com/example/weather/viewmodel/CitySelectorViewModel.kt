@@ -46,13 +46,21 @@ class CitySelectorViewModel (
         context: Context
     ): ResponseBody {
         var response: ResponseBody
+
         withContext(Dispatchers.IO) {
-            response = GeoLocationAPI.retrofitService.getLocationsData(
-                cityName = cityName,
-                limit = 10,
-                apiKey = context.getString(R.string.api_key)
-            )
+            try {
+                response = GeoLocationAPI.retrofitService.getLocationsData(
+                    cityName = cityName,
+                    limit = 10,
+                    apiKey = context.getString(R.string.api_key)
+                )
+            }
+            catch (e: Exception) {
+                Log.d("CitySelectorViewModel", "Error: $e")
+                response = ResponseBody.create(null, "")
+            }
         }
+        Log.d("CitySelectorViewModel", "Response Body: $response")
         return response
     }
 
