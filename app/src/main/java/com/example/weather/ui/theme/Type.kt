@@ -16,22 +16,29 @@ val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = juaFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,  // Small text size
+        fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = juaFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 18.sp,  // Medium text size
+        fontSize = 18.sp,
         lineHeight = 26.sp,
         letterSpacing = 0.5.sp
     ),
     titleLarge = TextStyle(
         fontFamily = juaFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 35.sp,  // Larger title text size
+        fontSize = 35.sp,
         lineHeight = 40.sp,
+        letterSpacing = 0.sp
+    ),
+    titleMedium = TextStyle(
+        fontFamily = juaFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 25.sp,
+        lineHeight = 30.sp,
         letterSpacing = 0.sp
     )
 )

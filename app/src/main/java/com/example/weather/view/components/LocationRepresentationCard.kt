@@ -49,7 +49,8 @@ fun LocationRepresentationCard(
             Text(
                 modifier = modifier.weight(2f).padding(8.dp),
                 text = location.name,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleMedium,
             )
 
             IconButton(
