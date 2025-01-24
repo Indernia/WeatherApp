@@ -45,7 +45,9 @@ fun CitySelectorPopup(
 ) {
 var cityName by remember {mutableStateOf("")}
 val items by viewModel.possibleLocations.collectAsState()
-    Dialog(onDismissRequest = { onDismissRequest() }) {
+    Dialog(
+
+        onDismissRequest = { onDismissRequest() }) {
         Card(
             modifier = Modifier
                 .padding(16.dp),
