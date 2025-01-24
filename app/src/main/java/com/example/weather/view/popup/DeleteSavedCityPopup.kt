@@ -10,7 +10,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import com.example.weather.R
 
 
 @Composable
@@ -30,7 +32,7 @@ fun DeleteSavedCityPopup(
         },
         text = {
             Text(
-                text = text = "${stringResource(R.string.Youaredeleting)} $city",
+                text = "${stringResource(R.string.Youaredeleting)} $city",
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
