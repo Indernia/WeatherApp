@@ -23,24 +23,3 @@ fun HourSlider(
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun PreviewHourSlider() {
-    val hourData = List(24) { // Create a list of 24 hours of data
-        HourData(
-            timestamp = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone).plusHours(it.toLong()), // Incrementing the time for each hour
-            temperature = 25.0 + it, // Example temperature increase per hour
-            humidity = 60.0,
-            windSpeed = 15.0 ,
-            updatedAt = ZonedDateTime.now(),
-            uv = 5.0 ,
-            condition = Condition.RAIN
-        )
-    }
-
-    HourSlider(data = hourData)
-}
-
- */

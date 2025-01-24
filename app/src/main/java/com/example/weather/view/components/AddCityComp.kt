@@ -46,8 +46,6 @@ fun AddCityComp(
 
     var response: ResponseBody = ResponseBody.create(null, "")
 
-    // the list of cities should be stored elsewhere
-    val cities = remember { mutableStateListOf<String>() }
 
     Card(
         onClick = { showDialog.value = true },
