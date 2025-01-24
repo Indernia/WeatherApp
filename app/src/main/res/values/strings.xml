@@ -9,7 +9,7 @@
     <string name="Clouds">Clouds</string>
     <string name="AddCity">Add a City</string>
     <string name="InsertCity">Insert City Name</string>
-    <string name="Add">Add</string>
+    <string name="Search">Search</string>
     <string name="Cancel">Cancel</string>
     <string name="January">January</string>
     <string name="February">February</string>
@@ -39,6 +39,9 @@
     <string name="ChooseLanguage">Choose a language</string>
     <string name="UVI">UV Index</string>
     <string name="MaxTemp">Max temp</string>
+    <string name="DeleteCity">Delete City?</string>
+    <string name="Delete">Delete</string>
+    <string name="Youaredeleting">You are deleting</string>"
 
 
 

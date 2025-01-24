@@ -33,6 +33,8 @@ import com.example.weather.data.LocationData
 import java.time.Instant
 import android.util.Log
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.res.stringResource
+import com.example.weather.R
 
 @Composable
 fun CitySelectorPopup(
@@ -57,7 +59,7 @@ val items by viewModel.possibleLocations.collectAsState()
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Add a City",
+                    text = stringResource(R.string.AddCity) ,
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center
                 )
@@ -65,7 +67,7 @@ val items by viewModel.possibleLocations.collectAsState()
                 TextField(
                     value = cityName,
                     onValueChange = { cityName = it },
-                    placeholder = { Text("Enter city name") },
+                    placeholder = { Text(stringResource(R.string.InsertCity)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -74,13 +76,13 @@ val items by viewModel.possibleLocations.collectAsState()
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { onDismissRequest() }) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.Cancel))
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(onClick = {
                         onSearchCity(cityName)
                     }) {
-                        Text("Search")
+                        Text(stringResource(R.string.Search))
                     }
 
                 }
