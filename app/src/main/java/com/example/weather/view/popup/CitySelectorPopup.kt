@@ -32,10 +32,16 @@ import com.example.weather.viewmodel.CitySelectorViewModel
 import com.example.weather.data.LocationData
 import java.time.Instant
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.res.stringResource
 import com.example.weather.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CitySelectorPopup(
     onDismissRequest: () -> Unit,
@@ -46,13 +52,13 @@ fun CitySelectorPopup(
 var cityName by remember {mutableStateOf("")}
 val items by viewModel.possibleLocations.collectAsState()
     Dialog(
-
         onDismissRequest = { onDismissRequest() }) {
         Card(
             modifier = Modifier
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
-        ) {
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            ) {
             Column(
                 modifier = Modifier
                     .padding(16.dp)
@@ -70,8 +76,13 @@ val items by viewModel.possibleLocations.collectAsState()
                     value = cityName,
                     onValueChange = { cityName = it },
                     placeholder = { Text(stringResource(R.string.InsertCity)) },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = MaterialTheme.colorScheme.surface // Set TextField background color
+                    )
                 )
+
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
