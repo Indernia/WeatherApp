@@ -32,6 +32,7 @@ import com.example.weather.view.components.WeatherBackground
 @Composable
 fun DailyBreakdownScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
+    weatherCondition: String
 ) {
     val context = LocalContext.current
     val dailyViewModel = remember { DailyBreakdownViewModel(context = context) }
@@ -39,7 +40,6 @@ fun DailyBreakdownScreen(
     val dayDataList by dailyViewModel.dayDataState.collectAsState()
     val firstDayData = dayDataList.firstOrNull()
     val firstHourData = hourDataList.firstOrNull()
-    val weatherCondition = hourDataList.firstOrNull()?.condition ?: "Clear"
     val city = dailyViewModel.currentCity.value
 
     WeatherBackground(weatherCondition)
