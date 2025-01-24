@@ -47,13 +47,6 @@ fun AppNavHost(
     val savedLanguage = settingsViewModel.getLanguagePreference(context)
     val currentData by mainViewModel.currentDataState.collectAsState()
     val weatherCondition = remember {currentData.firstOrNull()?.condition ?: ""}
-    /*
-    Commenting out as the only way this returns true is if the database breaks which we will not handle in this project
-    if(WeatherRepository().getCurrentCity(context).equals("")) {
-        WeatherRepository.currentCity = "Copenhagen"
-        CitySelectorViewModel(LocalContext.current).updateCurrentLocation(1, context = context)
-    }
-    */
 
 
     Scaffold(

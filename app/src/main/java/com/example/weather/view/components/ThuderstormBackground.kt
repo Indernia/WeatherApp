@@ -1,6 +1,6 @@
 package com.example.weather.view.components
 
-import androidx.compose.animation.core.*
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -39,7 +39,7 @@ fun ThunderstormBackground() {
 @Composable
 fun RaindropEffect() {
     val raindrops = remember { mutableStateListOf<Raindrop>() }
-    val dropCount = 200
+
 
     LaunchedEffect(Unit) {
         while (true) {
