@@ -36,7 +36,6 @@ fun CitySelectorScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
     handleClickBack: () -> Unit = {},
     navController: NavHostController,
-    weatherCondition: String
 
 ) {
     Box(
@@ -44,6 +43,9 @@ fun CitySelectorScreen(
             .fillMaxSize()
     ) {
         val context = LocalContext.current
+        val mainViewModel = remember { MainScreenViewModel(context = context) }
+        val currentData by mainViewModel.currentDataState.collectAsState()
+        val weatherCondition = currentData.firstOrNull()?.condition ?: ""
 
         WeatherBackground(weatherCondition)
 

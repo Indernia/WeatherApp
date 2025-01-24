@@ -50,7 +50,6 @@ fun MainScreen (
     onSettingsClicked: () -> Unit = {},
     onSelectorClicked: () -> Unit = {},
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-    weatherCondition: String
 ) {
     val context = LocalContext.current
     val mainViewModel = remember { MainScreenViewModel(context = context) }
@@ -60,6 +59,7 @@ fun MainScreen (
     val feelsLike = currentData.firstOrNull()?.feelsLike?.minus(273.15) ?: 0.0
     val temperature = currentData.firstOrNull()?.temperature?.minus(273.15)?.toInt().toString()
     val today = dayDataList.firstOrNull()
+    val weatherCondition = currentData.firstOrNull()?.condition ?: ""
 
     Log.d("WeatherApp", "currentData: ${currentData.size}")
 

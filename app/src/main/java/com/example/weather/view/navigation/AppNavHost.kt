@@ -41,11 +41,8 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     viewModel: NavViewModel = viewModel(),
 ) {
-    val context = LocalContext.current
-    val mainViewModel = remember { MainScreenViewModel(context = context) }
-    val selectedItem = viewModel.selectedItem.value
-    val currentData by mainViewModel.currentDataState.collectAsState()
-    val weatherCondition = currentData.firstOrNull()?.condition ?: ""
+     val selectedItem = viewModel.selectedItem.value
+
     /*
     Commenting out as the only way this returns true is if the database breaks which we will not handle in this project
     if(WeatherRepository().getCurrentCity(context).equals("")) {
@@ -95,7 +92,6 @@ fun AppNavHost(
                 MainScreen(
                     onSettingsClicked = {navController.navigate(AppScreens.Settings.name)},
                     onSelectorClicked = {navController.navigate(AppScreens.CitySelector.name)},
-                    weatherCondition = weatherCondition
                 )
             }
 
@@ -105,19 +101,16 @@ fun AppNavHost(
                         navController.navigateUp()
                     },
                     navController = navController,
-                    weatherCondition = weatherCondition
                 )
             }
 
             composable(route = AppScreens.DailyBreakdown.name) {
                 DailyBreakdownScreen(
-                    weatherCondition = weatherCondition
                 )
             }
 
             composable(route = AppScreens.HourlyBreakdown.name) {
                 HourlyBreakdownScreen(
-                    weatherCondition = weatherCondition
                 )
             }
 
