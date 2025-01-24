@@ -2,6 +2,11 @@ package com.example.weather.viewmodel
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.runtime.MutableFloatState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,4 +39,17 @@ class SettingsViewModel: ViewModel()  {
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("language_prefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString("selected_language", "da") ?: "da"
     }
+
+    fun getSliderPosition(context: Context): Float {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("slider_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getFloat("slider_position", 0f)
+    }
+
+    fun setSliderPosition(context: Context, position: Float) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("slider_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putFloat("slider_position", position)
+        editor.apply()
+    }
+
 }

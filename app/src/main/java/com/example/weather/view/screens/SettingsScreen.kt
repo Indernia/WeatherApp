@@ -117,10 +117,6 @@ fun SettingsScreen(
                                 )
                             }
                             item {
-                                SliderItem(
-                                )
-                            }
-                            item {
                                 DropdownSettingItem(
                                     title = stringResource(R.string.Language),
                                     options = langOptions,
@@ -132,6 +128,13 @@ fun SettingsScreen(
                                         settingsViewModel.saveLanguagePreference(context, langCode)
                                         settingsViewModel.setLocale(context, langCode)
                                     }
+                                )
+                            }
+                            item{
+                                Spacer(modifier = Modifier.height(10.dp))
+                            }
+                            item {
+                                SliderItem(
                                 )
                             }
                         }
@@ -148,16 +151,22 @@ fun SettingsScreen(
 @Composable
 fun SliderItem(
 ) {
-    var sliderPosition by remember { mutableFloatStateOf(0f) }
+    val context = LocalContext.current
+    val initialSliderValue = SettingsViewModel().getSliderPosition(context)
+    var sliderValue by remember { mutableFloatStateOf(initialSliderValue)}
     Column {
+        Text(text = stringResource(R.string.SliderDescription))
         Slider(
-            value = sliderPosition,
-            onValueChange = { sliderPosition = it },
+            value = sliderValue,
+            onValueChange = {
+                                SettingsViewModel().setSliderPosition(context, it);
+                                sliderValue = it;
+                            },
             colors = SliderDefaults.colors(MaterialTheme.colorScheme.secondary),
             steps = 34,
             valueRange = -5f..30f
         )
-        Text(text = sliderPosition.toString())
+        Text(text = "${sliderValue.toInt().toString()}°C")
 
     }
 }

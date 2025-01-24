@@ -42,4 +42,5 @@
     <string name="DeleteCity">Slet by?</string>
     <string name="Delete">Slet</string>
     <string name="Youaredeleting">Du sletter</string>
+    <string name="SliderDescription">Slideren definerer når det er koldt</string>"
 </resources>
