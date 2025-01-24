@@ -42,7 +42,7 @@ fun DailyBreakdownScreen(
     val firstHourData = hourDataList.firstOrNull()
     val city = dailyViewModel.currentCity.value
 
-    WeatherBackground(weatherCondition)
+
 
     if (dayDataList.isEmpty() || hourDataList.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -50,6 +50,7 @@ fun DailyBreakdownScreen(
         }
     } else {
 
+        WeatherBackground(dayDataList.firstOrNull()?.weatherCondition.toString())
         Box(
             modifier = Modifier
                 .fillMaxSize()

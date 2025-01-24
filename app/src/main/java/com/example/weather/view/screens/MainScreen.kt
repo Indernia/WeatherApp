@@ -63,7 +63,7 @@ fun MainScreen (
 
     Log.d("WeatherApp", "currentData: ${currentData.size}")
 
-    WeatherBackground(weatherCondition)
+
 
     Log.println(Log.DEBUG, "MainScreen", hourDataList.toString())
     Log.println(Log.DEBUG, "MainScreen", dayDataList.toString())
@@ -73,6 +73,8 @@ fun MainScreen (
             Text("Loading weather data...", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
     } else {
+
+        WeatherBackground(dayDataList.firstOrNull()?.weatherCondition.toString())
 
         Box(
             modifier = Modifier
@@ -117,7 +119,7 @@ fun MainScreen (
                     MainScreenInfoComponent(
                         city = mainViewModel.currentCity.value,
                         temp = temperature,
-                        weatherCondition = weatherCondition,
+                        weatherCondition = dayDataList.firstOrNull()?.weatherCondition.toString(),
                         data = today,
                         feelsLike = feelsLike
                     )
