@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weather</string>
+    <string name="app_name">Group 9 Weather</string>
     <string name="Thunderstorm">Thunderstorm</string>
     <string name="Drizzle">Drizzle</string>
     <string name="Rain">Rain</string>
