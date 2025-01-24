@@ -40,12 +40,10 @@ fun AppNavHost(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier,
     viewModel: NavViewModel = viewModel(),
-    settingsViewModel: SettingsViewModel = viewModel(),
 ) {
     val context = LocalContext.current
     val mainViewModel = remember { MainScreenViewModel(context = context) }
     val selectedItem = viewModel.selectedItem.value
-    val savedLanguage = settingsViewModel.getLanguagePreference(context)
     val currentData by mainViewModel.currentDataState.collectAsState()
     val weatherCondition = currentData.firstOrNull()?.condition ?: ""
     /*
@@ -125,9 +123,6 @@ fun AppNavHost(
 
             composable(route = AppScreens.Settings.name) {
                 SettingsScreen(
-                    selectedOption = savedLanguage,
-                    onOptionSelected = { },
-                    settingsViewModel = SettingsViewModel(),
                     handleClickBack = {
                         navController.navigateUp()
                     }

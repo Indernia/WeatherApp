@@ -47,17 +47,12 @@ import com.example.weather.viewmodel.SettingsViewModel
 
 @Composable
 fun SettingsScreen(
-    selectedOption: String,
-    onOptionSelected: (String) -> Unit,
     settingsViewModel: SettingsViewModel = viewModel(),
     handleClickBack: () -> Unit = {},
     context: Context = LocalContext.current
 ){
     val currentLanguage = settingsViewModel.getLanguagePreference(context)
     val langOptions = listOf("Dansk", "English")
-    var isSwitchChecked by remember { mutableStateOf(true) }
-    val languageOptions = listOf("Dansk", "English")
-    val languageCodeMap = mapOf("Dansk" to "da", "English" to "en")
     val selectedLanguageDisplay = when (currentLanguage) {
         "da" -> "Dansk"
         "en" -> "English"
