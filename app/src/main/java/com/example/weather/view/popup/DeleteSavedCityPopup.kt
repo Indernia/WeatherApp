@@ -10,20 +10,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 @Composable
 fun DeleteSavedCityPopup(
     onDismissRequest: () -> Unit,
+    city: String,
     onConfirmation: () -> Unit,
-    dialogTitle: String,
-    dialogText: String,
-    icon: ImageVector,
 ) {
     AlertDialog(
-        icon = {
-            Icon(icon, contentDescription = "Example Icon")
-        },
         title = {
-            Text(text = dialogTitle)
+            Text(text = "Delete City?")
         },
         text = {
-            Text(text = dialogText)
+            Text(text = "You are deleting $city")
         },
         onDismissRequest = {
             onDismissRequest()

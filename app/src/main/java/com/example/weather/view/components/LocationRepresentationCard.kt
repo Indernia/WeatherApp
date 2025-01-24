@@ -12,6 +12,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.weather.R
 import com.example.weather.data.LocationData
+import com.example.weather.view.popup.DeleteSavedCityPopup
 
 @Composable
 fun LocationRepresentationCard(
@@ -29,7 +32,9 @@ fun LocationRepresentationCard(
     onClick: () -> Unit = {},
     onFavouriteClick: () -> Unit = {},
     onDeleteClick: () -> Unit = {},
-){
+) {
+    val showDialog = remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -54,17 +59,17 @@ fun LocationRepresentationCard(
             )
 
             IconButton(
-                onClick = onDeleteClick,
+                onClick = { showDialog.value = true },
                 modifier = modifier.weight(0.5f).padding(8.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.round_delete_24),
-                    contentDescription = "Favourite",
+                    contentDescription = "Delete",
                     tint = Color.Red,
                 )
             }
 
-            if( location.isFavourite) {
+            if (location.isFavourite) {
                 IconButton(
                     onClick = onFavouriteClick,
                     modifier = modifier.weight(1f).padding(8.dp)
@@ -89,20 +94,11 @@ fun LocationRepresentationCard(
             }
         }
     }
-}
-
-
-@Composable
-@Preview
-fun LocationRepresentationCardPreview() {
-    LocationRepresentationCard(
-        location = LocationData(
-            name = "Copenhagen",
-            latitude = 0.0,
-            longitude = 0.0,
-            updatedAt = 0,
-            isFavourite = true,
-            id = 1
+    if (showDialog.value) {
+        DeleteSavedCityPopup(
+            city = location.name,
+            onDismissRequest = { showDialog.value = false },
+            onConfirmation = onDeleteClick
         )
-    )
+    }
 }
