@@ -34,6 +34,7 @@ import java.time.Instant
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -106,6 +107,7 @@ val items by viewModel.possibleLocations.collectAsState()
                         Log.d("CitySelectorPopup", "Item: $item")
                         Card (
                             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                            modifier = Modifier.fillMaxWidth(),
                             onClick = {
                                 onAddCity(
                                     LocationData(
@@ -124,6 +126,7 @@ val items by viewModel.possibleLocations.collectAsState()
                             Text(text = item.country ?: "Something went wrong")
                             Text(text = item.state ?: "No State to show")
                         }
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
 

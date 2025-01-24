@@ -96,6 +96,7 @@ fun AddCityComp(
 }
 suspend fun fetchLocationData(cityName: String, context: Context, viewModel: CitySelectorViewModel): List<CityGeoLocatorData> {
     val responseBody = viewModel.getSuggestedLocations(cityName, context)
+    Log.d("GeoLocationRepository", "Response Body: $responseBody")
     return GeoLocationRepository().convertResponseBodyToGeoLocationData(responseBody)
 }
 
