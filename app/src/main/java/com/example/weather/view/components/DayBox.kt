@@ -68,28 +68,3 @@ fun DayBox(
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun PreviewHourDayBox() {
-    val dayData = DayData(
-        date = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone),
-        updatedAt = ZonedDateTime.of(2025, 1, 9, 0, 0, 0, 0, ZonedDateTime.now().zone),
-        dayOfWeek = "Thursday",
-        maxTempC = 30.0,
-        minTempC = 20.0,
-        maxHumidity = 80.0,
-        minHumidity = 50.0,
-        maxUV = 6.0,
-        minUV = 1.0,
-        maxWindSpeed = 20.0,
-        minWindSpeed = 5.0,
-        weatherCondition = Condition.CLOUDS
-    )
-    DayBox(data = dayData)
-}
-
-
-
- */
