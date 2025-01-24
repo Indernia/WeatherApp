@@ -6,6 +6,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import com.example.weather.R
 
 @Composable
 fun DeleteSavedCityPopup(
@@ -15,10 +17,10 @@ fun DeleteSavedCityPopup(
 ) {
     AlertDialog(
         title = {
-            Text(text = "Delete City?")
+            Text(stringResource(R.string.DeleteCity))
         },
         text = {
-            Text(text = "You are deleting $city")
+            Text(text = "${stringResource(R.string.Youaredeleting)} $city")
         },
         onDismissRequest = {
             onDismissRequest()
@@ -29,7 +31,7 @@ fun DeleteSavedCityPopup(
                     onConfirmation()
                 }
             ) {
-                Text("Delete")
+                Text(stringResource(R.string.Delete))
             }
         },
         dismissButton = {
@@ -38,7 +40,7 @@ fun DeleteSavedCityPopup(
                     onDismissRequest()
                 }
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.Cancel))
             }
         }
     )
