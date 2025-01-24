@@ -105,7 +105,7 @@ fun HourDropDown(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "$celsiusTemperature°",
+                        text = "$celsiusTemperature°C",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                     )
