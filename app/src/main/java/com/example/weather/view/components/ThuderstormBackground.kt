@@ -38,7 +38,7 @@ fun ThunderstormBackground() {
 @Composable
 fun RaindropEffect() {
     val raindrops = remember { mutableStateListOf<Raindrop>() }
-
+    val dropCount = 100
 
     LaunchedEffect(Unit) {
         while (true) {
