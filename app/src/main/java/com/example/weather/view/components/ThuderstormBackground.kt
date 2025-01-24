@@ -42,13 +42,17 @@ fun RaindropEffect() {
 
     LaunchedEffect(Unit) {
         while (true) {
-            raindrops.add(
-                Raindrop(
-                    x = Random.nextFloat(),
-                    y = -0.1f,
-                    speed = Random.nextFloat() * 0.01f + 0.02f
+            if (raindrops.size < dropCount) {
+                raindrops.add(
+                    Raindrop(
+                        x = (0..1000).random() / 1000f,
+                        y = -0.1f,
+                        speed = (3..7).random() / 100f
+                    )
                 )
-            )
+            } else {
+                raindrops.removeAt(0)
+            }
             delay(50)
         }
     }
