@@ -14,8 +14,6 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,9 +36,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.key
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weather.viewmodel.SettingsViewModel
@@ -117,11 +117,7 @@ fun SettingsScreen(
                                 )
                             }
                             item {
-                                SwitchSettingItem(
-                                    title = stringResource(R.string.WeatherAlert),
-                                    description = stringResource(R.string.EnableDisableAlert),
-                                    isChecked = isSwitchChecked,
-                                    onCheckedChange = { isSwitchChecked = it }
+                                SliderItem(
                                 )
                             }
                             item {
@@ -150,38 +146,19 @@ fun SettingsScreen(
 }
 
 @Composable
-fun SwitchSettingItem(
-    title: String,
-    description: String,
-    isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+fun SliderItem(
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(text = title, style = MaterialTheme.typography.bodyLarge)
-            Text(
-                text = description,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        Switch(
-            checked = isChecked,
-            onCheckedChange = onCheckedChange,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.Green,
-                uncheckedThumbColor = Color.Red,
-                checkedTrackColor = Color.LightGray,
-                uncheckedTrackColor = Color.Gray
-            )
+    var sliderPosition by remember { mutableFloatStateOf(0f) }
+    Column {
+        Slider(
+            value = sliderPosition,
+            onValueChange = { sliderPosition = it },
+            colors = SliderDefaults.colors(MaterialTheme.colorScheme.secondary),
+            steps = 34,
+            valueRange = -5f..30f
         )
+        Text(text = sliderPosition.toString())
+
     }
 }
 
