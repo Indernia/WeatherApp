@@ -16,16 +16,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.weather.viewmodel.MainScreenViewModel
-
 import com.example.weather.viewmodel.CitySelectorViewModel
 import com.example.weather.view.components.CitySelectionContainer
 import com.example.weather.view.components.WeatherBackground

@@ -49,13 +49,7 @@ fun HourBox(
                             .align(Alignment.TopCenter)
                             .padding(top = 8.dp),
                     )
-                    /*
-                    Text(
-                        text = WeatherConditionText(data.condition),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(8.dp),
-                    )*/
+
 
             val weatherImage = when (data.condition) {
                 "Clear" -> R.drawable.sun
@@ -101,20 +95,3 @@ fun WeatherConditionText(condition: String) : String {
     }
 }
 
-// commented out the testing previews for new before re making them for a new data model version
-/*
-@Preview
-@Composable
-fun PreviewHourDayBoxHourData() {
-    val hourData = HourData(
-        timestamp = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
-        temperature = 25.0,
-        humidity = 60.0,
-        windSpeed = 15.0,
-        updatedAt = ZonedDateTime.of(2025, 1, 9, 14, 30, 0, 0, ZonedDateTime.now().zone),
-        uv = 5.0,
-        condition = Condition.RAIN
-    )
-    HourDayBox(data = hourData)
-}
-*/
