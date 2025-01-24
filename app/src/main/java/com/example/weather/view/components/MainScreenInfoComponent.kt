@@ -1,6 +1,7 @@
 package com.example.weather.view.components
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -13,6 +14,8 @@ import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.unit.dp
 import com.example.weather.R
 import com.example.weather.data.DayData
+import com.example.weather.view.screens.SettingsScreen
+import com.example.weather.viewmodel.SettingsViewModel
 import kotlin.math.roundToInt
 
 
@@ -29,12 +32,16 @@ fun MainScreenInfoComponent(
     val context = LocalContext.current
 
     val baseFigureRes = when {
-        feelsLike < 10 -> R.drawable.winter
+        feelsLike < SettingsViewModel().getSliderPosition(context) -> R.drawable.winter
         weatherCondition == "Clear" -> R.drawable.standard
         weatherCondition in listOf("Rain", "Drizzle", "Thunderstorm") -> R.drawable.rain
         weatherCondition == "Snow" -> R.drawable.winter
         else -> R.drawable.winter
     }
+    Log.d("MainScreenInfoComponent", "Weather condition: $weatherCondition")
+    Log.d("MainScreenInfoComponent", "feelsLike: $feelsLike")
+    Log.d("MainScreenInfoComponent", "Slider position: ${SettingsViewModel().getSliderPosition(context)}")
+
 
     BoxWithConstraints(
         modifier = Modifier.fillMaxSize(),

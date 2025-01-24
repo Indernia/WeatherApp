@@ -42,6 +42,7 @@
     <string name="DeleteCity">Delete City?</string>
     <string name="Delete">Delete</string>
     <string name="Youaredeleting">You are deleting</string>"
+    <string name="SliderDescription">Slider defines when it is cold</string>
 
 
 
