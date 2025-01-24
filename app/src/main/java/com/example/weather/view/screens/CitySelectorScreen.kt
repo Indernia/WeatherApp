@@ -43,8 +43,8 @@ fun CitySelectorScreen(
             .fillMaxSize()
     ) {
         val context = LocalContext.current
-        val mainViewModel = remember { MainScreenViewModel(context = context) }
-        val currentData by mainViewModel.currentDataState.collectAsState()
+        val viewModel = remember { CitySelectorViewModel(context = context) }
+        val currentData by viewModel.currentDataState.collectAsState()
         val weatherCondition = currentData.firstOrNull()?.condition ?: ""
 
         WeatherBackground(weatherCondition)

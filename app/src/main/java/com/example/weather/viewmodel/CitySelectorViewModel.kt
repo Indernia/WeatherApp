@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.R
+import com.example.weather.data.CurrentData
 import com.example.weather.domain.CityGeoLocatorData
 import com.example.weather.domain.GeoLocationAPI
 import com.example.weather.domain.WeatherRepository
@@ -24,6 +25,9 @@ class CitySelectorViewModel (
     private val _LocationDataState = MutableStateFlow<List<LocationData>>(emptyList())
     val LocationDataState: StateFlow<List<LocationData>> = _LocationDataState
 
+    private val _currentDataState = MutableStateFlow<List<CurrentData>>(emptyList())
+    val currentDataState: MutableStateFlow<List<CurrentData>> = _currentDataState
+
     var possibleLocations: MutableStateFlow<List<CityGeoLocatorData>> = MutableStateFlow(emptyList())
 
 
@@ -35,6 +39,14 @@ class CitySelectorViewModel (
                     .distinctUntilChanged()
                     .collect {
                         _LocationDataState.value = it
+                    }
+            }
+
+            launch {
+                WeatherRepository().getCurrent(context, 25.67594, 11.56553, "Copenhagen")
+                    .distinctUntilChanged()
+                    .collect {
+                        _currentDataState.value = listOf(it)
                     }
             }
         }

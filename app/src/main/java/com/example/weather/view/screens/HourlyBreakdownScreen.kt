@@ -40,8 +40,7 @@ fun HourlyBreakdownScreen(
     val firstDayData = dayDataList.firstOrNull()
     val firstHourData = hourDataList.firstOrNull()
     val city = hourlyViewModel.currentCity.value
-    val mainViewModel = remember { MainScreenViewModel(context = context) }
-    val currentData by mainViewModel.currentDataState.collectAsState()
+    val currentData by hourlyViewModel.currentDataState.collectAsState()
     val weatherCondition = currentData.firstOrNull()?.condition ?: ""
 
     WeatherBackground(weatherCondition)
